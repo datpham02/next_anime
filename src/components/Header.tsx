@@ -45,34 +45,12 @@ const Header = () => {
         }
     }
 
-    const setHeaderBackGroundOnScroll = (isScroll: Boolean) => {
-        if (isScroll) {
-            wrappedDivRef.current?.classList.add('bg-[#090B0F]')
-            wrappedDivRef.current?.classList.remove('bg-[rgba(0,0,0,0)]')
-        } else {
-            wrappedDivRef.current?.classList.remove('bg-[#090B0F]')
-            wrappedDivRef.current?.classList.add('bg-[rgba(0,0,0,0)]')
-        }
-    }
-    useEffect(() => {
-        window.addEventListener('scroll', function () {
-            var currentScrollPosition =
-                window.pageYOffset || document.documentElement.scrollTop
-
-            if (currentScrollPosition > 0) {
-                setHeaderBackGroundOnScroll(true)
-            } else {
-                setHeaderBackGroundOnScroll(false)
-            }
-        })
-    }, [])
-
     return (
         <>
             <div>
                 <div
                     ref={wrappedDivRef}
-                    className='z-[1] fixed w-full bg-[rgba(0,0,0,0)]'
+                    className='z-[1] fixed w-full bg-[#090B0F]'
                 >
                     <div className='flex items-center justify-between w-full  lg:h-[80px] md:h-[75px] sm:h-[70px] h-[65px]  md:px-[40px] px-[10px]'>
                         <div className='flex items-center space-x-3 text-[30px] font-bold text-[#fff] select-none'>

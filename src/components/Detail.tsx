@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { BsPlayCircle } from 'react-icons/bs'
+import { BsDot, BsFillPlayFill, BsPlayCircle } from 'react-icons/bs'
 import { FaCalendar, FaPlayCircle } from 'react-icons/fa'
 import { MdOutlineAccessTime } from 'react-icons/md'
 import { convertMonthNumberToMonthString } from '../utils/function'
@@ -8,7 +8,7 @@ import { AiOutlinePlus } from 'react-icons/ai'
 const Detail = () => {
     return (
         <>
-            <div className='w-full h-full'>
+            <div className='w-full flex flex-col'>
                 <div className='flex xl:flex-row flex-col'>
                     <div className='relative xl:w-[80%] w-full xl:h-[600px] lg:h-[600px] md:h-[700px] sm:h-[650px]  h-[700px]'>
                         <img
@@ -144,6 +144,33 @@ const Detail = () => {
                             <div>
                                 <span>Producers:</span>
                                 <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className='bg-[#202125] h-[500px]'>
+                    <span className='text-[red]'>Recommended for you</span>
+                    <div>
+                        <div className='relative w-[170px] h-[270px] rounded-md cursor-pointer'>
+                            <div className='relative flex items-center justify-center group'>
+                                <img src='https://img.zorores.com/_r/300x400/100/11/48/1148deffa03b32f6efbd8a30821f2269/1148deffa03b32f6efbd8a30821f2269.jpg' />
+                                <div className='z-[-2] group-hover:z-[1] flex transition-all duration-200 ease-linear absolute top-0 left-0 bottom-0 right-0 w-full h-full justify-center items-center bg-[rgba(0,0,0,0)] group-hover:bg-[rgba(0,0,0,0.4)]'>
+                                    <BsFillPlayFill className='w-[50px] h-[50px] text-[#fff]' />
+                                </div>
+                            </div>
+                            <div className='flex flex-col space-y-1 bg-[#2a2c31] px-[8px] py-[10px]'>
+                                <span className='text-[#fff] text-[14px] line-clamp-2'>
+                                    Dai-Shogun: Great Revolution
+                                </span>
+                                <div className='flex items-center space-x-4'>
+                                    <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
+                                        TV
+                                    </span>
+                                    <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
+                                    <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
+                                        24m
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
