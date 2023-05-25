@@ -8,9 +8,9 @@ import { AiOutlinePlus } from 'react-icons/ai'
 const Detail = () => {
     return (
         <>
-            <div className='w-full flex flex-col'>
+            <div className='w-full h-full flex flex-col overflow-hidden overflow-y-auto'>
                 <div className='flex xl:flex-row flex-col'>
-                    <div className='relative xl:w-[80%] w-full xl:h-[600px] lg:h-[600px] md:h-[700px] sm:h-[650px]  h-[700px]'>
+                    <div className='relative xl:w-[80%] w-full xl:h-[700px] lg:h-[600px] md:h-[700px] sm:h-[650px]  h-[700px]'>
                         <img
                             className='w-full h-full object-cover bg-center blur-xl'
                             src='https://img.zorores.com/_r/300x400/100/0a/d5/0ad5356f28ee75bccfde8b69ea6a5e54/0ad5356f28ee75bccfde8b69ea6a5e54.jpg'
@@ -148,29 +148,287 @@ const Detail = () => {
                         </div>
                     </div>
                 </div>
-                <div className='bg-[#202125] h-[500px]'>
-                    <span className='text-[red]'>Recommended for you</span>
-                    <div>
-                        <div className='relative w-[170px] h-[270px] rounded-md cursor-pointer'>
-                            <div className='relative flex items-center justify-center group'>
-                                <img src='https://img.zorores.com/_r/300x400/100/11/48/1148deffa03b32f6efbd8a30821f2269/1148deffa03b32f6efbd8a30821f2269.jpg' />
-                                <div className='z-[-2] group-hover:z-[1] flex transition-all duration-200 ease-linear absolute top-0 left-0 bottom-0 right-0 w-full h-full justify-center items-center bg-[rgba(0,0,0,0)] group-hover:bg-[rgba(0,0,0,0.4)]'>
-                                    <BsFillPlayFill className='w-[50px] h-[50px] text-[#fff]' />
+                <div className='bg-[#202125] flex xl:flex-row flex-col w-full  pt-[30px]'>
+                    <div className='flex flex-col space-y-4 xl:w-[80%] w-full px-[20px]'>
+                        <span className='text-[#2196F3] text-[20px] font-semibold'>
+                            Recommended for you
+                        </span>
+                        <div className='grid 2xl:grid-cols-6 md:grid-cols-4 grid-cols-3 gap-4'>
+                            <div className='relative w-full h-full rounded-md cursor-pointer'>
+                                <div className='relative flex items-center justify-center group'>
+                                    <img src='https://img.zorores.com/_r/300x400/100/11/48/1148deffa03b32f6efbd8a30821f2269/1148deffa03b32f6efbd8a30821f2269.jpg' />
+                                    <div className='z-[-2] group-hover:z-[1] flex transition-all duration-200 ease-linear absolute top-0 left-0 bottom-0 right-0 w-full h-full justify-center items-center bg-[rgba(0,0,0,0)] group-hover:bg-[rgba(0,0,0,0.4)]'>
+                                        <BsFillPlayFill className='w-[50px] h-[50px] text-[#fff]' />
+                                    </div>
+                                </div>
+                                <div className='flex flex-col space-y-1 bg-[#2a2c31] px-[8px] py-[10px]'>
+                                    <span className='text-[#fff] text-[14px] line-clamp-2'>
+                                        Dai-Shogun: Great Revolution
+                                    </span>
+                                    <div className='flex items-center space-x-4'>
+                                        <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
+                                            TV
+                                        </span>
+                                        <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
+                                        <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
+                                            24m
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                            <div className='flex flex-col space-y-1 bg-[#2a2c31] px-[8px] py-[10px]'>
-                                <span className='text-[#fff] text-[14px] line-clamp-2'>
-                                    Dai-Shogun: Great Revolution
-                                </span>
-                                <div className='flex items-center space-x-4'>
-                                    <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
-                                        TV
-                                    </span>
-                                    <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
-                                    <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
-                                        24m
-                                    </span>
+                            <div className='relative w-full h-full rounded-md cursor-pointer'>
+                                <div className='relative flex items-center justify-center group'>
+                                    <img src='https://img.zorores.com/_r/300x400/100/11/48/1148deffa03b32f6efbd8a30821f2269/1148deffa03b32f6efbd8a30821f2269.jpg' />
+                                    <div className='z-[-2] group-hover:z-[1] flex transition-all duration-200 ease-linear absolute top-0 left-0 bottom-0 right-0 w-full h-full justify-center items-center bg-[rgba(0,0,0,0)] group-hover:bg-[rgba(0,0,0,0.4)]'>
+                                        <BsFillPlayFill className='w-[50px] h-[50px] text-[#fff]' />
+                                    </div>
                                 </div>
+                                <div className='flex flex-col space-y-1 bg-[#2a2c31] px-[8px] py-[10px]'>
+                                    <span className='text-[#fff] text-[14px] line-clamp-2'>
+                                        Dai-Shogun: Great Revolution
+                                    </span>
+                                    <div className='flex items-center space-x-4'>
+                                        <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
+                                            TV
+                                        </span>
+                                        <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
+                                        <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
+                                            24m
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='relative w-full h-full rounded-md cursor-pointer'>
+                                <div className='relative flex items-center justify-center group'>
+                                    <img src='https://img.zorores.com/_r/300x400/100/11/48/1148deffa03b32f6efbd8a30821f2269/1148deffa03b32f6efbd8a30821f2269.jpg' />
+                                    <div className='z-[-2] group-hover:z-[1] flex transition-all duration-200 ease-linear absolute top-0 left-0 bottom-0 right-0 w-full h-full justify-center items-center bg-[rgba(0,0,0,0)] group-hover:bg-[rgba(0,0,0,0.4)]'>
+                                        <BsFillPlayFill className='w-[50px] h-[50px] text-[#fff]' />
+                                    </div>
+                                </div>
+                                <div className='flex flex-col space-y-1 bg-[#2a2c31] px-[8px] py-[10px]'>
+                                    <span className='text-[#fff] text-[14px] line-clamp-2'>
+                                        Dai-Shogun: Great Revolution
+                                    </span>
+                                    <div className='flex items-center space-x-4'>
+                                        <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
+                                            TV
+                                        </span>
+                                        <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
+                                        <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
+                                            24m
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='relative w-full h-full rounded-md cursor-pointer'>
+                                <div className='relative flex items-center justify-center group'>
+                                    <img src='https://img.zorores.com/_r/300x400/100/11/48/1148deffa03b32f6efbd8a30821f2269/1148deffa03b32f6efbd8a30821f2269.jpg' />
+                                    <div className='z-[-2] group-hover:z-[1] flex transition-all duration-200 ease-linear absolute top-0 left-0 bottom-0 right-0 w-full h-full justify-center items-center bg-[rgba(0,0,0,0)] group-hover:bg-[rgba(0,0,0,0.4)]'>
+                                        <BsFillPlayFill className='w-[50px] h-[50px] text-[#fff]' />
+                                    </div>
+                                </div>
+                                <div className='flex flex-col space-y-1 bg-[#2a2c31] px-[8px] py-[10px]'>
+                                    <span className='text-[#fff] text-[14px] line-clamp-2'>
+                                        Dai-Shogun: Great Revolution
+                                    </span>
+                                    <div className='flex items-center space-x-4'>
+                                        <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
+                                            TV
+                                        </span>
+                                        <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
+                                        <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
+                                            24m
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='relative w-full h-full rounded-md cursor-pointer'>
+                                <div className='relative flex items-center justify-center group'>
+                                    <img src='https://img.zorores.com/_r/300x400/100/11/48/1148deffa03b32f6efbd8a30821f2269/1148deffa03b32f6efbd8a30821f2269.jpg' />
+                                    <div className='z-[-2] group-hover:z-[1] flex transition-all duration-200 ease-linear absolute top-0 left-0 bottom-0 right-0 w-full h-full justify-center items-center bg-[rgba(0,0,0,0)] group-hover:bg-[rgba(0,0,0,0.4)]'>
+                                        <BsFillPlayFill className='w-[50px] h-[50px] text-[#fff]' />
+                                    </div>
+                                </div>
+                                <div className='flex flex-col space-y-1 bg-[#2a2c31] px-[8px] py-[10px]'>
+                                    <span className='text-[#fff] text-[14px] line-clamp-2'>
+                                        Dai-Shogun: Great Revolution
+                                    </span>
+                                    <div className='flex items-center space-x-4'>
+                                        <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
+                                            TV
+                                        </span>
+                                        <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
+                                        <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
+                                            24m
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='relative w-full h-full rounded-md cursor-pointer'>
+                                <div className='relative flex items-center justify-center group'>
+                                    <img src='https://img.zorores.com/_r/300x400/100/11/48/1148deffa03b32f6efbd8a30821f2269/1148deffa03b32f6efbd8a30821f2269.jpg' />
+                                    <div className='z-[-2] group-hover:z-[1] flex transition-all duration-200 ease-linear absolute top-0 left-0 bottom-0 right-0 w-full h-full justify-center items-center bg-[rgba(0,0,0,0)] group-hover:bg-[rgba(0,0,0,0.4)]'>
+                                        <BsFillPlayFill className='w-[50px] h-[50px] text-[#fff]' />
+                                    </div>
+                                </div>
+                                <div className='flex flex-col space-y-1 bg-[#2a2c31] px-[8px] py-[10px]'>
+                                    <span className='text-[#fff] text-[14px] line-clamp-2'>
+                                        Dai-Shogun: Great Revolution
+                                    </span>
+                                    <div className='flex items-center space-x-4'>
+                                        <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
+                                            TV
+                                        </span>
+                                        <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
+                                        <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
+                                            24m
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='relative w-full h-full rounded-md cursor-pointer'>
+                                <div className='relative flex items-center justify-center group'>
+                                    <img src='https://img.zorores.com/_r/300x400/100/11/48/1148deffa03b32f6efbd8a30821f2269/1148deffa03b32f6efbd8a30821f2269.jpg' />
+                                    <div className='z-[-2] group-hover:z-[1] flex transition-all duration-200 ease-linear absolute top-0 left-0 bottom-0 right-0 w-full h-full justify-center items-center bg-[rgba(0,0,0,0)] group-hover:bg-[rgba(0,0,0,0.4)]'>
+                                        <BsFillPlayFill className='w-[50px] h-[50px] text-[#fff]' />
+                                    </div>
+                                </div>
+                                <div className='flex flex-col space-y-1 bg-[#2a2c31] px-[8px] py-[10px]'>
+                                    <span className='text-[#fff] text-[14px] line-clamp-2'>
+                                        Dai-Shogun: Great Revolution
+                                    </span>
+                                    <div className='flex items-center space-x-4'>
+                                        <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
+                                            TV
+                                        </span>
+                                        <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
+                                        <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
+                                            24m
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='flex flex-col space-y-4 xl:w-[20%] w-full pr-[20px] xl:mt-0 mt-[100px] xl:px-0 px-[20px]'>
+                        <span className='text-[#2196F3] text-[20px] font-semibold'>
+                            Most Popular
+                        </span>
+                        <div className='bg-[#2A2C31] flex flex-col py-[15px] px-[15px] rounded-sm'>
+                            <div className='flex items-center justify-between border-b-solid border-b-[1px] border-b-[#35373C] py-[15px]'>
+                                <div className='flex items-center space-x-3'>
+                                    <img
+                                        className='w-[45px] h-[60px]'
+                                        src='https://img.zorores.com/_r/300x400/100/54/90/5490cb32786d4f7fef0f40d7266df532/5490cb32786d4f7fef0f40d7266df532.jpg'
+                                    />
+                                    <div className='flex flex-col space-y-1'>
+                                        <span className='text-[#fff] font-semibold'>
+                                            One Piece
+                                        </span>
+                                        <div className='flex items-center space-x-4 text-[#fff]'>
+                                            <span className='text-[14px] '>
+                                                TV
+                                            </span>
+                                            <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
+                                            <span className='text-[14px]'>
+                                                24m
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <AiOutlinePlus className='w-[25px] h-[25px] font-semibold text-[#Fff]' />
+                            </div>
+                            <div className='flex items-center justify-between border-b-solid border-b-[1px] border-b-[#35373C] py-[15px]'>
+                                <div className='flex items-center space-x-3'>
+                                    <img
+                                        className='w-[45px] h-[60px]'
+                                        src='https://img.zorores.com/_r/300x400/100/54/90/5490cb32786d4f7fef0f40d7266df532/5490cb32786d4f7fef0f40d7266df532.jpg'
+                                    />
+                                    <div className='flex flex-col space-y-1'>
+                                        <span className='text-[#fff] font-semibold'>
+                                            One Piece
+                                        </span>
+                                        <div className='flex items-center space-x-4 text-[#fff]'>
+                                            <span className='text-[14px] '>
+                                                TV
+                                            </span>
+                                            <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
+                                            <span className='text-[14px]'>
+                                                24m
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <AiOutlinePlus className='w-[25px] h-[25px] font-semibold text-[#Fff]' />
+                            </div>
+                            <div className='flex items-center justify-between border-b-solid border-b-[1px] border-b-[#35373C] py-[15px]'>
+                                <div className='flex items-center space-x-3'>
+                                    <img
+                                        className='w-[45px] h-[60px]'
+                                        src='https://img.zorores.com/_r/300x400/100/54/90/5490cb32786d4f7fef0f40d7266df532/5490cb32786d4f7fef0f40d7266df532.jpg'
+                                    />
+                                    <div className='flex flex-col space-y-1'>
+                                        <span className='text-[#fff] font-semibold'>
+                                            One Piece
+                                        </span>
+                                        <div className='flex items-center space-x-4 text-[#fff]'>
+                                            <span className='text-[14px] '>
+                                                TV
+                                            </span>
+                                            <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
+                                            <span className='text-[14px]'>
+                                                24m
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <AiOutlinePlus className='w-[25px] h-[25px] font-semibold text-[#Fff]' />
+                            </div>
+                            <div className='flex items-center justify-between border-b-solid border-b-[1px] border-b-[#35373C] py-[15px]'>
+                                <div className='flex items-center space-x-3'>
+                                    <img
+                                        className='w-[45px] h-[60px]'
+                                        src='https://img.zorores.com/_r/300x400/100/54/90/5490cb32786d4f7fef0f40d7266df532/5490cb32786d4f7fef0f40d7266df532.jpg'
+                                    />
+                                    <div className='flex flex-col space-y-1'>
+                                        <span className='text-[#fff] font-semibold'>
+                                            One Piece
+                                        </span>
+                                        <div className='flex items-center space-x-4 text-[#fff]'>
+                                            <span className='text-[14px] '>
+                                                TV
+                                            </span>
+                                            <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
+                                            <span className='text-[14px]'>
+                                                24m
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <AiOutlinePlus className='w-[25px] h-[25px] font-semibold text-[#Fff]' />
+                            </div>
+                            <div className='flex items-center justify-between border-b-solid border-b-[1px] border-b-[#35373C] py-[15px]'>
+                                <div className='flex items-center space-x-3'>
+                                    <img
+                                        className='w-[45px] h-[60px]'
+                                        src='https://img.zorores.com/_r/300x400/100/54/90/5490cb32786d4f7fef0f40d7266df532/5490cb32786d4f7fef0f40d7266df532.jpg'
+                                    />
+                                    <div className='flex flex-col space-y-1'>
+                                        <span className='text-[#fff] font-semibold'>
+                                            One Piece
+                                        </span>
+                                        <div className='flex items-center space-x-4 text-[#fff]'>
+                                            <span className='text-[14px] '>
+                                                TV
+                                            </span>
+                                            <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
+                                            <span className='text-[14px]'>
+                                                24m
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <AiOutlinePlus className='w-[25px] h-[25px] font-semibold text-[#Fff]' />
                             </div>
                         </div>
                     </div>
