@@ -1,4 +1,4 @@
-import { Body, Detail, Header, Home } from './components'
+import { Body, Detail, Header, Home, Watch } from './components'
 import { Route } from 'react-router-dom'
 import VideoPlayer from './components/VideoPlayer'
 function App() {
@@ -8,7 +8,7 @@ function App() {
             <Body>
                 <Route path='/home' element={<Home />} />
                 <Route path='/detail' element={<Detail />} />
-                <Route path='/watch' element={<VideoPlayer />} />
+                <Route path='/watch' element={<Watch />} />
             </Body>
         </>
     )
