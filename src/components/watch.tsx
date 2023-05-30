@@ -468,7 +468,7 @@ const Watch = () => {
                             <span className='text-[#2196F3] text-[20px] font-semibold'>
                                 Recommended for you
                             </span>
-                            <div className='grid 2xl:grid-cols-6 md:grid-cols-4 grid-cols-3 gap-4'>
+                            <div className='grid 2xl:grid-cols-6 md:grid-cols-4 grid-cols-2 gap-4'>
                                 <div className='relative w-full h-full rounded-md cursor-pointer'>
                                     <div className='relative flex items-center justify-center group'>
                                         <img src='https://img.zorores.com/_r/300x400/100/11/48/1148deffa03b32f6efbd8a30821f2269/1148deffa03b32f6efbd8a30821f2269.jpg' />
