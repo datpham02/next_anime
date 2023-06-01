@@ -1,8 +1,8 @@
 import React from 'react'
-import { EpisodeType } from '../utils/interface'
+import { EpisodeProps } from '../utils/interface'
 import { BsFillPlayCircleFill, BsFillPlayFill } from 'react-icons/bs'
 
-const Episode = ({ type, episode, episode_name, watching }: EpisodeType) => {
+const Episode = ({ type, episode, episode_name, watching }: EpisodeProps) => {
     if (type == 1) {
         return (
             <>

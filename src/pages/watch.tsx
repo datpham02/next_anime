@@ -1,15 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react'
-import VideoPlayer from './VideoPlayer'
+
 import { AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai'
 import { BsFillPlayFill, BsFillReplyFill, BsPlayCircle } from 'react-icons/bs'
 import { FaCalendar, FaPlayCircle, FaSort } from 'react-icons/fa'
 import { IoChatboxOutline } from 'react-icons/io5'
 import { MdOutlineAccessTime } from 'react-icons/md'
 import { convertMonthNumberToMonthString } from '../utils/function'
-import Episode from './Episode'
+
 import EmojiPicker from 'emoji-picker-react'
 import { BiLike, BiDislike } from 'react-icons/bi'
 import { IoMdArrowDropdown } from 'react-icons/io'
+import { Episode, Recommend, MostPopular } from '~/components'
+import VideoPlayer from '~/components/VideoPlayer'
 
 const Watch = () => {
     const wrappedDivRef = useRef<HTMLDivElement>(null)
@@ -33,7 +35,7 @@ const Watch = () => {
 
     return (
         <>
-            <div className='mt-[50px] overflow-hidden'>
+            <div className='mt-[80px] overflow-hidden'>
                 <div
                     style={{
                         height: heightChildDiv,
@@ -46,9 +48,9 @@ const Watch = () => {
                     />
                     <div
                         ref={childOfWrappedDivRef}
-                        className='absolute top-0 left-0 w-full h-auto flex 2xl:flex-row lg:flex-col flex-col lg:space-y-4 space-y-4'
+                        className='absolute top-0 left-0 w-full h-auto flex xl:flex-row lg:flex-col flex-col lg:space-y-4 space-y-4'
                     >
-                        <div className='flex lg:flex-row flex-col-reverse 2xl:w-[80%] lg:w-full h-full 2xl:px-[20px] lg:px-[50px]'>
+                        <div className='flex lg:flex-row flex-col-reverse xl:w-[80%] lg:w-full h-full xl:px-[20px] lg:px-[50px]'>
                             <div className='lg:w-[25%]  w-full flex flex-col bg-[#14151A] lg:pb-0 pb-[25px]'>
                                 <div className='flex items-center justify-between px-[10px] py-[12px]'>
                                     <span className='text-[#fff] text-[14px]'>
@@ -114,21 +116,20 @@ const Watch = () => {
                                 </div>
                             </div>
                             <div className='lg:w-[75%] w-full flex flex-col'>
-                                <img
-                                    className='w-full xl:h-[500px] lg:h-[550px] md:h-[550px] h-[300px] object-cover bg-center'
-                                    src='https://img.zorores.com/_r/300x400/100/0a/d5/0ad5356f28ee75bccfde8b69ea6a5e54/0ad5356f28ee75bccfde8b69ea6a5e54.jpg'
-                                />
+                                <div className='w-full xl:h-[500px] lg:h-[550px] md:h-[550px] h-[300px]'>
+                                    <VideoPlayer />
+                                </div>
                                 <div className='flex flex-col space-y-3 px-[10px] py-[15px] bg-[#08090B]'>
                                     <span className='text-[#fff]'>
                                         Watch more seasons of this anime
                                     </span>
-                                    <div className='grid grid-cols-5 gap-2 overflow-hidden'>
+                                    <div className='grid xl:grid-cols-5 md:grid-cols-6 grid-cols-4 gap-2 overflow-hidden'>
                                         <div className='relative w-full h-[60px] flex items-center justify-center rounded-md overflow-hidden group cursor-pointer'>
                                             <img
                                                 className='w-full h-full object-cover blur-sm'
                                                 src='https://img.zorores.com/_r/300x400/100/bd/5a/bd5ae1d387a59c5abcf5e1a6a616728c/bd5ae1d387a59c5abcf5e1a6a616728c.jpg'
                                             />
-                                            <span className='absolute top-0 left-0 w-full h-full group-hover:text-[#2196F3] flex items-center justify-center text-[#fff] font-medium md:text-[13px] text-[11px]'>
+                                            <span className='absolute top-0 left-0 w-full h-full text-center group-hover:text-[#2196F3] flex items-center justify-center text-[#fff] font-medium sm:text-[13px] text-[12px]'>
                                                 Bleach Movie 1
                                             </span>
                                         </div>
@@ -137,7 +138,7 @@ const Watch = () => {
                                                 className='w-full h-full object-cover blur-sm'
                                                 src='https://img.zorores.com/_r/300x400/100/bd/5a/bd5ae1d387a59c5abcf5e1a6a616728c/bd5ae1d387a59c5abcf5e1a6a616728c.jpg'
                                             />
-                                            <span className='absolute top-0 left-0 w-full h-full group-hover:text-[#2196F3] flex items-center justify-center text-[#fff] font-medium md:text-[13px] text-[11px]'>
+                                            <span className='absolute top-0 left-0 w-full h-full text-center group-hover:text-[#2196F3] flex items-center justify-center text-[#fff] font-medium sm:text-[13px] text-[12px]'>
                                                 Bleach Movie 1
                                             </span>
                                         </div>
@@ -146,7 +147,7 @@ const Watch = () => {
                                                 className='w-full h-full object-cover blur-sm'
                                                 src='https://img.zorores.com/_r/300x400/100/bd/5a/bd5ae1d387a59c5abcf5e1a6a616728c/bd5ae1d387a59c5abcf5e1a6a616728c.jpg'
                                             />
-                                            <span className='absolute top-0 left-0 w-full h-full group-hover:text-[#2196F3] flex items-center justify-center text-[#fff] font-medium md:text-[13px] text-[11px]'>
+                                            <span className='absolute top-0 left-0 w-full h-full text-center group-hover:text-[#2196F3] flex items-center justify-center text-[#fff] font-medium sm:text-[13px] text-[12px]'>
                                                 Bleach Movie 1
                                             </span>
                                         </div>
@@ -155,7 +156,7 @@ const Watch = () => {
                                                 className='w-full h-full object-cover blur-sm'
                                                 src='https://img.zorores.com/_r/300x400/100/bd/5a/bd5ae1d387a59c5abcf5e1a6a616728c/bd5ae1d387a59c5abcf5e1a6a616728c.jpg'
                                             />
-                                            <span className='absolute top-0 left-0 w-full h-full group-hover:text-[#2196F3] flex items-center justify-center text-[#fff] font-medium md:text-[13px] text-[11px]'>
+                                            <span className='absolute top-0 left-0 w-full h-full text-center group-hover:text-[#2196F3] flex items-center justify-center text-[#fff] font-medium sm:text-[13px] text-[12px]'>
                                                 Bleach Movie 1
                                             </span>
                                         </div>
@@ -164,7 +165,7 @@ const Watch = () => {
                                                 className='w-full h-full object-cover blur-sm'
                                                 src='https://img.zorores.com/_r/300x400/100/bd/5a/bd5ae1d387a59c5abcf5e1a6a616728c/bd5ae1d387a59c5abcf5e1a6a616728c.jpg'
                                             />
-                                            <span className='absolute top-0 left-0 w-full h-full group-hover:text-[#2196F3] flex items-center justify-center text-[#fff] font-medium md:text-[13px] text-[11px]'>
+                                            <span className='absolute top-0 left-0 w-full h-full text-center group-hover:text-[#2196F3] flex items-center justify-center text-[#fff] font-medium sm:text-[13px] text-[12px]'>
                                                 Bleach Movie 1
                                             </span>
                                         </div>
@@ -173,7 +174,7 @@ const Watch = () => {
                                                 className='w-full h-full object-cover blur-sm'
                                                 src='https://img.zorores.com/_r/300x400/100/bd/5a/bd5ae1d387a59c5abcf5e1a6a616728c/bd5ae1d387a59c5abcf5e1a6a616728c.jpg'
                                             />
-                                            <span className='absolute top-0 left-0 w-full h-full group-hover:text-[#2196F3] flex items-center justify-center text-[#fff] font-medium md:text-[13px] text-[11px]'>
+                                            <span className='absolute top-0 left-0 w-full h-full text-center group-hover:text-[#2196F3] flex items-center justify-center text-[#fff] font-medium sm:text-[13px] text-[12px]'>
                                                 Bleach Movie 1
                                             </span>
                                         </div>
@@ -182,7 +183,7 @@ const Watch = () => {
                                                 className='w-full h-full object-cover blur-sm'
                                                 src='https://img.zorores.com/_r/300x400/100/bd/5a/bd5ae1d387a59c5abcf5e1a6a616728c/bd5ae1d387a59c5abcf5e1a6a616728c.jpg'
                                             />
-                                            <span className='absolute top-0 left-0 w-full h-full group-hover:text-[#2196F3] flex items-center justify-center text-[#fff] font-medium md:text-[13px] text-[11px]'>
+                                            <span className='absolute top-0 left-0 w-full h-full text-center group-hover:text-[#2196F3] flex items-center justify-center text-[#fff] font-medium sm:text-[13px] text-[12px]'>
                                                 Bleach Movie 1
                                             </span>
                                         </div>
@@ -190,12 +191,12 @@ const Watch = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='flex 2xl:py-0 py-[25px] 2xl:flex-col lg:flex-row 2xl:space-y-4 2xl:space-x-0 lg:space-x-4 space-x-4 2xl:w-[20%] lg:w-full 2xl:px-0 lg:px-[50px]'>
+                        <div className='flex xl:py-0 py-[25px] xl:flex-col lg:flex-row md:flex-row flex-col xl:space-y-4 xl:space-x-0 lg:space-x-4 md:space-x-4 md:space-y-0 space-y-4 xl:w-[20%] lg:w-full xl:px-0 lg:px-[50px] px-[15px]'>
                             <img
-                                className='w-[120px] h-[160px] object-cover bg-center'
+                                className='xl:w-[140px] xl:h-[180px] lg:w-[200px] lg:h-[250px] md:w-[180px] md:h-[250px] sm:w-[160px] sm:h-[220px] w-[150px] h-[200px] object-cover bg-center'
                                 src='https://img.zorores.com/_r/300x400/100/0a/d5/0ad5356f28ee75bccfde8b69ea6a5e54/0ad5356f28ee75bccfde8b69ea6a5e54.jpg'
                             />
-                            <div className='flex 2xl:flex-col lg:flex-col flex-col 2xl:space-y-4 lg:space-y-4 space-y-2'>
+                            <div className='flex flex-1 2xl:flex-col lg:flex-col flex-col 2xl:space-y-4 lg:space-y-4 space-y-2'>
                                 <h1 className='text-[#fff] font-medium text-[25px] line-clamp-2'>
                                     I Got a Cheat Skill in Another World and
                                     Became Unrivaled in The Real World, Too
@@ -245,7 +246,7 @@ const Watch = () => {
                             <span className='text-[#2196F3] text-[20px] font-semibold'>
                                 Comments
                             </span>
-                            <div className='flex flex-col space-y-6 bg-[#2A2C31] px-[50px] py-[20px]'>
+                            <div className='flex flex-col space-y-6 bg-[#2A2C31] sm:px-[50px] px-[20px] py-[20px]'>
                                 <div className='h-full w-full flex flex-col space-y-4'>
                                     <div className='flex items-center justify-between py-[15px]'>
                                         <div className='flex items-center space-x-2 text-[#fff]'>
@@ -260,11 +261,11 @@ const Watch = () => {
                                     <div className='w-full flex justify-start space-x-3'>
                                         <div className='flex justify-start pt-[5px]'>
                                             <img
-                                                className='rounded-full w-[40px] h-[40px]'
+                                                className='rounded-full sm:w-[40px] sm:h-[40px] w-[35px] h-[35px]'
                                                 src='https://img.zorores.com/_r/100x100/100/avatar/one_piece/File6.png'
                                             />
                                         </div>
-                                        <div className='w-full flex flex-col space-y-3'>
+                                        <div className='w-full flex flex-1 flex-col space-y-3'>
                                             <div className='flex items-center space-x-1 text-[13px]'>
                                                 <span className='text-[#fff]'>
                                                     Comments as
@@ -288,11 +289,11 @@ const Watch = () => {
                                     <div className='w-full flex justify-start space-x-3'>
                                         <div className='flex justify-start'>
                                             <img
-                                                className='rounded-full w-[40px] h-[40px]'
+                                                className='rounded-full sm:w-[40px] sm:h-[40px] w-[35px] h-[35px]'
                                                 src='https://img.zorores.com/_r/100x100/100/avatar/one_piece/File6.png'
                                             />
                                         </div>
-                                        <div className='w-full flex flex-col space-y-2'>
+                                        <div className='w-full flex flex-1 flex-col space-y-2'>
                                             <div className='flex items-center space-x-3'>
                                                 <span className='text-[#fff] text-[14px]'>
                                                     Phạm Trọng Đạt
@@ -327,11 +328,11 @@ const Watch = () => {
                                                         <div className='w-full flex justify-start space-x-3'>
                                                             <div className='flex justify-start'>
                                                                 <img
-                                                                    className='rounded-full w-[40px] h-[40px]'
+                                                                    className='rounded-full sm:w-[40px] sm:h-[40px] w-[35px] h-[35px]'
                                                                     src='https://img.zorores.com/_r/100x100/100/avatar/one_piece/File6.png'
                                                                 />
                                                             </div>
-                                                            <div className='w-full flex flex-col space-y-2'>
+                                                            <div className='w-full flex flex-1 flex-col space-y-2'>
                                                                 <div className='flex items-center space-x-3'>
                                                                     <span className='text-[#fff] text-[14px]'>
                                                                         Phạm
@@ -362,11 +363,11 @@ const Watch = () => {
                                                         <div className='w-full flex justify-start space-x-3'>
                                                             <div className='flex justify-start'>
                                                                 <img
-                                                                    className='rounded-full w-[40px] h-[40px]'
+                                                                    className='rounded-full sm:w-[40px] sm:h-[40px] w-[35px] h-[35px]'
                                                                     src='https://img.zorores.com/_r/100x100/100/avatar/one_piece/File6.png'
                                                                 />
                                                             </div>
-                                                            <div className='w-full flex flex-col space-y-2'>
+                                                            <div className='w-full flex flex-1 flex-col space-y-2'>
                                                                 <div className='flex items-center space-x-3'>
                                                                     <span className='text-[#fff] text-[14px]'>
                                                                         Phạm
@@ -402,11 +403,11 @@ const Watch = () => {
                                     <div className='w-full flex justify-start space-x-3'>
                                         <div className='flex justify-start'>
                                             <img
-                                                className='rounded-full w-[40px] h-[40px]'
+                                                className='rounded-full sm:w-[40px] sm:h-[40px] w-[35px] h-[35px]'
                                                 src='https://img.zorores.com/_r/100x100/100/avatar/one_piece/File6.png'
                                             />
                                         </div>
-                                        <div className='w-full flex flex-col space-y-2'>
+                                        <div className='w-full flex flex-1 flex-col space-y-2'>
                                             <div className='flex items-center space-x-3'>
                                                 <span className='text-[#fff] text-[14px]'>
                                                     Phạm Trọng Đạt
@@ -433,11 +434,11 @@ const Watch = () => {
                                     <div className='w-full flex justify-start space-x-3'>
                                         <div className='flex justify-start'>
                                             <img
-                                                className='rounded-full w-[40px] h-[40px]'
+                                                className='rounded-full sm:w-[40px] sm:h-[40px] w-[35px] h-[35px]'
                                                 src='https://img.zorores.com/_r/100x100/100/avatar/one_piece/File6.png'
                                             />
                                         </div>
-                                        <div className='w-full flex flex-col space-y-2'>
+                                        <div className='w-full flex flex-1 flex-col space-y-2'>
                                             <div className='flex items-center space-x-3'>
                                                 <span className='text-[#fff] text-[14px]'>
                                                     Phạm Trọng Đạt
@@ -464,289 +465,10 @@ const Watch = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='flex flex-col space-y-4 w-full'>
-                            <span className='text-[#2196F3] text-[20px] font-semibold'>
-                                Recommended for you
-                            </span>
-                            <div className='grid 2xl:grid-cols-6 md:grid-cols-4 grid-cols-2 gap-4'>
-                                <div className='relative w-full h-full rounded-md cursor-pointer'>
-                                    <div className='relative flex items-center justify-center group'>
-                                        <img src='https://img.zorores.com/_r/300x400/100/11/48/1148deffa03b32f6efbd8a30821f2269/1148deffa03b32f6efbd8a30821f2269.jpg' />
-                                        <div className='z-[-2] group-hover:z-[1] flex transition-all duration-200 ease-linear absolute top-0 left-0 bottom-0 right-0 w-full h-full justify-center items-center bg-[rgba(0,0,0,0)] group-hover:bg-[rgba(0,0,0,0.4)]'>
-                                            <BsFillPlayFill className='w-[50px] h-[50px] text-[#fff]' />
-                                        </div>
-                                    </div>
-                                    <div className='flex flex-col space-y-1 bg-[#2a2c31] px-[8px] py-[10px]'>
-                                        <span className='text-[#fff] text-[14px] line-clamp-2'>
-                                            Dai-Shogun: Great Revolution
-                                        </span>
-                                        <div className='flex items-center space-x-4'>
-                                            <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
-                                                TV
-                                            </span>
-                                            <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
-                                            <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
-                                                24m
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='relative w-full h-full rounded-md cursor-pointer'>
-                                    <div className='relative flex items-center justify-center group'>
-                                        <img src='https://img.zorores.com/_r/300x400/100/11/48/1148deffa03b32f6efbd8a30821f2269/1148deffa03b32f6efbd8a30821f2269.jpg' />
-                                        <div className='z-[-2] group-hover:z-[1] flex transition-all duration-200 ease-linear absolute top-0 left-0 bottom-0 right-0 w-full h-full justify-center items-center bg-[rgba(0,0,0,0)] group-hover:bg-[rgba(0,0,0,0.4)]'>
-                                            <BsFillPlayFill className='w-[50px] h-[50px] text-[#fff]' />
-                                        </div>
-                                    </div>
-                                    <div className='flex flex-col space-y-1 bg-[#2a2c31] px-[8px] py-[10px]'>
-                                        <span className='text-[#fff] text-[14px] line-clamp-2'>
-                                            Dai-Shogun: Great Revolution
-                                        </span>
-                                        <div className='flex items-center space-x-4'>
-                                            <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
-                                                TV
-                                            </span>
-                                            <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
-                                            <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
-                                                24m
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='relative w-full h-full rounded-md cursor-pointer'>
-                                    <div className='relative flex items-center justify-center group'>
-                                        <img src='https://img.zorores.com/_r/300x400/100/11/48/1148deffa03b32f6efbd8a30821f2269/1148deffa03b32f6efbd8a30821f2269.jpg' />
-                                        <div className='z-[-2] group-hover:z-[1] flex transition-all duration-200 ease-linear absolute top-0 left-0 bottom-0 right-0 w-full h-full justify-center items-center bg-[rgba(0,0,0,0)] group-hover:bg-[rgba(0,0,0,0.4)]'>
-                                            <BsFillPlayFill className='w-[50px] h-[50px] text-[#fff]' />
-                                        </div>
-                                    </div>
-                                    <div className='flex flex-col space-y-1 bg-[#2a2c31] px-[8px] py-[10px]'>
-                                        <span className='text-[#fff] text-[14px] line-clamp-2'>
-                                            Dai-Shogun: Great Revolution
-                                        </span>
-                                        <div className='flex items-center space-x-4'>
-                                            <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
-                                                TV
-                                            </span>
-                                            <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
-                                            <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
-                                                24m
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='relative w-full h-full rounded-md cursor-pointer'>
-                                    <div className='relative flex items-center justify-center group'>
-                                        <img src='https://img.zorores.com/_r/300x400/100/11/48/1148deffa03b32f6efbd8a30821f2269/1148deffa03b32f6efbd8a30821f2269.jpg' />
-                                        <div className='z-[-2] group-hover:z-[1] flex transition-all duration-200 ease-linear absolute top-0 left-0 bottom-0 right-0 w-full h-full justify-center items-center bg-[rgba(0,0,0,0)] group-hover:bg-[rgba(0,0,0,0.4)]'>
-                                            <BsFillPlayFill className='w-[50px] h-[50px] text-[#fff]' />
-                                        </div>
-                                    </div>
-                                    <div className='flex flex-col space-y-1 bg-[#2a2c31] px-[8px] py-[10px]'>
-                                        <span className='text-[#fff] text-[14px] line-clamp-2'>
-                                            Dai-Shogun: Great Revolution
-                                        </span>
-                                        <div className='flex items-center space-x-4'>
-                                            <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
-                                                TV
-                                            </span>
-                                            <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
-                                            <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
-                                                24m
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='relative w-full h-full rounded-md cursor-pointer'>
-                                    <div className='relative flex items-center justify-center group'>
-                                        <img src='https://img.zorores.com/_r/300x400/100/11/48/1148deffa03b32f6efbd8a30821f2269/1148deffa03b32f6efbd8a30821f2269.jpg' />
-                                        <div className='z-[-2] group-hover:z-[1] flex transition-all duration-200 ease-linear absolute top-0 left-0 bottom-0 right-0 w-full h-full justify-center items-center bg-[rgba(0,0,0,0)] group-hover:bg-[rgba(0,0,0,0.4)]'>
-                                            <BsFillPlayFill className='w-[50px] h-[50px] text-[#fff]' />
-                                        </div>
-                                    </div>
-                                    <div className='flex flex-col space-y-1 bg-[#2a2c31] px-[8px] py-[10px]'>
-                                        <span className='text-[#fff] text-[14px] line-clamp-2'>
-                                            Dai-Shogun: Great Revolution
-                                        </span>
-                                        <div className='flex items-center space-x-4'>
-                                            <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
-                                                TV
-                                            </span>
-                                            <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
-                                            <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
-                                                24m
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='relative w-full h-full rounded-md cursor-pointer'>
-                                    <div className='relative flex items-center justify-center group'>
-                                        <img src='https://img.zorores.com/_r/300x400/100/11/48/1148deffa03b32f6efbd8a30821f2269/1148deffa03b32f6efbd8a30821f2269.jpg' />
-                                        <div className='z-[-2] group-hover:z-[1] flex transition-all duration-200 ease-linear absolute top-0 left-0 bottom-0 right-0 w-full h-full justify-center items-center bg-[rgba(0,0,0,0)] group-hover:bg-[rgba(0,0,0,0.4)]'>
-                                            <BsFillPlayFill className='w-[50px] h-[50px] text-[#fff]' />
-                                        </div>
-                                    </div>
-                                    <div className='flex flex-col space-y-1 bg-[#2a2c31] px-[8px] py-[10px]'>
-                                        <span className='text-[#fff] text-[14px] line-clamp-2'>
-                                            Dai-Shogun: Great Revolution
-                                        </span>
-                                        <div className='flex items-center space-x-4'>
-                                            <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
-                                                TV
-                                            </span>
-                                            <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
-                                            <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
-                                                24m
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='relative w-full h-full rounded-md cursor-pointer'>
-                                    <div className='relative flex items-center justify-center group'>
-                                        <img src='https://img.zorores.com/_r/300x400/100/11/48/1148deffa03b32f6efbd8a30821f2269/1148deffa03b32f6efbd8a30821f2269.jpg' />
-                                        <div className='z-[-2] group-hover:z-[1] flex transition-all duration-200 ease-linear absolute top-0 left-0 bottom-0 right-0 w-full h-full justify-center items-center bg-[rgba(0,0,0,0)] group-hover:bg-[rgba(0,0,0,0.4)]'>
-                                            <BsFillPlayFill className='w-[50px] h-[50px] text-[#fff]' />
-                                        </div>
-                                    </div>
-                                    <div className='flex flex-col space-y-1 bg-[#2a2c31] px-[8px] py-[10px]'>
-                                        <span className='text-[#fff] text-[14px] line-clamp-2'>
-                                            Dai-Shogun: Great Revolution
-                                        </span>
-                                        <div className='flex items-center space-x-4'>
-                                            <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
-                                                TV
-                                            </span>
-                                            <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
-                                            <span className='text-[13px] text-[rgba(255,255,255,.3)]'>
-                                                24m
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <Recommend data={[]} props={{}} />
                     </div>
-                    <div className='h-full lg:w-[20%] w-full bg-[#202125] rounded-sm flex flex-col space-y-4'>
-                        <span className='text-[#2196F3] text-[20px] font-semibold'>
-                            Most Popular
-                        </span>
-                        <div className='bg-[#2A2C31] flex flex-col py-[15px] px-[15px] border-solid border-[1px] border-[#2A2C31] rounded-sm'>
-                            <div className='flex items-center justify-between border-b-solid border-b-[1px] border-b-[#35373C] py-[15px]'>
-                                <div className='flex items-center space-x-3'>
-                                    <img
-                                        className='w-[45px] h-[60px]'
-                                        src='https://img.zorores.com/_r/300x400/100/54/90/5490cb32786d4f7fef0f40d7266df532/5490cb32786d4f7fef0f40d7266df532.jpg'
-                                    />
-                                    <div className='flex flex-col space-y-1'>
-                                        <span className='text-[#fff] font-semibold'>
-                                            One Piece
-                                        </span>
-                                        <div className='flex items-center space-x-4 text-[#fff]'>
-                                            <span className='text-[14px] '>
-                                                TV
-                                            </span>
-                                            <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
-                                            <span className='text-[14px]'>
-                                                24m
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <AiOutlinePlus className='w-[25px] h-[25px] font-semibold text-[#Fff]' />
-                            </div>
-                            <div className='flex items-center justify-between border-b-solid border-b-[1px] border-b-[#35373C] py-[15px]'>
-                                <div className='flex items-center space-x-3'>
-                                    <img
-                                        className='w-[45px] h-[60px]'
-                                        src='https://img.zorores.com/_r/300x400/100/54/90/5490cb32786d4f7fef0f40d7266df532/5490cb32786d4f7fef0f40d7266df532.jpg'
-                                    />
-                                    <div className='flex flex-col space-y-1'>
-                                        <span className='text-[#fff] font-semibold'>
-                                            One Piece
-                                        </span>
-                                        <div className='flex items-center space-x-4 text-[#fff]'>
-                                            <span className='text-[14px] '>
-                                                TV
-                                            </span>
-                                            <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
-                                            <span className='text-[14px]'>
-                                                24m
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <AiOutlinePlus className='w-[25px] h-[25px] font-semibold text-[#Fff]' />
-                            </div>
-                            <div className='flex items-center justify-between border-b-solid border-b-[1px] border-b-[#35373C] py-[15px]'>
-                                <div className='flex items-center space-x-3'>
-                                    <img
-                                        className='w-[45px] h-[60px]'
-                                        src='https://img.zorores.com/_r/300x400/100/54/90/5490cb32786d4f7fef0f40d7266df532/5490cb32786d4f7fef0f40d7266df532.jpg'
-                                    />
-                                    <div className='flex flex-col space-y-1'>
-                                        <span className='text-[#fff] font-semibold'>
-                                            One Piece
-                                        </span>
-                                        <div className='flex items-center space-x-4 text-[#fff]'>
-                                            <span className='text-[14px] '>
-                                                TV
-                                            </span>
-                                            <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
-                                            <span className='text-[14px]'>
-                                                24m
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <AiOutlinePlus className='w-[25px] h-[25px] font-semibold text-[#Fff]' />
-                            </div>
-                            <div className='flex items-center justify-between border-b-solid border-b-[1px] border-b-[#35373C] py-[15px]'>
-                                <div className='flex items-center space-x-3'>
-                                    <img
-                                        className='w-[45px] h-[60px]'
-                                        src='https://img.zorores.com/_r/300x400/100/54/90/5490cb32786d4f7fef0f40d7266df532/5490cb32786d4f7fef0f40d7266df532.jpg'
-                                    />
-                                    <div className='flex flex-col space-y-1'>
-                                        <span className='text-[#fff] font-semibold'>
-                                            One Piece
-                                        </span>
-                                        <div className='flex items-center space-x-4 text-[#fff]'>
-                                            <span className='text-[14px] '>
-                                                TV
-                                            </span>
-                                            <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
-                                            <span className='text-[14px]'>
-                                                24m
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <AiOutlinePlus className='w-[25px] h-[25px] font-semibold text-[#Fff]' />
-                            </div>
-                            <div className='flex items-center justify-between border-b-solid border-b-[1px] border-b-[#35373C] py-[15px]'>
-                                <div className='flex items-center space-x-3'>
-                                    <img
-                                        className='w-[45px] h-[60px]'
-                                        src='https://img.zorores.com/_r/300x400/100/54/90/5490cb32786d4f7fef0f40d7266df532/5490cb32786d4f7fef0f40d7266df532.jpg'
-                                    />
-                                    <div className='flex flex-col space-y-1'>
-                                        <span className='text-[#fff] font-semibold'>
-                                            One Piece
-                                        </span>
-                                        <div className='flex items-center space-x-4 text-[#fff]'>
-                                            <span className='text-[14px] '>
-                                                TV
-                                            </span>
-                                            <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
-                                            <span className='text-[14px]'>
-                                                24m
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <AiOutlinePlus className='w-[25px] h-[25px] font-semibold text-[#Fff]' />
-                            </div>
-                        </div>
+                    <div className='lg:w-[20%]'>
+                        <MostPopular />
                     </div>
                 </div>
             </div>

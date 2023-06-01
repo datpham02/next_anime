@@ -1,9 +1,9 @@
+import Link from 'next/link'
 import React, { useEffect, useRef, useState } from 'react'
 import { BiMenu } from 'react-icons/bi'
 import { BsSearch } from 'react-icons/bs'
 import { IoIosArrowBack } from 'react-icons/io'
 
-import { Link } from 'react-router-dom'
 const Header = () => {
     const wrappedDivRef = useRef<HTMLDivElement>(null)
     const wrappedMenuDivRef = useRef<HTMLDivElement>(null)
@@ -60,31 +60,9 @@ const Header = () => {
                                 }}
                                 className='md:w-[40px] md:h-[40px] w-[35px] h-[35px]'
                             />
-                            <Link to='/home'>
+                            <Link href='/home'>
                                 React{' '}
                                 <span className='text-[#2196F3]'>Anime</span>
-                            </Link>
-                        </div>
-                        <div className='items-center space-x-10 select-none xl:text-[22px] md:text-[20px] xl:flex hidden'>
-                            <Link to='/home'>
-                                <span className='cursor-pointer text-[#2196F3]'>
-                                    Home
-                                </span>
-                            </Link>
-                            <Link to='/trending'>
-                                <span className='cursor-pointer text-[#868688]'>
-                                    Trending
-                                </span>
-                            </Link>
-                            <Link to='/movies'>
-                                <span className='cursor-pointer text-[#868688]'>
-                                    Movies
-                                </span>
-                            </Link>
-                            <Link to='/genres'>
-                                <span className='cursor-pointer text-[#868688]'>
-                                    Genres
-                                </span>
                             </Link>
                         </div>
                         <div className='flex justify-end items-center space-x-4'>
@@ -102,7 +80,7 @@ const Header = () => {
                                 }}
                                 className='cursor-pointer w-[25px] h-[25px] text-[#2196F3] right-[10px] block xl:hidden'
                             />
-                            <Link to='/login'>
+                            <Link href='/login'>
                                 <button className='text-[#162032] outline-none hover:text-[#fff] select-none border-solid border-[1px] border-[#868688] rounded-md px-[15px] py-[6px] bg-[#2196F3] md:block hidden'>
                                     Login
                                 </button>
@@ -146,27 +124,27 @@ const Header = () => {
                             </button>
                         </div>
                         <div className='flex flex-col mt-[10px]'>
-                            <Link to='/login'>
+                            <Link href='/login'>
                                 <div className='cursor-pointer hover:text-[#2196F3] border-b-solid border-b-[1px] border-b-[#35373C] text-[16px] font-medium text-[#fff] p-[10px]'>
                                     Login
                                 </div>
                             </Link>
-                            <Link to='/home'>
+                            <Link href='/home'>
                                 <div className='cursor-pointer hover:text-[#2196F3] border-b-solid border-b-[1px] border-b-[#35373C] text-[16px] font-medium text-[#fff] p-[10px]'>
                                     Home
                                 </div>
                             </Link>
-                            <Link to='/trending'>
+                            <Link href='/trending'>
                                 <div className='cursor-pointer hover:text-[#2196F3] border-b-solid border-b-[1px] border-b-[#35373C] text-[16px] font-medium text-[#fff] p-[10px]'>
                                     Trending
                                 </div>
                             </Link>
-                            <Link to='/movies'>
+                            <Link href='/movies'>
                                 <div className='cursor-pointer hover:text-[#2196F3] border-b-solid border-b-[1px] border-b-[#35373C] text-[16px] font-medium text-[#fff] p-[10px]'>
                                     Movies
                                 </div>
                             </Link>
-                            <Link to='/genres'>
+                            <Link href='/genres'>
                                 <div className='cursor-pointer hover:text-[#2196F3] border-b-solid border-b-[1px] border-b-[#35373C] text-[16px] font-medium text-[#fff] p-[10px]'>
                                     Genres
                                 </div>
