@@ -8,7 +8,7 @@ export interface EpisodeProps {
     watching: boolean
 }
 export interface RecommendProps {
-    data: []
+    data: Recommendation[]
     props: React.HTMLAttributes<HTMLDivElement>
 }
 export interface TrendingAnime {
@@ -97,7 +97,7 @@ export interface EndDate {
 export interface Recommendation {
     id: number
     malId: number
-    title: Title2
+    title: TitleType2
     status: string
     episodes: number
     image: string
@@ -106,7 +106,7 @@ export interface Recommendation {
     type: string
 }
 
-export interface Title2 {
+export interface TitleType2 {
     romaji: string
     english: string
     native: string
@@ -132,23 +132,15 @@ export interface Name {
 export interface VoiceActor {
     id: number
     language: string
-    name: Name2
+    name: Name
     image: string
-}
-
-export interface Name2 {
-    first: string
-    last?: string
-    full: string
-    native?: string
-    userPreferred: string
 }
 
 export interface Relation {
     id: number
     relationType: string
     malId: number
-    title: Title3
+    title: TitleType2
     status: string
     episodes?: number
     image: string
@@ -156,13 +148,6 @@ export interface Relation {
     type: string
     cover: string
     rating?: number
-}
-
-export interface Title3 {
-    romaji: string
-    english?: string
-    native: string
-    userPreferred: string
 }
 
 export interface Mappings {
@@ -184,4 +169,53 @@ export interface Episode {
     number: number
     image: string
     airDate: string
+}
+
+export interface RecentAnime {
+    id: string
+    malId: number
+    title: TitleType2
+    image: string
+    rating: number
+    color: string
+    episodeId: string
+    episodeTitle: string
+    episodeNumber: number
+    genres: string[]
+    type: string
+}
+
+export interface AiringAnime {
+    id: string
+    malId: any
+    episode: number
+    airingAt: number
+    title: TitleType2
+    country: string
+    image: string
+    description: string
+    cover: string
+    genres: string[]
+    color: string
+    rating: any
+    releaseDate: any
+    type: string
+}
+
+export interface PopularAnime {
+    id: string
+    malId: number
+    title: TitleType2
+    image: string
+    trailer: Trailer
+    description: string
+    status: string
+    cover: string
+    rating: number
+    releaseDate: number
+    color: string
+    genres: string[]
+    totalEpisodes: number
+    duration: number
+    type: string
 }

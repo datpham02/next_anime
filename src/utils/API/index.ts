@@ -20,3 +20,41 @@ export const getAnimeInfo = async (id: string, provider: string) => {
 
     return data
 }
+
+export const getRecentAnime = async (
+    page: number,
+    perPage: number,
+    provider: string,
+) => {
+    const { data } = await baseAPI.get('/meta/anilist/recent-episodes', {
+        params: {
+            page: page,
+            perPage: perPage,
+            provider: provider,
+        },
+    })
+
+    return data
+}
+
+export const getAiringAnime = async (page: number, perPage: number) => {
+    const { data } = await baseAPI.get('/meta/anilist/airing-schedule', {
+        params: {
+            page: page,
+            perPage: perPage,
+        },
+    })
+
+    return data
+}
+
+export const getPopulargAnime = async (page: number, perPage: number) => {
+    const { data } = await baseAPI.get('/meta/anilist/popular', {
+        params: {
+            page: page,
+            perPage: perPage,
+        },
+    })
+
+    return data
+}

@@ -2,8 +2,15 @@ import React, { useEffect } from 'react'
 import Slider from 'react-slick'
 import { useQuery } from '@tanstack/react-query'
 import { getTredingAnime } from '~/utils/API'
-import { SliderItem, Trending } from '~/components'
+import {
+    Genres,
+    Popular,
+    RecentAnime,
+    SliderItem,
+    Trending,
+} from '~/components'
 import { TrendingAnime } from '~/utils/interface'
+import AiringAnime from '~/components/AiringAnime'
 const Home = () => {
     const { data, isSuccess } = useQuery({
         queryKey: ['trending_anime'],
@@ -36,6 +43,16 @@ const Home = () => {
                     })}
                 </Slider>
                 <Trending />
+                <div className='flex h-[600px]'>
+                    <div className='w-[75%] h-full flex flex-col space-y-3'>
+                        <AiringAnime />
+                        <RecentAnime />
+                        <Popular />
+                    </div>
+                    <div className='w-[25%] h-full flex flex-col'>
+                        <Genres />
+                    </div>
+                </div>
             </div>
         </>
     )
