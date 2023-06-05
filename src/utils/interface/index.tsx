@@ -11,6 +11,10 @@ export interface RecommendProps {
     data: Recommendation[]
     props: React.HTMLAttributes<HTMLDivElement>
 }
+export interface UseDebounce {
+    value: string
+    delay: number
+}
 export interface TrendingAnime {
     id: string
     malId: number
@@ -218,4 +222,23 @@ export interface PopularAnime {
     totalEpisodes: number
     duration: number
     type: string
+}
+
+export interface AnimeSearch {
+    id: string
+    malId: number
+    title: TitleType2
+    status: string
+    image: string
+    cover: string
+    popularity: number
+    totalEpisodes: number
+    currentEpisode: any
+    countryOfOrigin: string
+    description: string
+    genres: string[]
+    rating: number
+    color: string
+    type: string
+    releaseDate: number
 }

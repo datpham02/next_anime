@@ -1,15 +1,34 @@
 import Link from 'next/link'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { BiMenu } from 'react-icons/bi'
 import { BsSearch } from 'react-icons/bs'
-import { IoIosArrowBack } from 'react-icons/io'
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
+import UseDebounce from './UseDebounce'
+import { searchAnime } from '~/utils/API'
+import { useMutation } from '@tanstack/react-query'
+import Loading from './Loading'
+import { AnimeSearch } from '~/utils/interface'
+import UseBreakPoint from './useBreakPoint'
 
 const Header = () => {
     const wrappedDivRef = useRef<HTMLDivElement>(null)
     const wrappedMenuDivRef = useRef<HTMLDivElement>(null)
     const menuDivRef = useRef<HTMLDivElement>(null)
+    const breakPoint = UseBreakPoint()
     const [showSearchInput, setShowSearchInput] = useState<Boolean>(false)
+    const [search, setSearch] = useState<string>('')
+    const debounceSearch = UseDebounce({ value: search, delay: 500 })
 
+    const { data, isSuccess, mutate } = useMutation({
+        mutationFn: async (searchData: { query: string }) => {
+            const data = await searchAnime(searchData.query)
+            return data
+        },
+    })
+
+    const handleOnchangeInputSearch = (e: ChangeEvent<HTMLInputElement>) => {
+        setSearch(e.target.value)
+    }
     const bsSearchIconRefOnClick = () => {
         setShowSearchInput(!showSearchInput)
     }
@@ -45,6 +64,20 @@ const Header = () => {
         }
     }
 
+    useEffect(() => {
+        if (breakPoint == '2xl' || breakPoint == 'xl') {
+            setShowSearchInput(false)
+        }
+    }, [breakPoint])
+    useEffect(() => {
+        if (debounceSearch) {
+            mutate({ query: search })
+        }
+    }, [debounceSearch])
+
+    useEffect(() => {
+        if (isSuccess) console.log(data?.results)
+    }, [isSuccess])
     return (
         <>
             <div>
@@ -68,11 +101,91 @@ const Header = () => {
                         <div className='flex justify-end items-center space-x-4'>
                             <div className='relative w-[400px] xl:flex justify-end items-center hidden'>
                                 <input
+                                    onChange={(e) => {
+                                        handleOnchangeInputSearch(e)
+                                    }}
                                     type='search'
                                     placeholder='Search anime . . .'
-                                    className='outline-none pl-[5px] py-[6px] w-full'
+                                    className='outline-none px-[5px] py-[6px] w-full'
                                 />
-                                <BsSearch className='absolute cursor-pointer w-[20px] h-[20px] text-[#000] right-[10px]' />
+                                {search ? null : (
+                                    <BsSearch className='absolute cursor-pointer w-[20px] h-[20px] text-[#000] right-[10px]' />
+                                )}
+                                {search && data ? (
+                                    isSuccess ? (
+                                        <div className='absolute w-full top-[50px] bg-[#414248]'>
+                                            {data.results.map(
+                                                (
+                                                    anime_search: AnimeSearch,
+                                                    index: number,
+                                                ) => {
+                                                    return (
+                                                        <div
+                                                            key={
+                                                                anime_search.id
+                                                            }
+                                                            className='flex flex-col'
+                                                        >
+                                                            <div className='group flex space-x-2 p-[8px] cursor-pointer'>
+                                                                <img
+                                                                    className='w-[50px] h-[70px]'
+                                                                    src={
+                                                                        anime_search.image
+                                                                    }
+                                                                />
+                                                                <div className='flex flex-col space-y-1'>
+                                                                    <span
+                                                                        style={{
+                                                                            color: anime_search.color,
+                                                                        }}
+                                                                        className='font-semibold text-[#fff] line-clamp-1 group-hover:text-[#2196F3]'
+                                                                    >
+                                                                        {
+                                                                            anime_search
+                                                                                .title
+                                                                                .english
+                                                                        }
+                                                                    </span>
+                                                                    <span className='text-[#929293] text-[13px]'>
+                                                                        {
+                                                                            anime_search
+                                                                                .title
+                                                                                .romaji
+                                                                        }
+                                                                    </span>
+                                                                    <div className='flex items-center space-x-2 text-[#929293] text-[13px]'>
+                                                                        <span className='group-hover:text-[#2196F3] text-[#fff]'>
+                                                                            {
+                                                                                anime_search.type
+                                                                            }
+                                                                        </span>
+                                                                        <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
+                                                                        <span>
+                                                                            {
+                                                                                anime_search.releaseDate
+                                                                            }
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            {index + 1 < 5 ? (
+                                                                <div className='border-dashed border border-gray-500'></div>
+                                                            ) : null}
+                                                        </div>
+                                                    )
+                                                },
+                                            )}
+                                            <div className='bg-[#2196F3] flex items-center justify-center py-[10px] cursor-pointer space-x-2'>
+                                                <span>View all results</span>
+                                                <IoIosArrowForward />
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div className='absolute w-full flex items-center h-[100px] justify-center top-[50px] bg-[#414248]'>
+                                            <Loading />
+                                        </div>
+                                    )
+                                ) : null}
                             </div>
                             <BsSearch
                                 onClick={() => {
@@ -93,10 +206,86 @@ const Header = () => {
                             <div className='relative w-full flex items-center'>
                                 <input
                                     type='search'
+                                    value={search}
+                                    onChange={(e) => {
+                                        handleOnchangeInputSearch(e)
+                                    }}
                                     placeholder='Search anime . . .'
-                                    className='outline-none rounded-sm pl-[5px] py-[6px] w-full'
+                                    className='outline-none rounded-sm px-[5px] py-[6px] w-full'
                                 />
-                                <BsSearch className='absolute cursor-pointer w-[20px] h-[20px] text-[#000] right-[10px]' />
+                                {search ? null : (
+                                    <BsSearch className='absolute cursor-pointer w-[20px] h-[20px] text-[#000] right-[10px]' />
+                                )}
+                                {search && data ? (
+                                    isSuccess ? (
+                                        <div className='absolute w-full top-[45px] bg-[#414248]'>
+                                            {data.results.map(
+                                                (
+                                                    anime_search: AnimeSearch,
+                                                    index: number,
+                                                ) => {
+                                                    return (
+                                                        <div
+                                                            key={
+                                                                anime_search.id
+                                                            }
+                                                            className='flex flex-col'
+                                                        >
+                                                            <div className='group flex space-x-2 p-[8px] cursor-pointer'>
+                                                                <img
+                                                                    className='w-[50px] h-[70px]'
+                                                                    src={
+                                                                        anime_search.image
+                                                                    }
+                                                                />
+                                                                <div className='flex flex-col space-y-1'>
+                                                                    <span className='font-semibold text-[#fff] line-clamp-1 group-hover:text-[#2196F3]'>
+                                                                        {
+                                                                            anime_search
+                                                                                .title
+                                                                                .english
+                                                                        }
+                                                                    </span>
+                                                                    <span className='text-[#929293] text-[13px]'>
+                                                                        {
+                                                                            anime_search
+                                                                                .title
+                                                                                .romaji
+                                                                        }
+                                                                    </span>
+                                                                    <div className='flex items-center space-x-2 text-[#929293] text-[13px]'>
+                                                                        <span className='group-hover:text-[#2196F3] text-[#fff]'>
+                                                                            {
+                                                                                anime_search.type
+                                                                            }
+                                                                        </span>
+                                                                        <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
+                                                                        <span>
+                                                                            {
+                                                                                anime_search.releaseDate
+                                                                            }
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            {index + 1 < 5 ? (
+                                                                <div className='border-dashed border border-gray-500'></div>
+                                                            ) : null}
+                                                        </div>
+                                                    )
+                                                },
+                                            )}
+                                            <div className='bg-[#2196F3] flex items-center justify-center py-[10px] cursor-pointer space-x-2'>
+                                                <span>View all results</span>
+                                                <IoIosArrowForward />
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div className='absolute w-full flex items-center h-[100px] justify-center top-[50px] bg-[#414248]'>
+                                            <Loading />
+                                        </div>
+                                    )
+                                ) : null}
                             </div>
                         </div>
                     )}

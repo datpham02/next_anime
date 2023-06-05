@@ -69,11 +69,11 @@ const Trending = () => {
                     {data?.results.map(
                         (trending_anime: TrendingAnime, index: number) => {
                             return (
-                                <Link href={`/detail?id=${trending_anime.id}`}>
-                                    <div
-                                        key={trending_anime.id}
-                                        className='pr-[10px]'
-                                    >
+                                <Link
+                                    key={trending_anime.id}
+                                    href={`/detail?id=${trending_anime.id}`}
+                                >
+                                    <div className='pr-[10px]'>
                                         <div className='flex w-auto h-auto'>
                                             <div className='w-[20%] flex-col space-y-16 justify-end items-center text-[#fff] trending-title-bg-color sm:flex hidden'>
                                                 <span

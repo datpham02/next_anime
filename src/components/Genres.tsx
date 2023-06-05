@@ -12,46 +12,124 @@ const Genres = () => {
                         Action
                     </span>
                     <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
-                        Action
+                        Adventure
                     </span>
                     <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
-                        Action
+                        Cars
                     </span>
                     <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
-                        Action
+                        Comedy
                     </span>
                     <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
-                        Action
+                        Dementia
                     </span>
                     <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
-                        Action
+                        Demons
                     </span>
                     <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
-                        Action
+                        Drama
                     </span>
                     <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
-                        Action
+                        Ecchi
                     </span>
                     <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
-                        Action
+                        Fantasy
                     </span>
                     <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
-                        Action
+                        Game
                     </span>
                     <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
-                        Action
+                        Harem
                     </span>
                     <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
-                        Action
+                        Historical
                     </span>
                     <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
-                        Action
+                        Horror
                     </span>
                     <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
-                        Action
+                        Isekai
                     </span>
                     <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
-                        Action
+                        Josei
+                    </span>
+                    <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
+                        Kids
+                    </span>
+                    <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
+                        Magic
+                    </span>
+                    <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
+                        Martial Arts
+                    </span>
+                    <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
+                        Mecha
+                    </span>
+                    <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
+                        Military
+                    </span>
+                    <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
+                        Music
+                    </span>
+                    <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
+                        Mystery
+                    </span>
+                    <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
+                        Parody
+                    </span>
+                    <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
+                        Police
+                    </span>
+                    <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
+                        Psychological
+                    </span>
+                    <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
+                        Romance
+                    </span>
+                    <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
+                        Samurai
+                    </span>
+                    <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
+                        School
+                    </span>
+                    <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
+                        Sci-Fi
+                    </span>
+                    <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
+                        Seinen
+                    </span>
+                    <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
+                        Shoujo
+                    </span>
+                    <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
+                        Shoujo Ai
+                    </span>
+                    <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
+                        Shounen
+                    </span>
+                    <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
+                        Shounen Ai
+                    </span>
+                    <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
+                        Slice of Life
+                    </span>
+                    <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
+                        Space
+                    </span>
+                    <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
+                        Sports
+                    </span>
+                    <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
+                        Super Power
+                    </span>
+                    <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
+                        Supernatural
+                    </span>
+                    <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
+                        Thriller
+                    </span>
+                    <span className='hover:bg-[#414248] cursor-pointer px-[10px] py-[12px] rounded-md'>
+                        Vampire
                     </span>
                 </div>
             </div>

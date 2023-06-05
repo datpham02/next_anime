@@ -48,7 +48,7 @@ export const getAiringAnime = async (page: number, perPage: number) => {
     return data
 }
 
-export const getPopulargAnime = async (page: number, perPage: number) => {
+export const getPopularAnime = async (page: number, perPage: number) => {
     const { data } = await baseAPI.get('/meta/anilist/popular', {
         params: {
             page: page,
@@ -56,5 +56,20 @@ export const getPopulargAnime = async (page: number, perPage: number) => {
         },
     })
 
+    return data
+}
+
+export const searchAnime = async (
+    query: String,
+    page: number = 1,
+    perPage: number = 5,
+) => {
+    const { data } = await baseAPI.get(`meta/anilist/advanced-search`, {
+        params: {
+            query: query,
+            page: page,
+            perPage: perPage,
+        },
+    })
     return data
 }

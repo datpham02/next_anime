@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import React, { useEffect } from 'react'
 import { BsFillPlayFill } from 'react-icons/bs'
-import { getPopulargAnime } from '~/utils/API'
+import { getPopularAnime } from '~/utils/API'
 import Loading from './Loading'
 import { PopularAnime } from '~/utils/interface'
 
@@ -9,15 +9,15 @@ const Popular = () => {
     const { data, isSuccess, isLoading } = useQuery({
         queryKey: ['recent_anime'],
         queryFn: async () => {
-            const data = await getPopulargAnime(1, 20)
+            const data = await getPopularAnime(1, 20)
 
             return data
         },
     })
 
-    useEffect(() => {
-        if (isSuccess) console.log(data)
-    }, [])
+    // useEffect(() => {
+    //     if (isSuccess) console.log(data)
+    // }, [])
     return (
         <>
             <div className='flex flex-col space-y-4 px-[15px]'>

@@ -5,6 +5,7 @@ import { getAiringAnime } from '~/utils/API'
 import Loading from './Loading'
 import { AiringAnime } from '~/utils/interface'
 import { convertTimeStamp, formatTime } from '~/utils/function'
+import Link from 'next/link'
 const AiringAnime = () => {
     const { data, isSuccess, isLoading } = useQuery({
         queryKey: ['airing_anime'],
@@ -16,6 +17,7 @@ const AiringAnime = () => {
     })
 
     const handleData = (airing_anime: AiringAnime[]) => {
+        if (airing_anime.length <= 0) return []
         let showTimes: {
             year: number
             month: number
@@ -77,85 +79,101 @@ const AiringAnime = () => {
 
         return result
     }
-    useEffect(() => {
-        if (isSuccess) {
-            console.log(handleData(data.results))
-        }
-    }, [isSuccess])
+    // useEffect(() => {
+    //     if (isSuccess) {
+    //         console.log(handleData(data.results))
+    //     }
+    // }, [isSuccess])
     return (
         <>
-            <div className='flex flex-col space-y-4 px-[15px]'>
-                <span className='text-[#2196F3] text-[20px] font-semibold'>
-                    Airing Anime
-                </span>
-                <div className='flex flex-col space-y-3'>
-                    {isLoading ? (
-                        <div className='w-full h-full flex items-center justify-center'>
-                            <Loading />
-                        </div>
-                    ) : (
-                        handleData(data.results).map(
-                            (data: {
-                                airingTime: {
-                                    year: number
-                                    month: number
-                                    day: number
-                                    hour: number
-                                    minute: number
-                                }
-                                anime: AiringAnime[]
-                            }) => {
-                                return (
-                                    <div className='flex flex-col space-y-3'>
-                                        <div className='flex text-[#2196F3] text-[18px] font-semibold bg-[#2F3137] px-[10px] py-[15px]'>
-                                            {`Airing at ${formatTime(
-                                                data.airingTime,
-                                            )}`}
-                                        </div>
-                                        <div className='grid 2xl:grid-cols-6 md:grid-cols-4 grid-cols-2 gap-4 bg-[#373738] py-[15px] px-[15px]'>
-                                            {data.anime.map(
-                                                (airing_anime: AiringAnime) => (
-                                                    <div
-                                                        key={airing_anime.id}
-                                                        className='w-full h-full rounded-md cursor-pointer'
-                                                    >
-                                                        <div className='h-[80%] relative flex items-center justify-center group'>
-                                                            <div className='after:anime-poster-bg'></div>
-                                                            <img
-                                                                className='w-full h-full object-cover'
-                                                                src={
-                                                                    airing_anime.image
+            {data?.results.length > 0 ? (
+                <div className='flex flex-col space-y-4 px-[15px]'>
+                    <span className='text-[#2196F3] text-[20px] font-semibold'>
+                        Anime Airing Today
+                    </span>
+                    <div className='flex flex-col space-y-3'>
+                        {isLoading ? (
+                            <div className='w-full h-full flex items-center justify-center'>
+                                <Loading />
+                            </div>
+                        ) : (
+                            handleData(data.results).map(
+                                (data: {
+                                    airingTime: {
+                                        year: number
+                                        month: number
+                                        day: number
+                                        hour: number
+                                        minute: number
+                                    }
+                                    anime: AiringAnime[]
+                                }) => {
+                                    return (
+                                        <div
+                                            key={data.airingTime.hour}
+                                            className='flex flex-col bg-[#373738]'
+                                        >
+                                            <div className='flex text-[#2196F3] text-[18px] font-semibold px-[10px] py-[15px]'>
+                                                {`Airing at ${formatTime(
+                                                    data.airingTime,
+                                                )}`}
+                                            </div>
+                                            <div className='grid 2xl:grid-cols-6 md:grid-cols-4 grid-cols-2 gap-4 py-[15px] px-[15px]'>
+                                                {data.anime.map(
+                                                    (
+                                                        airing_anime: AiringAnime,
+                                                    ) => (
+                                                        <Link
+                                                            key={
+                                                                airing_anime.id
+                                                            }
+                                                            href={`/detail?id=${airing_anime.id}`}
+                                                        >
+                                                            <div
+                                                                key={
+                                                                    airing_anime.id
                                                                 }
-                                                            />
-                                                            <div className='z-[-2] group-hover:z-[1] flex transition-all duration-200 ease-linear absolute top-0 left-0 bottom-0 right-0 w-full h-full justify-center items-center bg-[rgba(0,0,0,0)] group-hover:bg-[rgba(0,0,0,0.4)]'>
-                                                                <BsFillPlayFill className='w-[50px] h-[50px] text-[#fff]' />
-                                                            </div>
-                                                        </div>
-                                                        <div className='h-[20%] flex flex-col space-y-1 bg-[#2a2c31] px-[8px] py-[10px]'>
-                                                            <span
-                                                                style={{
-                                                                    color: airing_anime.color,
-                                                                }}
-                                                                className='text-[#fff] font-medium text-[14px] line-clamp-2'
+                                                                className='w-full h-full rounded-md cursor-pointer'
                                                             >
-                                                                {
-                                                                    airing_anime
-                                                                        .title
-                                                                        .romaji
-                                                                }
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                ),
-                                            )}
+                                                                <div className='h-[80%] relative flex items-center justify-center group'>
+                                                                    <div className='after:anime-poster-bg'></div>
+                                                                    <img
+                                                                        className='w-full h-full object-cover'
+                                                                        src={
+                                                                            airing_anime.image
+                                                                        }
+                                                                    />
+                                                                    <div className='z-[-2] group-hover:z-[1] flex transition-all duration-200 ease-linear absolute top-0 left-0 bottom-0 right-0 w-full h-full justify-center items-center bg-[rgba(0,0,0,0)] group-hover:bg-[rgba(0,0,0,0.4)]'>
+                                                                        <BsFillPlayFill className='w-[50px] h-[50px] text-[#fff]' />
+                                                                    </div>
+                                                                </div>
+                                                                <div className='h-[20%] flex flex-col space-y-1 bg-[#2a2c31] px-[8px] py-[10px]'>
+                                                                    <span
+                                                                        style={{
+                                                                            color: airing_anime.color,
+                                                                        }}
+                                                                        className='text-[#fff] font-medium text-[14px] line-clamp-2'
+                                                                    >
+                                                                        {
+                                                                            airing_anime
+                                                                                .title
+                                                                                .romaji
+                                                                        }
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </Link>
+                                                    ),
+                                                )}
+                                            </div>
                                         </div>
-                                    </div>
-                                )
-                            },
-                        )
-                    )}
+                                    )
+                                },
+                            )
+                        )}
+                    </div>
                 </div>
-            </div>
+            ) : null}
         </>
     )
 }
