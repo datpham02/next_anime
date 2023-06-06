@@ -10,7 +10,7 @@ const Trending = () => {
     const settingSlider = {
         infinite: true,
         autoplay: true,
-        autoplaySpeed: 3000,
+        autoplaySpeed: 2000,
         slidesToShow: 6,
         slidesToScroll: 1,
         arrows: false,
@@ -69,11 +69,11 @@ const Trending = () => {
                     {data?.results.map(
                         (trending_anime: TrendingAnime, index: number) => {
                             return (
-                                <Link
-                                    key={trending_anime.id}
-                                    href={`/detail?id=${trending_anime.id}`}
-                                >
-                                    <div className='pr-[10px]'>
+                                <Link href={`/detail?id=${trending_anime.id}`}>
+                                    <div
+                                        key={trending_anime.id}
+                                        className='pr-[10px]'
+                                    >
                                         <div className='flex w-auto h-auto'>
                                             <div className='w-[20%] flex-col space-y-16 justify-end items-center text-[#fff] trending-title-bg-color sm:flex hidden'>
                                                 <span

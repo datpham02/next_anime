@@ -10,233 +10,69 @@ import { convertMonthNumberToMonthString } from '../utils/function'
 import EmojiPicker from 'emoji-picker-react'
 import { BiLike, BiDislike } from 'react-icons/bi'
 import { IoMdArrowDropdown } from 'react-icons/io'
-import { Episode, Recommend, MostPopular } from '~/components'
-import VideoPlayer from '~/components/VideoPlayer'
+import { EpisodeComponent, Recommend } from '~/components'
+import dynamic from 'next/dynamic'
+import { GetServerSidePropsContext } from 'next/types'
+import { getAnimeEpisodeStreamingLink, getAnimeInfo } from '~/utils/API'
+import { AnimeInfo, Episode, EpisodeSource } from '~/utils/interface'
+import { useRouter } from 'next/router'
 
-const Watch = () => {
-    const wrappedDivRef = useRef<HTMLDivElement>(null)
-    const childOfWrappedDivRef = useRef<HTMLDivElement>(null)
+const VideoPlayer = dynamic(() => import('../components/VideoPlayer'), {
+    ssr: false,
+})
 
-    const [heightChildDiv, setHeightChildDiv] = useState<number>(0)
-
-    useEffect(() => {
-        if (childOfWrappedDivRef && childOfWrappedDivRef.current) {
-            setHeightChildDiv(childOfWrappedDivRef.current.clientHeight)
-        }
-    }, [childOfWrappedDivRef.current?.clientHeight])
-
-    useEffect(() => {
-        window.addEventListener('resize', () => {
-            if (childOfWrappedDivRef && childOfWrappedDivRef.current) {
-                setHeightChildDiv(childOfWrappedDivRef.current.clientHeight)
-            }
-        })
-    }, [])
-
+const Watch = ({
+    anime_info,
+    currentEpisode,
+}: {
+    anime_info: AnimeInfo
+    currentEpisode: EpisodeSource
+}) => {
+    const router = useRouter()
     return (
         <>
-            <div className='mt-[80px] overflow-hidden'>
-                <div
-                    style={{
-                        height: heightChildDiv,
-                    }}
-                    className='relative w-full'
-                >
-                    <img
-                        className='w-full h-full object-cover bg-center blur-xl'
-                        src='https://img.zorores.com/_r/300x400/100/0a/d5/0ad5356f28ee75bccfde8b69ea6a5e54/0ad5356f28ee75bccfde8b69ea6a5e54.jpg'
-                    />
-                    <div
-                        ref={childOfWrappedDivRef}
-                        className='absolute top-0 left-0 w-full h-auto flex xl:flex-row lg:flex-col flex-col lg:space-y-4 space-y-4'
-                    >
-                        <div className='flex lg:flex-row flex-col-reverse xl:w-[80%] lg:w-full h-full xl:px-[20px] lg:px-[50px]'>
-                            <div className='lg:w-[25%]  w-full flex flex-col bg-[#14151A] lg:pb-0 pb-[25px]'>
-                                <div className='flex items-center justify-between px-[10px] py-[12px]'>
-                                    <span className='text-[#fff] text-[14px]'>
-                                        List of episodes:
-                                    </span>
-                                    <div className='relative flex items-center'>
-                                        <input
-                                            placeholder='Number of Ep'
-                                            className='outline-none rounded-md w-[140px] bg-[#14151A] border-solid border-[1px] border-[#35373D] placeholder:text-[12px] pl-[33px] py-[4px] focus:text-[#fff]'
-                                        />
-                                        <AiOutlineSearch className='absolute left-[10px] text-[#fff]' />
-                                    </div>
-                                </div>
-                                <div className='flex flex-wrap p-[8px] gap-1'>
-                                    <Episode
-                                        type={1}
-                                        episode={1}
-                                        episode_name='All because of you'
-                                        watching={true}
-                                    />
-                                    <Episode
-                                        type={1}
-                                        episode={2}
-                                        episode_name='All because of you'
-                                        watching={false}
-                                    />
-                                    <Episode
-                                        type={1}
-                                        episode={3}
-                                        episode_name='All because of you'
-                                        watching={false}
-                                    />
-                                    <Episode
-                                        type={1}
-                                        episode={4}
-                                        episode_name='All because of you'
-                                        watching={false}
-                                    />
-                                    <Episode
-                                        type={1}
-                                        episode={4}
-                                        episode_name='All because of you'
-                                        watching={false}
-                                    />
-                                    <Episode
-                                        type={1}
-                                        episode={4}
-                                        episode_name='All because of you'
-                                        watching={false}
-                                    />
-                                    <Episode
-                                        type={1}
-                                        episode={4}
-                                        episode_name='All because of you'
-                                        watching={false}
-                                    />
-                                    <Episode
-                                        type={1}
-                                        episode={4}
-                                        episode_name='All because of you'
-                                        watching={false}
-                                    />
-                                </div>
-                            </div>
-                            <div className='lg:w-[75%] w-full flex flex-col'>
-                                <div className='w-full xl:h-[500px] lg:h-[550px] md:h-[550px] h-[300px]'>
-                                    <VideoPlayer />
-                                </div>
-                                <div className='flex flex-col space-y-3 px-[10px] py-[15px] bg-[#08090B]'>
-                                    <span className='text-[#fff]'>
-                                        Watch more seasons of this anime
-                                    </span>
-                                    <div className='grid xl:grid-cols-5 md:grid-cols-6 grid-cols-4 gap-2 overflow-hidden'>
-                                        <div className='relative w-full h-[60px] flex items-center justify-center rounded-md overflow-hidden group cursor-pointer'>
-                                            <img
-                                                className='w-full h-full object-cover blur-sm'
-                                                src='https://img.zorores.com/_r/300x400/100/bd/5a/bd5ae1d387a59c5abcf5e1a6a616728c/bd5ae1d387a59c5abcf5e1a6a616728c.jpg'
-                                            />
-                                            <span className='absolute top-0 left-0 w-full h-full text-center group-hover:text-[#2196F3] flex items-center justify-center text-[#fff] font-medium sm:text-[13px] text-[12px]'>
-                                                Bleach Movie 1
-                                            </span>
-                                        </div>
-                                        <div className='relative w-full h-[60px] flex items-center justify-center rounded-md overflow-hidden group cursor-pointer'>
-                                            <img
-                                                className='w-full h-full object-cover blur-sm'
-                                                src='https://img.zorores.com/_r/300x400/100/bd/5a/bd5ae1d387a59c5abcf5e1a6a616728c/bd5ae1d387a59c5abcf5e1a6a616728c.jpg'
-                                            />
-                                            <span className='absolute top-0 left-0 w-full h-full text-center group-hover:text-[#2196F3] flex items-center justify-center text-[#fff] font-medium sm:text-[13px] text-[12px]'>
-                                                Bleach Movie 1
-                                            </span>
-                                        </div>
-                                        <div className='relative w-full h-[60px] flex items-center justify-center rounded-md overflow-hidden group cursor-pointer'>
-                                            <img
-                                                className='w-full h-full object-cover blur-sm'
-                                                src='https://img.zorores.com/_r/300x400/100/bd/5a/bd5ae1d387a59c5abcf5e1a6a616728c/bd5ae1d387a59c5abcf5e1a6a616728c.jpg'
-                                            />
-                                            <span className='absolute top-0 left-0 w-full h-full text-center group-hover:text-[#2196F3] flex items-center justify-center text-[#fff] font-medium sm:text-[13px] text-[12px]'>
-                                                Bleach Movie 1
-                                            </span>
-                                        </div>
-                                        <div className='relative w-full h-[60px] flex items-center justify-center rounded-md overflow-hidden group cursor-pointer'>
-                                            <img
-                                                className='w-full h-full object-cover blur-sm'
-                                                src='https://img.zorores.com/_r/300x400/100/bd/5a/bd5ae1d387a59c5abcf5e1a6a616728c/bd5ae1d387a59c5abcf5e1a6a616728c.jpg'
-                                            />
-                                            <span className='absolute top-0 left-0 w-full h-full text-center group-hover:text-[#2196F3] flex items-center justify-center text-[#fff] font-medium sm:text-[13px] text-[12px]'>
-                                                Bleach Movie 1
-                                            </span>
-                                        </div>
-                                        <div className='relative w-full h-[60px] flex items-center justify-center rounded-md overflow-hidden group cursor-pointer'>
-                                            <img
-                                                className='w-full h-full object-cover blur-sm'
-                                                src='https://img.zorores.com/_r/300x400/100/bd/5a/bd5ae1d387a59c5abcf5e1a6a616728c/bd5ae1d387a59c5abcf5e1a6a616728c.jpg'
-                                            />
-                                            <span className='absolute top-0 left-0 w-full h-full text-center group-hover:text-[#2196F3] flex items-center justify-center text-[#fff] font-medium sm:text-[13px] text-[12px]'>
-                                                Bleach Movie 1
-                                            </span>
-                                        </div>
-                                        <div className='relative w-full h-[60px] flex items-center justify-center rounded-md overflow-hidden group cursor-pointer'>
-                                            <img
-                                                className='w-full h-full object-cover blur-sm'
-                                                src='https://img.zorores.com/_r/300x400/100/bd/5a/bd5ae1d387a59c5abcf5e1a6a616728c/bd5ae1d387a59c5abcf5e1a6a616728c.jpg'
-                                            />
-                                            <span className='absolute top-0 left-0 w-full h-full text-center group-hover:text-[#2196F3] flex items-center justify-center text-[#fff] font-medium sm:text-[13px] text-[12px]'>
-                                                Bleach Movie 1
-                                            </span>
-                                        </div>
-                                        <div className='relative w-full h-[60px] flex items-center justify-center rounded-md overflow-hidden group cursor-pointer'>
-                                            <img
-                                                className='w-full h-full object-cover blur-sm'
-                                                src='https://img.zorores.com/_r/300x400/100/bd/5a/bd5ae1d387a59c5abcf5e1a6a616728c/bd5ae1d387a59c5abcf5e1a6a616728c.jpg'
-                                            />
-                                            <span className='absolute top-0 left-0 w-full h-full text-center group-hover:text-[#2196F3] flex items-center justify-center text-[#fff] font-medium sm:text-[13px] text-[12px]'>
-                                                Bleach Movie 1
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
+            <div>
+                <div className='flex xl:flex-row flex-col'>
+                    <div className='w-full xl:w-[75%] 2xl:h-[640px] xl:h-[540px] lg:w-[600px] lg:h-[500px] '>
+                        <VideoPlayer />
+                    </div>
+                    <div className='xl:w-[25%]  w-full flex flex-col bg-[#14151A] lg:pb-0 pb-[25px]'>
+                        <div className='flex items-center justify-between px-[10px] py-[12px]'>
+                            <span className='text-[#fff] text-[14px]'>
+                                List of episodes:
+                            </span>
+                            <div className='relative flex items-center'>
+                                <input
+                                    placeholder='Number of Ep'
+                                    className='outline-none rounded-md w-[140px] bg-[#14151A] border-solid border-[1px] border-[#35373D] placeholder:text-[12px] pl-[33px] py-[4px] focus:text-[#fff]'
+                                />
+                                <AiOutlineSearch className='absolute left-[10px] text-[#fff]' />
                             </div>
                         </div>
-                        <div className='flex xl:py-0 py-[25px] xl:flex-col lg:flex-row md:flex-row flex-col xl:space-y-4 xl:space-x-0 lg:space-x-4 md:space-x-4 md:space-y-0 space-y-4 xl:w-[20%] lg:w-full xl:px-0 lg:px-[50px] px-[15px]'>
-                            <img
-                                className='xl:w-[140px] xl:h-[180px] lg:w-[200px] lg:h-[250px] md:w-[180px] md:h-[250px] sm:w-[160px] sm:h-[220px] w-[150px] h-[200px] object-cover bg-center'
-                                src='https://img.zorores.com/_r/300x400/100/0a/d5/0ad5356f28ee75bccfde8b69ea6a5e54/0ad5356f28ee75bccfde8b69ea6a5e54.jpg'
-                            />
-                            <div className='flex flex-1 2xl:flex-col lg:flex-col flex-col 2xl:space-y-4 lg:space-y-4 space-y-2'>
-                                <h1 className='text-[#fff] font-medium text-[25px] line-clamp-2'>
-                                    I Got a Cheat Skill in Another World and
-                                    Became Unrivaled in The Real World, Too
-                                </h1>
-                                <div className='flex justify-start items-center space-x-4 text-[#fff] text-[15px]'>
-                                    <div className='flex items-center space-x-2'>
-                                        <BsPlayCircle />
-                                        <span>TV</span>
-                                    </div>
-                                    <div className='flex items-center space-x-2'>
-                                        <MdOutlineAccessTime />
-                                        <span>24</span>
-                                    </div>
-                                    <div className='flex items-center space-x-2'>
-                                        <FaCalendar />
-                                        <span>
-                                            {convertMonthNumberToMonthString(1)}{' '}
-                                            1, 2023
-                                        </span>
-                                    </div>
-                                </div>
-                                <p className='text-[#fff] text-[14px]'>
-                                    Apprentice mage Chise Hatori is invited to
-                                    enroll at the College, a prestigious
-                                    learning institution for sorcerers, to
-                                    examine and look for a way to remove the
-                                    curses she bears. Despite her groom Elias
-                                    Ainsworth's reluctance, Chise accepts the
-                                    proposal, as she believes attending the
-                                    school might help her minimize her
-                                    self-sacrificing tendencies. From the
-                                    get-go, Chise grabs the attention of her
-                                    classmates and professors alike, who have
-                                    never seen a mage in action before. However,
-                                    there is a sinister plot brewing behind the
-                                    College's back, and the young mage will have
-                                    to determine who is friend or foe in order
-                                    to put a stop to it
-                                </p>
-                            </div>
+                        <div className='flex flex-wrap p-[8px] gap-1'>
+                            {anime_info.episodes.length > 12
+                                ? anime_info.episodes.map(
+                                      (epsiode: Episode, index: number) => (
+                                          <EpisodeComponent
+                                              type={2}
+                                              episode_name={epsiode.title}
+                                              episode={index + 1}
+                                              watching={false}
+                                              key={epsiode.id}
+                                          />
+                                      ),
+                                  )
+                                : anime_info.episodes.map(
+                                      (epsiode: Episode, index: number) => (
+                                          <EpisodeComponent
+                                              type={1}
+                                              episode_name={epsiode.title}
+                                              episode={index + 1}
+                                              watching={false}
+                                              key={epsiode.id}
+                                          />
+                                      ),
+                                  )}
                         </div>
                     </div>
                 </div>
@@ -467,9 +303,7 @@ const Watch = () => {
                         </div>
                         <Recommend data={[]} props={{}} />
                     </div>
-                    <div className='lg:w-[20%]'>
-                        <MostPopular />
-                    </div>
+                    <div className='lg:w-[20%]'></div>
                 </div>
             </div>
         </>
@@ -477,3 +311,25 @@ const Watch = () => {
 }
 
 export default Watch
+
+export const getServerSideProps = async (
+    context: GetServerSidePropsContext,
+) => {
+    const { id } = context.query
+
+    if (!id) {
+        return { notFound: true }
+    }
+
+    const anime_info: AnimeInfo = await getAnimeInfo(id as string, 'zoro')
+
+    const currentEpisode = await getAnimeEpisodeStreamingLink(
+        anime_info.episodes[0].id,
+    )
+    return {
+        props: {
+            anime_info,
+            currentEpisode,
+        },
+    }
+}

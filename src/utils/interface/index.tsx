@@ -2,6 +2,7 @@ export interface Children {
     children: React.ReactNode
 }
 export interface EpisodeProps {
+    key: any
     type: number
     episode: number
     episode_name: string
@@ -241,4 +242,26 @@ export interface AnimeSearch {
     color: string
     type: string
     releaseDate: number
+}
+
+export interface EpisodeSource {
+    sources: Source[]
+    subtitles: Subtitle[]
+    intro: Intro
+}
+
+export interface Source {
+    url: string
+    quality: string
+    isM3U8: boolean
+}
+
+export interface Subtitle {
+    url: string
+    lang: string
+}
+
+export interface Intro {
+    start: number
+    end: number
 }

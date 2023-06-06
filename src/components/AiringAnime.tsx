@@ -19,11 +19,11 @@ const AiringAnime = () => {
     const handleData = (airing_anime: AiringAnime[]) => {
         if (airing_anime.length <= 0) return []
         let showTimes: {
-            year: number
-            month: number
-            day: number
-            hour: number
             minute: number
+            hour: number
+            day: number
+            month: number
+            year: number
         }[] = []
 
         airing_anime.forEach((data: AiringAnime) => {
@@ -37,31 +37,31 @@ const AiringAnime = () => {
 
             if (!isElementExists) {
                 showTimes.push({
-                    year: airingTime.year,
-                    month: airingTime.month,
-                    day: airingTime.day,
-                    hour: airingTime.hour,
                     minute: airingTime.minute,
+                    hour: airingTime.hour,
+                    day: airingTime.day,
+                    month: airingTime.month,
+                    year: airingTime.year,
                 })
             }
         })
         var result: {
             airingTime: {
-                year: number
-                month: number
-                day: number
-                hour: number
                 minute: number
+                hour: number
+                day: number
+                month: number
+                year: number
             }
             anime: AiringAnime[]
         }[] = []
         showTimes.forEach(
             (time: {
-                year: number
-                month: number
-                day: number
-                hour: number
                 minute: number
+                hour: number
+                day: number
+                month: number
+                year: number
             }) => {
                 let data = airing_anime.filter((airing_anime: AiringAnime) => {
                     const airingTime = convertTimeStamp(airing_anime.airingAt)
@@ -100,11 +100,11 @@ const AiringAnime = () => {
                             handleData(data.results).map(
                                 (data: {
                                     airingTime: {
-                                        year: number
-                                        month: number
-                                        day: number
-                                        hour: number
                                         minute: number
+                                        hour: number
+                                        day: number
+                                        month: number
+                                        year: number
                                     }
                                     anime: AiringAnime[]
                                 }) => {

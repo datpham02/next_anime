@@ -1,6 +1,6 @@
 import baseAPI from './baseApi'
 
-export const getTredingAnime = async (page: number, perPage: number) => {
+export const getTredingAnime = async (page: number = 1, perPage: number) => {
     const { data } = await baseAPI.get('/meta/anilist/trending', {
         params: {
             page: page,
@@ -11,7 +11,7 @@ export const getTredingAnime = async (page: number, perPage: number) => {
     return data
 }
 
-export const getAnimeInfo = async (id: string, provider: string) => {
+export const getAnimeInfo = async (id: string, provider: string = 'zoro') => {
     const { data } = await baseAPI.get(`/meta/anilist/info/${id}`, {
         params: {
             provider: provider,
@@ -37,7 +37,7 @@ export const getRecentAnime = async (
     return data
 }
 
-export const getAiringAnime = async (page: number, perPage: number) => {
+export const getAiringAnime = async (page: number = 1, perPage: number) => {
     const { data } = await baseAPI.get('/meta/anilist/airing-schedule', {
         params: {
             page: page,
@@ -48,7 +48,7 @@ export const getAiringAnime = async (page: number, perPage: number) => {
     return data
 }
 
-export const getPopularAnime = async (page: number, perPage: number) => {
+export const getPopularAnime = async (page: number = 1, perPage: number) => {
     const { data } = await baseAPI.get('/meta/anilist/popular', {
         params: {
             page: page,
@@ -71,5 +71,18 @@ export const searchAnime = async (
             perPage: perPage,
         },
     })
+    return data
+}
+
+export const getAnimeEpisodeStreamingLink = async (
+    episodeId: string,
+    provider: string = 'zoro',
+) => {
+    const { data } = await baseAPI.get(`/meta/anilist/watch/${episodeId}`, {
+        params: {
+            provider: provider,
+        },
+    })
+
     return data
 }

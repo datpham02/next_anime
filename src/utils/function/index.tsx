@@ -80,20 +80,20 @@ export const convertTimeStamp = (time_stamp: number) => {
     let minute = date.getMinutes()
     // let second = date.getSeconds()
 
-    return { year, month, day, hour, minute }
+    return { minute, hour, day, month, year }
 }
 
 export const formatTime = (time: {
-    year: number
-    month: number
-    day: number
-    hour: number
     minute: number
+    hour: number
+    day: number
+    month: number
+    year: number
 }) => {
-    let year = time.year > 9 ? time.year : `0${time.year}`
-    let month = time.month > 9 ? time.month : `0${time.month}`
-    let day = time.day > 9 ? time.day : `0${time.day}`
-    let hour = time.hour > 9 ? time.hour : `0${time.hour}`
     let minute = time.minute > 9 ? time.minute : `0${time.minute}`
+    let hour = time.hour > 9 ? time.hour : `0${time.hour}`
+    let day = time.day > 9 ? time.day : `0${time.day}`
+    let month = time.month > 9 ? time.month : `0${time.month}`
+    let year = time.year > 9 ? time.year : `0${time.year}`
     return `${hour} : ${minute} - ${day}/${month}/${year}`
 }

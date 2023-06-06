@@ -32,7 +32,7 @@ const Home = () => {
 
     return (
         <>
-            <div className='flex flex-col space-y-4 pb-[50px]'>
+            <div className='flex flex-col space-y-4 overflow-hidden'>
                 <Slider {...settingSlider}>
                     {data?.results.map((trending_anime: TrendingAnime) => {
                         return (
@@ -44,7 +44,7 @@ const Home = () => {
                     })}
                 </Slider>
                 <Trending />
-                <div className='flex h-[600px]'>
+                <div className='flex'>
                     <div className='w-[75%] h-full flex flex-col space-y-3'>
                         <AiringAnime />
                         <RecentAnime />

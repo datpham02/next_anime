@@ -8,6 +8,7 @@ import { getAnimeInfo } from '~/utils/API'
 import { convertMonthNumberToMonthString } from '~/utils/function'
 import { AnimeInfo, TrendingAnime } from '~/utils/interface'
 import Loading from './Loading'
+import Link from 'next/link'
 
 const SliderItem = ({
     TrendingAnime,
@@ -28,7 +29,7 @@ const SliderItem = ({
         <>
             <div
                 key={key}
-                className='relative flex items-center justify-center outline-none 2xl:h-[700px]  xl:h-[600px] lg:h-[600px] md:h-[500px] h-[450px] w-full overflow-hidden  '
+                className='relative flex items-center justify-center outline-none 2xl:h-[650px]  xl:h-[550px] lg:h-[500px] md:h-[450px] h-[400px] w-full overflow-hidden  '
             >
                 {isLoading ? (
                     <div className='w-full h-full flex items-center justify-center'>
@@ -36,14 +37,16 @@ const SliderItem = ({
                     </div>
                 ) : (
                     <>
-                        <img
-                            className='w-full h-full object-cover'
-                            src={TrendingAnime.image}
-                        />
-                        <div className='before-slider'></div>
-                        <div className='after-slider'></div>
-                        <div className='absolute flex items-center w-full h-full z-[1] text-[#fff] px-[35px] md:pt-[85px] pt-[190px] '>
-                            <div className='md:w-[50%] w-[80%] flex flex-col space-y-4'>
+                        <div className='relative flex items-center w-full h-full text-[#fff] '>
+                            <div className='z-[-1] absolute w-full h-full flex justify-center items-center'>
+                                <img
+                                    className='w-full h-full object-cover opacity-50'
+                                    src={TrendingAnime.image}
+                                />
+                                <div className='before-slider'></div>
+                                <div className='after-slider'></div>
+                            </div>
+                            <div className='z-[1] px-[35px] md:pt-[30px] pt-[180px]  md:w-[50%] w-[80%] flex flex-col space-y-4'>
                                 <h1
                                     style={{
                                         color: TrendingAnime.color,
@@ -90,10 +93,14 @@ const SliderItem = ({
                                         <FaPlayCircle />
                                         <span>Watch Now</span>
                                     </button>
-                                    <button className='flex items-center space-x-2 bg-[#95afc0] 2xl:text-[17px] xl:text-[16px] lg:text-[15px] md:text-[14px] sm:[13px] text-[12px] 2xl:px-[20px] 2xl:py-[8px] xl:px-[18px] xl:py-[6px] lg:px-[18px] lg:py-[6px] md:px-[16px] md:py-[8px] sm:px-[14px] sm:py-[8px] px-[12px] py-[8px] rounded-full'>
-                                        <span>Detail</span>
-                                        <IoIosArrowForward />
-                                    </button>
+                                    <Link
+                                        href={`/detail?id=${TrendingAnime.id}`}
+                                    >
+                                        <button className='flex items-center space-x-2 bg-[#95afc0] 2xl:text-[17px] xl:text-[16px] lg:text-[15px] md:text-[14px] sm:[13px] text-[12px] 2xl:px-[20px] 2xl:py-[8px] xl:px-[18px] xl:py-[6px] lg:px-[18px] lg:py-[6px] md:px-[16px] md:py-[8px] sm:px-[14px] sm:py-[8px] px-[12px] py-[8px] rounded-full'>
+                                            <span>Detail</span>
+                                            <IoIosArrowForward />
+                                        </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

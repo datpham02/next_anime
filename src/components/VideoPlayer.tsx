@@ -8,6 +8,8 @@ import {
 import { BiExitFullscreen, BiFullscreen } from 'react-icons/bi'
 import { IoMdVolumeLow, IoMdVolumeMute } from 'react-icons/io'
 import { AiFillSetting, AiTwotoneSetting } from 'react-icons/ai'
+import ReactHlsPlayer from 'react-hls-player'
+import UseBreakPoint from './UseBreakPoint'
 
 const VideoPlayer = () => {
     const videoRef = useRef<HTMLVideoElement>(null)
@@ -22,12 +24,19 @@ const VideoPlayer = () => {
     const [bufferedTime, setBufferedTime] = useState(0)
     const [videoVolume, setVideoVolume] = useState(0)
     const [videoFullScreen, setVideoFullScreen] = useState<Boolean>(false)
+    const [videoPlayerWidthHeight, setVideoPlayerWidthHeight] = useState<{
+        w: number
+        h: number
+    }>({ w: 0, h: 0 })
 
     const [watchTiem, setWatchTime] = useState<number>(0)
     useEffect(() => {
         if (videoRef.current != null) {
             const video = document.createElement('video')
-            video.setAttribute('src', '')
+            video.setAttribute(
+                'src',
+                'https://tailieuthi.site/https://c-an-ca3.betterstream.cc:2223/hls-playback/5f964bf7eb410481ca78c22910a439a6dc95e8e5e7a24b91dea8becd303dda4d93e5eb975077eca31ce931aaaae4e2e9949fcbeddb96ccecdbfabebbea4ff8c1b93ddb5482f3c0791e27964bd248da73289f238fd98b9f49c0d0ee20666ccc93ec1e77a04643b8ff180f2cc8d1ff944d3fd643395c09a7f217d5ac7beb5b7cd92d95bad8a95cc0d88e21436ea984a089/index-f1-v1-a1.m3u8',
+            )
 
             document.body.appendChild(video)
             video.addEventListener('loadedmetadata', () => {
@@ -155,7 +164,7 @@ const VideoPlayer = () => {
     return (
         <>
             <div
-                className='relative w-full h-full overflow-hidden'
+                className='relative h-full w-full overflow-hidden'
                 ref={wrapped}
                 onMouseOver={(e) => {
                     e.preventDefault()
@@ -172,9 +181,9 @@ const VideoPlayer = () => {
                     }
                 }}
             >
-                <video
-                    ref={videoRef}
+                <ReactHlsPlayer
                     className='w-full h-full'
+                    playerRef={videoRef}
                     onProgress={handleProgress}
                     controls={false}
                     onEnded={() => {
@@ -207,7 +216,7 @@ const VideoPlayer = () => {
                     onPause={() => {
                         console.log(watchTiem)
                     }}
-                    src=''
+                    src='https://tailieuthi.site/https://c-an-ca3.betterstream.cc:2223/hls-playback/5f964bf7eb410481ca78c22910a439a6dc95e8e5e7a24b91dea8becd303dda4d93e5eb975077eca31ce931aaaae4e2e9949fcbeddb96ccecdbfabebbea4ff8c1b93ddb5482f3c0791e27964bd248da73289f238fd98b9f49c0d0ee20666ccc93ec1e77a04643b8ff180f2cc8d1ff944d3fd643395c09a7f217d5ac7beb5b7cd92d95bad8a95cc0d88e21436ea984a089/index-f1-v1-a1.m3u8'
                 />
                 <div
                     ref={videoControlRef}
