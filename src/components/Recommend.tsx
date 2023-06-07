@@ -14,11 +14,11 @@ const Recommend = ({ data, props }: RecommendProps) => {
                     <div className='grid 2xl:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-4'>
                         {data?.map((recommend_anime: Recommendation) => {
                             return (
-                                <Link href={`/detail?id=${recommend_anime.id}`}>
-                                    <div
-                                        key={recommend_anime.id}
-                                        className='w-full h-full rounded-md cursor-pointer'
-                                    >
+                                <Link
+                                    key={recommend_anime.id}
+                                    href={`/detail?id=${recommend_anime.id}`}
+                                >
+                                    <div className='w-full h-full rounded-md cursor-pointer'>
                                         <div className='h-[80%] relative flex items-center justify-center group'>
                                             <div className='after:anime-poster-bg'></div>
                                             <img

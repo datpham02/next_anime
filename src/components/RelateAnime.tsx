@@ -13,11 +13,11 @@ const RelateAnime = ({ data }: { data: Relation[] }) => {
                     {data?.map((relate_anime: Relation, index: number) => {
                         if (index + 1 < data.length) {
                             return (
-                                <Link href={`/detail?id=${relate_anime.id}`}>
-                                    <div
-                                        key={relate_anime.id}
-                                        className=' cursor-pointer flex items-center space-x-4 py-[15px] border-b-solid border-b-[1px] border-b-[#35373C]'
-                                    >
+                                <Link
+                                    key={relate_anime.id}
+                                    href={`/detail?id=${relate_anime.id}`}
+                                >
+                                    <div className=' cursor-pointer flex items-center space-x-4 py-[15px] border-b-solid border-b-[1px] border-b-[#35373C]'>
                                         <img
                                             className='w-[45px] h-[60px]'
                                             src={relate_anime.image}
@@ -42,11 +42,11 @@ const RelateAnime = ({ data }: { data: Relation[] }) => {
                             )
                         } else {
                             return (
-                                <Link href={`/detail?id=${relate_anime.id}`}>
-                                    <div
-                                        key={relate_anime.id}
-                                        className=' cursor-pointer flex items-center space-x-4 py-[15px]'
-                                    >
+                                <Link
+                                    key={relate_anime.id}
+                                    href={`/detail?id=${relate_anime.id}`}
+                                >
+                                    <div className=' cursor-pointer flex items-center space-x-4 py-[15px]'>
                                         <img
                                             className='w-[45px] h-[60px]'
                                             src={relate_anime.image}

@@ -9,9 +9,8 @@ import { BiExitFullscreen, BiFullscreen } from 'react-icons/bi'
 import { IoMdVolumeLow, IoMdVolumeMute } from 'react-icons/io'
 import { AiFillSetting, AiTwotoneSetting } from 'react-icons/ai'
 import ReactHlsPlayer from 'react-hls-player'
-import UseBreakPoint from './UseBreakPoint'
 
-const VideoPlayer = () => {
+const VideoPlayer = ({ src }: { src: string }) => {
     const videoRef = useRef<HTMLVideoElement>(null)
     const videoControlRef = useRef<HTMLDivElement>(null)
     const videoRangeRef = useRef<HTMLInputElement>(null)
@@ -33,10 +32,7 @@ const VideoPlayer = () => {
     useEffect(() => {
         if (videoRef.current != null) {
             const video = document.createElement('video')
-            video.setAttribute(
-                'src',
-                'https://tailieuthi.site/https://c-an-ca3.betterstream.cc:2223/hls-playback/5f964bf7eb410481ca78c22910a439a6dc95e8e5e7a24b91dea8becd303dda4d93e5eb975077eca31ce931aaaae4e2e9949fcbeddb96ccecdbfabebbea4ff8c1b93ddb5482f3c0791e27964bd248da73289f238fd98b9f49c0d0ee20666ccc93ec1e77a04643b8ff180f2cc8d1ff944d3fd643395c09a7f217d5ac7beb5b7cd92d95bad8a95cc0d88e21436ea984a089/index-f1-v1-a1.m3u8',
-            )
+            video.setAttribute('src', process.env.NEXT_PUBLIC_URL_SV + src)
 
             document.body.appendChild(video)
             video.addEventListener('loadedmetadata', () => {
@@ -118,12 +114,12 @@ const VideoPlayer = () => {
                 const percent = (clientX - left) / width
 
                 if (videoRef && videoRef.current) {
-                    if (Math.floor(percent * 100) <= 5) {
+                    if (Math.floor(percent * 100) < 10) {
                         videoRef.current.volume = 0
                     } else videoRef.current.volume = percent
 
                     setVideoVolume(
-                        Math.floor(percent * 100) >= 5
+                        Math.floor(percent * 100) >= 10
                             ? Math.floor(percent * 100)
                             : 0,
                     )
@@ -216,11 +212,11 @@ const VideoPlayer = () => {
                     onPause={() => {
                         console.log(watchTiem)
                     }}
-                    src='https://tailieuthi.site/https://c-an-ca3.betterstream.cc:2223/hls-playback/5f964bf7eb410481ca78c22910a439a6dc95e8e5e7a24b91dea8becd303dda4d93e5eb975077eca31ce931aaaae4e2e9949fcbeddb96ccecdbfabebbea4ff8c1b93ddb5482f3c0791e27964bd248da73289f238fd98b9f49c0d0ee20666ccc93ec1e77a04643b8ff180f2cc8d1ff944d3fd643395c09a7f217d5ac7beb5b7cd92d95bad8a95cc0d88e21436ea984a089/index-f1-v1-a1.m3u8'
+                    src={process.env.NEXT_PUBLIC_URL_SV + src}
                 />
                 <div
                     ref={videoControlRef}
-                    className='absolute bottom-0 w-full hidden flex-col gap-2 py-[10px] px-[25px]'
+                    className='absolute bottom-0 w-full hidden flex-col gap-2 py-[15px] px-[25px] bg-[rgba(0,0,0,0.5)]'
                 >
                     <div
                         ref={videoRangeRef}

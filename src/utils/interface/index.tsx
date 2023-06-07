@@ -1,13 +1,7 @@
 export interface Children {
     children: React.ReactNode
 }
-export interface EpisodeProps {
-    key: any
-    type: number
-    episode: number
-    episode_name: string
-    watching: boolean
-}
+
 export interface RecommendProps {
     data: Recommendation[]
     props: React.HTMLAttributes<HTMLDivElement>

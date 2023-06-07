@@ -29,9 +29,7 @@ const Header = () => {
     const handleOnchangeInputSearch = (e: ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value)
     }
-    const handleOnblurInputSearch = (e: ChangeEvent<HTMLInputElement>) => {
-        setSearch('')
-    }
+
     const bsSearchIconRefOnClick = () => {
         setShowSearchInput(!showSearchInput)
     }
@@ -108,9 +106,6 @@ const Header = () => {
                                         handleOnchangeInputSearch(e)
                                     }}
                                     type='search'
-                                    onBlur={(e) => {
-                                        handleOnblurInputSearch(e)
-                                    }}
                                     value={search}
                                     placeholder='Search anime . . .'
                                     className='outline-none px-[5px] py-[6px] w-full'
@@ -221,9 +216,6 @@ const Header = () => {
                                     value={search}
                                     onChange={(e) => {
                                         handleOnchangeInputSearch(e)
-                                    }}
-                                    onBlur={(e) => {
-                                        handleOnblurInputSearch(e)
                                     }}
                                     placeholder='Search anime . . .'
                                     className='outline-none rounded-sm px-[5px] py-[6px] w-full'
