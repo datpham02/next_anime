@@ -12,7 +12,6 @@ import {
 import { TrendingAnime } from '~/utils/interface'
 import AiringAnime from '~/components/AiringAnime'
 const Home = () => {
-    console.log('render-home')
     const { data, isSuccess } = useQuery({
         queryKey: ['trending_anime'],
         queryFn: async () => {

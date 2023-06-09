@@ -20,10 +20,10 @@ const Watch = ({
         <>
             <div>
                 <div className='flex lg:flex-row flex-col-reverse'>
-                    <div className='lg:w-[30%]  w-full flex flex-col bg-[#14151A] lg:pb-0 pb-[25px]'>
+                    <div className='lg:w-[25%]  w-full flex flex-col bg-[#14151A] lg:pb-0 pb-[25px]'>
                         <EpisodeComponent data={anime_info.episodes} />
                     </div>
-                    <div className='w-full lg:w-[70%] aspect-video'>
+                    <div className='w-full lg:w-[75%] aspect-video'>
                         <VideoPlayer src={currentEpisode.sources[0].url} />
                     </div>
                 </div>

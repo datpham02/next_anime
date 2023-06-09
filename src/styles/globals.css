@@ -29,6 +29,7 @@
             #000
         );
     }
+
     .trending-title-bg-color {
         background: linear-gradient(180deg, #4a4b51 0, rgba(74, 75, 81, 0) 99%);
     }

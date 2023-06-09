@@ -9,6 +9,7 @@ import { useMutation } from '@tanstack/react-query'
 import Loading from './Loading'
 import { AnimeSearch } from '~/utils/interface'
 import UseBreakPoint from './UseBreakPoint'
+import Login from './Login'
 
 const Header = () => {
     const wrappedDivRef = useRef<HTMLDivElement>(null)
@@ -16,6 +17,7 @@ const Header = () => {
     const menuDivRef = useRef<HTMLDivElement>(null)
     const breakPoint = UseBreakPoint()
     const [showSearchInput, setShowSearchInput] = useState<Boolean>(false)
+    const [loginFormVisible, setLoginFormVisible] = useState<Boolean>(false)
     const [search, setSearch] = useState<string>('')
     const debounceSearch = UseDebounce({ value: search, delay: 500 })
 
@@ -28,6 +30,9 @@ const Header = () => {
 
     const handleOnchangeInputSearch = (e: ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value)
+    }
+    const handleLoginOnclick = () => {
+        setLoginFormVisible(!loginFormVisible)
     }
 
     const bsSearchIconRefOnClick = () => {
@@ -200,11 +205,14 @@ const Header = () => {
                                 }}
                                 className='cursor-pointer w-[25px] h-[25px] text-[#2196F3] right-[10px] block xl:hidden'
                             />
-                            <Link href='/login'>
-                                <button className='text-[#162032] outline-none hover:text-[#fff] select-none border-solid border-[1px] border-[#868688] rounded-md px-[15px] py-[6px] bg-[#2196F3] md:block hidden'>
-                                    Login
-                                </button>
-                            </Link>
+                            <button
+                                onClick={() => {
+                                    handleLoginOnclick()
+                                }}
+                                className='text-[#162032] outline-none hover:text-[#fff] select-none border-solid border-[1px] border-[#868688] rounded-md px-[15px] py-[6px] bg-[#2196F3] md:block hidden'
+                            >
+                                Login
+                            </button>
                         </div>
                     </div>
 
@@ -320,11 +328,14 @@ const Header = () => {
                             </button>
                         </div>
                         <div className='flex flex-col mt-[10px]'>
-                            <Link href='/login'>
-                                <div className='cursor-pointer hover:text-[#2196F3] border-b-solid border-b-[1px] border-b-[#35373C] text-[16px] font-medium text-[#fff] p-[10px]'>
-                                    Login
-                                </div>
-                            </Link>
+                            <div
+                                onClick={() => {
+                                    handleLoginOnclick()
+                                }}
+                                className='cursor-pointer hover:text-[#2196F3] border-b-solid border-b-[1px] border-b-[#35373C] text-[16px] font-medium text-[#fff] p-[10px]'
+                            >
+                                Login
+                            </div>
                             <Link href='/home'>
                                 <div className='cursor-pointer hover:text-[#2196F3] border-b-solid border-b-[1px] border-b-[#35373C] text-[16px] font-medium text-[#fff] p-[10px]'>
                                     Home
@@ -348,6 +359,11 @@ const Header = () => {
                         </div>
                     </div>
                 </div>
+                {loginFormVisible ? (
+                    <div className='z-[11] fixed inset-0 flex items-center justify-center bg-gradient-to-b from-[#000] to-[rgba(0,0,0,0.05)]  '>
+                        <Login />
+                    </div>
+                ) : null}
             </div>
         </>
     )
