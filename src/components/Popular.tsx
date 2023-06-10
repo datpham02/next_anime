@@ -33,11 +33,11 @@ const Popular = () => {
                     ) : (
                         data?.results?.map((popular_anime: PopularAnime) => {
                             return (
-                                <Link href={`/detail?id=${popular_anime.id}`}>
-                                    <div
-                                        key={popular_anime.id}
-                                        className='w-full h-full rounded-md cursor-pointer'
-                                    >
+                                <Link
+                                    key={popular_anime.id}
+                                    href={`/detail?id=${popular_anime.id}`}
+                                >
+                                    <div className='w-full h-full rounded-md cursor-pointer'>
                                         <div className='h-[80%] relative flex items-center justify-center group'>
                                             <div className='after:anime-poster-bg'></div>
                                             <img

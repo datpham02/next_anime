@@ -98,19 +98,22 @@ const AiringAnime = () => {
                             </div>
                         ) : (
                             handleData(data.results).map(
-                                (data: {
-                                    airingTime: {
-                                        minute: number
-                                        hour: number
-                                        day: number
-                                        month: number
-                                        year: number
-                                    }
-                                    anime: AiringAnime[]
-                                }) => {
+                                (
+                                    data: {
+                                        airingTime: {
+                                            minute: number
+                                            hour: number
+                                            day: number
+                                            month: number
+                                            year: number
+                                        }
+                                        anime: AiringAnime[]
+                                    },
+                                    index: number,
+                                ) => {
                                     return (
                                         <div
-                                            key={data.airingTime.hour}
+                                            key={data.airingTime.hour + index}
                                             className='flex flex-col bg-[#373738]'
                                         >
                                             <div className='flex text-[#2196F3] text-[18px] font-semibold px-[10px] py-[15px]'>

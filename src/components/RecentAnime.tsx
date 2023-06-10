@@ -30,11 +30,11 @@ const RecentAnime = () => {
                     ) : (
                         data?.results?.map((recent_anime: RecentAnime) => {
                             return (
-                                <Link href={`/detail?id=${recent_anime.id}`}>
-                                    <div
-                                        key={recent_anime.id}
-                                        className='w-full h-full rounded-md cursor-pointer'
-                                    >
+                                <Link
+                                    key={recent_anime.id}
+                                    href={`/detail?id=${recent_anime.id}`}
+                                >
+                                    <div className='w-full h-full rounded-md cursor-pointer'>
                                         <div className='h-[80%] relative flex items-center justify-center group'>
                                             <div className='after:anime-poster-bg'></div>
                                             <img

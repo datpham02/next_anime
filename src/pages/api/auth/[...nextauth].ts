@@ -11,12 +11,17 @@ export const authOptions: NextAuthOptions = {
             clientSecret: process.env.NEXT_PUBLIC_GOOGLE_SECRET as string,
         }),
     ],
+    secret: process.env.NEXTAUTH_SECRET as string,
+    pages: {
+        signIn: '/login',
+    },
     adapter: PrismaAdapter(prisma) as Adapter,
     callbacks: {
-        async session({ session, user }) {
+        async session({ session, user, token }) {
             return {
                 ...session,
                 user,
+                token,
             }
         },
     },

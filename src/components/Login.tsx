@@ -1,8 +1,18 @@
+import { signIn } from 'next-auth/react'
 import React from 'react'
+import { AiOutlineCloseCircle } from 'react-icons/ai'
 
-const Login = () => {
+const Login = ({ close }: { close: Function }) => {
     return (
-        <div className='w-[450px] bg-gray-900 text-gray-100 p-8 rounded-xl'>
+        <div className='relative w-[450px] bg-gray-900 text-gray-100 p-8 rounded-xl'>
+            <div className='absolute top-[-12px] right-[-12px]'>
+                <AiOutlineCloseCircle
+                    onClick={() => {
+                        close()
+                    }}
+                    className='w-[30px] h-[30px]'
+                />
+            </div>
             <p className='text-center text-2xl leading-8 font-bold'>Login</p>
             <form className='mt-6'>
                 <div className='text-sm leading-5 mt-1'>
@@ -56,6 +66,7 @@ const Login = () => {
             </div>
             <div className='flex justify-center'>
                 <button
+                    onClick={() => signIn('google')}
                     aria-label='Log in with Google'
                     className='bg-transparent ml-2 p-3 rounded-sm border-[none]'
                 >

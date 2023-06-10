@@ -1,15 +1,20 @@
 import Link from 'next/link'
+import Login from './Login'
+import Loading from './Loading'
+import UseDebounce from './UseDebounce'
+import UseBreakPoint from './UseBreakPoint'
+import Tippy from '@tippyjs/react/headless'
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { BiMenu } from 'react-icons/bi'
-import { BsSearch } from 'react-icons/bs'
+import { FaUser } from 'react-icons/fa'
+import { RxCounterClockwiseClock } from 'react-icons/rx'
+import { BsArrowRightShort, BsFillBellFill, BsSearch } from 'react-icons/bs'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
-import UseDebounce from './UseDebounce'
 import { searchAnime } from '~/utils/API'
 import { useMutation } from '@tanstack/react-query'
-import Loading from './Loading'
 import { AnimeSearch } from '~/utils/interface'
-import UseBreakPoint from './UseBreakPoint'
-import Login from './Login'
+import { signOut, useSession } from 'next-auth/react'
+import { AiTwotoneHeart } from 'react-icons/ai'
 
 const Header = () => {
     const wrappedDivRef = useRef<HTMLDivElement>(null)
@@ -18,6 +23,9 @@ const Header = () => {
     const breakPoint = UseBreakPoint()
     const [showSearchInput, setShowSearchInput] = useState<Boolean>(false)
     const [loginFormVisible, setLoginFormVisible] = useState<Boolean>(false)
+    const [userFeatureFormVisible, setUserFeatureFormVisible] = useState<
+        boolean | undefined
+    >(false)
     const [search, setSearch] = useState<string>('')
     const debounceSearch = UseDebounce({ value: search, delay: 500 })
 
@@ -28,11 +36,22 @@ const Header = () => {
         },
     })
 
+    const { data: sessionData } = useSession()
+
+    useEffect(() => {
+        if (sessionData) console.log(sessionData)
+    }, [sessionData])
     const handleOnchangeInputSearch = (e: ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value)
     }
     const handleLoginOnclick = () => {
         setLoginFormVisible(!loginFormVisible)
+    }
+    const handleCloseLoginForm = () => {
+        setLoginFormVisible(false)
+    }
+    const avtUserOnClick = () => {
+        setUserFeatureFormVisible(!userFeatureFormVisible)
     }
 
     const bsSearchIconRefOnClick = () => {
@@ -205,14 +224,79 @@ const Header = () => {
                                 }}
                                 className='cursor-pointer w-[25px] h-[25px] text-[#2196F3] right-[10px] block xl:hidden'
                             />
-                            <button
-                                onClick={() => {
-                                    handleLoginOnclick()
-                                }}
-                                className='text-[#162032] outline-none hover:text-[#fff] select-none border-solid border-[1px] border-[#868688] rounded-md px-[15px] py-[6px] bg-[#2196F3] md:block hidden'
-                            >
-                                Login
-                            </button>
+                            {sessionData?.user ? (
+                                <Tippy
+                                    interactive
+                                    visible={userFeatureFormVisible}
+                                    onClickOutside={() => {
+                                        avtUserOnClick()
+                                    }}
+                                    placement='bottom-start'
+                                    render={(attrs) => (
+                                        <div
+                                            {...attrs}
+                                            className='w-[300px] flex flex-col py-[8px] px-[10px] rounded-md bg-[#3F4148]'
+                                        >
+                                            <div className='flex flex-col px-[10px] py-[8px]'>
+                                                <span className='font-medium text-[#2196F3] text-[15px]'>
+                                                    {sessionData.user?.name}
+                                                </span>
+                                                <span className='text-[#fff] text-[13px]'>
+                                                    {sessionData.user?.email}
+                                                </span>
+                                            </div>
+                                            <div className='flex flex-col space-y-2 pt-[15px] px-[15px]'>
+                                                <div className='flex items-center space-x-2 cursor-pointer text-[#fff] hover:text-[#2196f3] text-[14px] bg-[#4F515B] rounded-full px-[12px] py-[10px]'>
+                                                    <FaUser />
+                                                    <span>Profile</span>
+                                                </div>
+                                                <div className='flex items-center space-x-2 cursor-pointer text-[#fff] hover:text-[#2196f3] text-[14px] bg-[#4F515B] rounded-full px-[12px] py-[10px]'>
+                                                    <RxCounterClockwiseClock />
+                                                    <span>
+                                                        Continue Watching
+                                                    </span>
+                                                </div>
+                                                <div className='flex items-center space-x-2 cursor-pointer text-[#fff] hover:text-[#2196f3] text-[14px] bg-[#4F515B] rounded-full px-[12px] py-[10px]'>
+                                                    <AiTwotoneHeart />
+                                                    <span>Watch List</span>
+                                                </div>
+                                                <div className='flex items-center space-x-2 cursor-pointer text-[#fff] hover:text-[#2196f3] text-[14px] bg-[#4F515B] rounded-full px-[12px] py-[10px]'>
+                                                    <BsFillBellFill />
+                                                    <span>Notification</span>
+                                                </div>
+                                            </div>
+                                            <div className='flex items-center justify-end'>
+                                                <div
+                                                    onClick={() => {
+                                                        signOut()
+                                                    }}
+                                                    className='flex items-center py-[15px] px-[15px] text-[#Fff] hover:text-[#2196f3] text-[13px] cursor-pointer'
+                                                >
+                                                    <span>Login out</span>
+                                                    <BsArrowRightShort className='w-[20px] h-[20px]' />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                >
+                                    <img
+                                        onClick={() => {
+                                            avtUserOnClick()
+                                        }}
+                                        src={sessionData.user.image as string}
+                                        className='rounded-full w-[45px] h-[45px]'
+                                    />
+                                </Tippy>
+                            ) : (
+                                <button
+                                    onClick={() => {
+                                        handleLoginOnclick()
+                                    }}
+                                    className='text-[#162032] outline-none hover:text-[#fff] select-none border-solid border-[1px] border-[#868688] rounded-md px-[15px] py-[6px] bg-[#2196F3] md:block hidden'
+                                >
+                                    Login
+                                </button>
+                            )}
                         </div>
                     </div>
 
@@ -361,7 +445,7 @@ const Header = () => {
                 </div>
                 {loginFormVisible ? (
                     <div className='z-[11] fixed inset-0 flex items-center justify-center bg-gradient-to-b from-[#000] to-[rgba(0,0,0,0.05)]  '>
-                        <Login />
+                        <Login close={handleCloseLoginForm} />
                     </div>
                 ) : null}
             </div>
