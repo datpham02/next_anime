@@ -83,6 +83,28 @@ export const convertTimeStamp = (time_stamp: number) => {
     return { minute, hour, day, month, year }
 }
 
+export const calculateTimeElapsed = (time: string) => {
+    const timestampA = new Date(time).getTime()
+    const currentTime = Date.now()
+    const timeElapsed = currentTime - timestampA
+
+    const second = Math.floor(timeElapsed / 1000)
+    const minute = Math.floor(second / 60)
+    const hour = Math.floor(minute / 60)
+    const day = Math.floor(hour / 24)
+
+    if (day > 0) {
+        return `${day} day ago`
+    }
+    if (hour > 0) {
+        return `${hour} hour ago`
+    }
+    if (minute > 0) {
+        return `${minute} minute ago`
+    }
+    return `${second} second ago`
+}
+
 export const formatTime = (time: {
     minute: number
     hour: number

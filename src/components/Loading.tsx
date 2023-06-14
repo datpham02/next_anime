@@ -1,13 +1,10 @@
 import React from 'react'
 
-const Loading = () => {
+const Loading = ({ className }: { className?: string }) => {
     return (
-        <div className='loader'>
-            <div className='bar'></div>
-            <div className='bar'></div>
-            <div className='bar'></div>
-            <div className='bar'></div>
-        </div>
+        <svg id='loading' className={className} viewBox='25 25 50 50'>
+            <circle r='20' cy='50' cx='50'></circle>
+        </svg>
     )
 }
 

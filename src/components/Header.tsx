@@ -38,9 +38,6 @@ const Header = () => {
 
     const { data: sessionData } = useSession()
 
-    useEffect(() => {
-        if (sessionData) console.log(sessionData)
-    }, [sessionData])
     const handleOnchangeInputSearch = (e: ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value)
     }
@@ -100,9 +97,6 @@ const Header = () => {
         }
     }, [debounceSearch])
 
-    useEffect(() => {
-        if (isSuccess) console.log(data?.results)
-    }, [isSuccess])
     return (
         <>
             <div>
@@ -140,76 +134,87 @@ const Header = () => {
                                 {search && data ? (
                                     isSuccess ? (
                                         <div className='absolute w-full top-[50px] bg-[#414248]'>
-                                            {data.results.map(
-                                                (
-                                                    anime_search: AnimeSearch,
-                                                    index: number,
-                                                ) => {
-                                                    return (
-                                                        <Link
-                                                            href={`/detail?id=${anime_search.id}`}
-                                                        >
-                                                            <div
-                                                                key={
-                                                                    anime_search.id
-                                                                }
-                                                                className='flex flex-col'
-                                                            >
-                                                                <div className='group flex space-x-2 p-[8px] cursor-pointer'>
-                                                                    <img
-                                                                        className='w-[50px] h-[70px]'
-                                                                        src={
-                                                                            anime_search.image
+                                            {data.results.lenght > 0 ? (
+                                                <>
+                                                    {data.results.map(
+                                                        (
+                                                            anime_search: AnimeSearch,
+                                                            index: number,
+                                                        ) => {
+                                                            return (
+                                                                <Link
+                                                                    href={`/detail?id=${anime_search.id}`}
+                                                                >
+                                                                    <div
+                                                                        key={
+                                                                            anime_search.id
                                                                         }
-                                                                    />
-                                                                    <div className='flex flex-col space-y-1'>
-                                                                        <span
-                                                                            style={{
-                                                                                color: anime_search.color,
-                                                                            }}
-                                                                            className='font-semibold text-[#fff] line-clamp-1 group-hover:text-[#2196F3]'
-                                                                        >
-                                                                            {
-                                                                                anime_search
-                                                                                    .title
-                                                                                    .english
-                                                                            }
-                                                                        </span>
-                                                                        <span className='text-[#929293] text-[13px]'>
-                                                                            {
-                                                                                anime_search
-                                                                                    .title
-                                                                                    .romaji
-                                                                            }
-                                                                        </span>
-                                                                        <div className='flex items-center space-x-2 text-[#929293] text-[13px]'>
-                                                                            <span className='group-hover:text-[#2196F3] text-[#fff]'>
-                                                                                {
-                                                                                    anime_search.type
+                                                                        className='flex flex-col'
+                                                                    >
+                                                                        <div className='group flex space-x-2 p-[8px] cursor-pointer'>
+                                                                            <img
+                                                                                className='w-[50px] h-[70px]'
+                                                                                src={
+                                                                                    anime_search.image
                                                                                 }
-                                                                            </span>
-                                                                            <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
-                                                                            <span>
-                                                                                {
-                                                                                    anime_search.releaseDate
-                                                                                }
-                                                                            </span>
+                                                                            />
+                                                                            <div className='flex flex-col space-y-1'>
+                                                                                <span
+                                                                                    style={{
+                                                                                        color: anime_search.color,
+                                                                                    }}
+                                                                                    className='font-semibold text-[#fff] line-clamp-1 group-hover:text-[#2196F3]'
+                                                                                >
+                                                                                    {
+                                                                                        anime_search
+                                                                                            .title
+                                                                                            .english
+                                                                                    }
+                                                                                </span>
+                                                                                <span className='text-[#929293] text-[13px]'>
+                                                                                    {
+                                                                                        anime_search
+                                                                                            .title
+                                                                                            .romaji
+                                                                                    }
+                                                                                </span>
+                                                                                <div className='flex items-center space-x-2 text-[#929293] text-[13px]'>
+                                                                                    <span className='group-hover:text-[#2196F3] text-[#fff]'>
+                                                                                        {
+                                                                                            anime_search.type
+                                                                                        }
+                                                                                    </span>
+                                                                                    <span className='w-[4px] h-[4px] rounded-[50%] bg-[rgba(255,255,255,.3)] inline-block my-[3px] mx-[6px]'></span>
+                                                                                    <span>
+                                                                                        {
+                                                                                            anime_search.releaseDate
+                                                                                        }
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
+                                                                        {index +
+                                                                            1 <
+                                                                        5 ? (
+                                                                            <div className='border-dashed border border-gray-500'></div>
+                                                                        ) : null}
                                                                     </div>
-                                                                </div>
-                                                                {index + 1 <
-                                                                5 ? (
-                                                                    <div className='border-dashed border border-gray-500'></div>
-                                                                ) : null}
-                                                            </div>
-                                                        </Link>
-                                                    )
-                                                },
+                                                                </Link>
+                                                            )
+                                                        },
+                                                    )}
+                                                    <div className='bg-[#2196F3] flex items-center justify-center py-[10px] cursor-pointer space-x-2'>
+                                                        <span>
+                                                            View all results
+                                                        </span>
+                                                        <IoIosArrowForward />
+                                                    </div>
+                                                </>
+                                            ) : (
+                                                <div className='flex justify-center items-center w-full h-[50px] text-[#Fff]'>
+                                                    No result found
+                                                </div>
                                             )}
-                                            <div className='bg-[#2196F3] flex items-center justify-center py-[10px] cursor-pointer space-x-2'>
-                                                <span>View all results</span>
-                                                <IoIosArrowForward />
-                                            </div>
                                         </div>
                                     ) : (
                                         <div className='absolute w-full flex items-center h-[100px] justify-center top-[50px] bg-[#414248]'>
@@ -246,10 +251,6 @@ const Header = () => {
                                                 </span>
                                             </div>
                                             <div className='flex flex-col space-y-2 pt-[15px] px-[15px]'>
-                                                <div className='flex items-center space-x-2 cursor-pointer text-[#fff] hover:text-[#2196f3] text-[14px] bg-[#4F515B] rounded-full px-[12px] py-[10px]'>
-                                                    <FaUser />
-                                                    <span>Profile</span>
-                                                </div>
                                                 <div className='flex items-center space-x-2 cursor-pointer text-[#fff] hover:text-[#2196f3] text-[14px] bg-[#4F515B] rounded-full px-[12px] py-[10px]'>
                                                     <RxCounterClockwiseClock />
                                                     <span>

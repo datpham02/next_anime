@@ -1,16 +1,106 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BsPlayCircle } from 'react-icons/bs'
 import { FaCalendar, FaPlayCircle } from 'react-icons/fa'
 import { MdOutlineAccessTime } from 'react-icons/md'
 import { convertMonthNumberToMonthString } from '../utils/function'
-import { AiOutlinePlus } from 'react-icons/ai'
+import { AiOutlineLoading3Quarters, AiOutlinePlus } from 'react-icons/ai'
 import { Characters, Recommend, RelateAnime } from '~/components'
-import { getAnimeInfo } from '~/utils/API'
+import {
+    addWatchList,
+    getAnimeInfo,
+    getAnimeWatchListStatus,
+    removeWatchList,
+} from '~/utils/API'
 import { AnimeInfo } from '~/utils/interface'
 import { GetServerSidePropsContext } from 'next'
 import Link from 'next/link'
+import { useMutation } from '@tanstack/react-query'
+import { useSession } from 'next-auth/react'
+import toast from 'react-hot-toast'
+import { IoIosRemove } from 'react-icons/io'
 
 const Detail = ({ anime_info }: { anime_info: AnimeInfo }) => {
+    const { data: sessionData } = useSession()
+    const [followed, setFollowed] = useState<Boolean>(false)
+    const [loading, setLoading] = useState<Boolean>(true)
+
+    const { mutateAsync: AddWatchList, isLoading: addWatchListLoading } =
+        useMutation({
+            mutationFn: async (data: { userId: string; animeId: string }) => {
+                const result = await addWatchList(data.userId, data.animeId)
+                return result
+            },
+            onSuccess: (response) => {
+                if (response.success) {
+                    setFollowed(true)
+                    setLoading(false)
+                    toast.success(response.message)
+                } else {
+                    setFollowed(false)
+                    setLoading(false)
+                    toast.error(response.message)
+                }
+            },
+            onError: () => {
+                toast.error('Something went wrong please f5 and try again')
+            },
+        })
+    const { mutateAsync: RemoveWatchList, isLoading: removeWatchListLoading } =
+        useMutation({
+            mutationFn: async (data: { userId: string; animeId: string }) => {
+                const result = await removeWatchList(data.userId, data.animeId)
+
+                return result
+            },
+            onSuccess: (response) => {
+                if (response.success) {
+                    setFollowed(false)
+                    setLoading(false)
+                    toast.success(response.message)
+                } else {
+                    setFollowed(true)
+                    setLoading(false)
+                    toast.error(response.message)
+                }
+            },
+            onError: () => {
+                toast.error('Something went wrong please f5 and try again')
+            },
+        })
+
+    const handleOnclick = () => {
+        if (followed) {
+            setLoading(true)
+            RemoveWatchList({
+                userId: sessionData?.user?.id as string,
+                animeId: anime_info.id,
+            })
+        } else {
+            setLoading(true)
+            AddWatchList({
+                userId: sessionData?.user?.id as string,
+                animeId: anime_info.id,
+            })
+        }
+    }
+
+    useEffect(() => {
+        if (sessionData?.user.id) {
+            getAnimeWatchListStatus(
+                sessionData?.user.id as string,
+                anime_info.id,
+            )
+                .then((response) => {
+                    setFollowed(response.followed)
+                })
+                .catch(() => {
+                    toast.error('Something went wrong please f5 and try again')
+                })
+                .finally(() => {
+                    setLoading(false)
+                })
+        }
+    }, [sessionData?.user.id])
     return (
         <>
             <div className='w-full h-full flex flex-col overflow-hidden overflow-y-auto bg-[#202125]'>
@@ -70,9 +160,34 @@ const Detail = ({ anime_info }: { anime_info: AnimeInfo }) => {
                                                 <span>Watch Now</span>
                                             </button>
                                         </Link>
-                                        <button className='flex items-center space-x-2 bg-[#fff] 2xl:text-[17px] xl:text-[16px] lg:text-[15px] md:text-[14px] sm:[13px] text-[12px] 2xl:px-[20px] 2xl:py-[8px] xl:px-[18px] xl:py-[6px] lg:px-[18px] lg:py-[6px] md:px-[16px] md:py-[8px] sm:px-[14px] sm:py-[8px] px-[12px] py-[8px] rounded-full'>
-                                            <AiOutlinePlus />
-                                            <span>Add to List</span>
+
+                                        <button
+                                            onClick={() => {
+                                                handleOnclick()
+                                            }}
+                                            className='flex items-center space-x-2 bg-[#fff] 2xl:text-[17px] xl:text-[16px] lg:text-[15px] md:text-[14px] sm:[13px] text-[12px] 2xl:px-[20px] 2xl:py-[8px] xl:px-[18px] xl:py-[6px] lg:px-[18px] lg:py-[6px] md:px-[16px] md:py-[8px] sm:px-[14px] sm:py-[8px] px-[12px] py-[8px] rounded-full'
+                                        >
+                                            {followed ? (
+                                                <>
+                                                    {loading ? (
+                                                        <AiOutlineLoading3Quarters className='animate-spin' />
+                                                    ) : (
+                                                        <IoIosRemove />
+                                                    )}
+                                                    <span>
+                                                        Remove from List
+                                                    </span>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    {loading ? (
+                                                        <AiOutlineLoading3Quarters className='animate-spin' />
+                                                    ) : (
+                                                        <AiOutlinePlus />
+                                                    )}
+                                                    <span>Add to List</span>
+                                                </>
+                                            )}
                                         </button>
                                     </div>
                                     <p

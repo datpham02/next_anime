@@ -1,7 +1,10 @@
 export interface Children {
     children: React.ReactNode
 }
-
+export interface CommentProps {
+    animeId: string
+    episodeId: string
+}
 export interface RecommendProps {
     data: Recommendation[]
     props: React.HTMLAttributes<HTMLDivElement>
@@ -258,4 +261,28 @@ export interface Subtitle {
 export interface Intro {
     start: number
     end: number
+}
+
+export interface Comment {
+    user: User
+    content: string
+    disLike: any[]
+    like: any[]
+    commentAt: string
+    reply: Reply[]
+}
+
+export interface User {
+    id: string
+    email: string
+    name: string
+    image: string
+}
+
+export interface Reply {
+    user: User
+    content: string
+    disLike: any[]
+    like: any[]
+    replyAt: string
 }

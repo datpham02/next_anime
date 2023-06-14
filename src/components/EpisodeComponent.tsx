@@ -40,6 +40,7 @@ const Episode = ({ data }: { data: Episode[] }) => {
                                   if (index + 1 == parseInt(episodeFind)) {
                                       return (
                                           <div
+                                              key={episode.id}
                                               className={`relative w-full animate-pulse bg-[#423E46] cursor-pointer flex items-center justify-between px-[15px] py-[8px] text-[#2196F3]`}
                                           >
                                               {/* <div className='absolute animate-ping bg-[#423E46] w-full h-full'></div> */}
@@ -66,6 +67,7 @@ const Episode = ({ data }: { data: Episode[] }) => {
                                   } else {
                                       return (
                                           <div
+                                              key={episode.id}
                                               className={`relative w-full hover:bg-[#423E46] cursor-pointer flex items-center justify-between px-[15px] py-[8px] text-[#fff]`}
                                           >
                                               {/* <div className='absolute animate-ping bg-[#423E46] w-full h-full'></div> */}
@@ -93,6 +95,7 @@ const Episode = ({ data }: { data: Episode[] }) => {
                               } else {
                                   return (
                                       <div
+                                          key={episode.id}
                                           className={`relative w-full hover:bg-[#423E46] cursor-pointer flex items-center justify-between px-[15px] py-[8px] text-[#fff]`}
                                       >
                                           {/* <div className='absolute animate-ping bg-[#423E46] w-full h-full'></div> */}
@@ -122,6 +125,7 @@ const Episode = ({ data }: { data: Episode[] }) => {
                                   if (index + 1 == parseInt(episodeFind)) {
                                       return (
                                           <div
+                                              key={episode.id}
                                               className={`relative w-full bg-[#423E46] animate-pulse cursor-pointer flex items-center justify-between px-[15px] py-[8px] text-[#2196F3]`}
                                           >
                                               {episode.id ==
@@ -147,6 +151,7 @@ const Episode = ({ data }: { data: Episode[] }) => {
                                   } else {
                                       return (
                                           <div
+                                              key={episode.id}
                                               className={`relative w-full hover:bg-[#423E46] bg-[#2B2C30] cursor-pointer flex items-center justify-between px-[15px] py-[8px] text-[#fff]`}
                                           >
                                               {episode.id ==
@@ -173,6 +178,7 @@ const Episode = ({ data }: { data: Episode[] }) => {
                               } else {
                                   return (
                                       <div
+                                          key={episode.id}
                                           className={`relative w-full hover:bg-[#423E46] bg-[#2B2C30] cursor-pointer flex items-center justify-between px-[15px] py-[8px] text-[#fff]`}
                                       >
                                           {episode.id ==
@@ -203,20 +209,29 @@ const Episode = ({ data }: { data: Episode[] }) => {
                               if (episodeFind) {
                                   if (index + 1 == parseInt(episodeFind)) {
                                       return (
-                                          <span className='w-[50px] h-[35px]  bg-[#2196F3] animate-pulse rounded-sm flex items-center justify-center cursor-pointer'>
+                                          <span
+                                              key={episode.id}
+                                              className='w-[50px] h-[35px]  bg-[#2196F3] animate-pulse rounded-sm flex items-center justify-center cursor-pointer'
+                                          >
                                               {index + 1}
                                           </span>
                                       )
                                   } else {
                                       return (
-                                          <span className='w-[50px] h-[35px]  bg-[#2196F3] rounded-sm flex items-center justify-center cursor-pointer'>
+                                          <span
+                                              key={episode.id}
+                                              className='w-[50px] h-[35px]  bg-[#2196F3] rounded-sm flex items-center justify-center cursor-pointer'
+                                          >
                                               {index + 1}
                                           </span>
                                       )
                                   }
                               } else {
                                   return (
-                                      <span className='w-[50px] h-[35px]  bg-[#2196F3] rounded-sm flex items-center justify-center cursor-pointer'>
+                                      <span
+                                          key={episode.id}
+                                          className='w-[50px] h-[35px]  bg-[#2196F3] rounded-sm flex items-center justify-center cursor-pointer'
+                                      >
                                           {index + 1}
                                       </span>
                                   )
@@ -225,20 +240,29 @@ const Episode = ({ data }: { data: Episode[] }) => {
                               if (episodeFind) {
                                   if (index + 1 == parseInt(episodeFind)) {
                                       return (
-                                          <span className='w-[50px] h-[35px] bg-[#2196F3] animate-pulse rounded-sm flex items-center justify-center cursor-pointer'>
+                                          <span
+                                              key={episode.id}
+                                              className='w-[50px] h-[35px] bg-[#2196F3] animate-pulse rounded-sm flex items-center justify-center cursor-pointer'
+                                          >
                                               {index + 1}
                                           </span>
                                       )
                                   } else {
                                       return (
-                                          <span className='w-[50px] h-[35px] bg-[#fff] rounded-sm flex items-center justify-center cursor-pointer'>
+                                          <span
+                                              key={episode.id}
+                                              className='w-[50px] h-[35px] bg-[#fff] rounded-sm flex items-center justify-center cursor-pointer'
+                                          >
                                               {index + 1}
                                           </span>
                                       )
                                   }
                               } else {
                                   return (
-                                      <span className='w-[50px] h-[35px] bg-[#fff] rounded-sm flex items-center justify-center cursor-pointer'>
+                                      <span
+                                          key={episode.id}
+                                          className='w-[50px] h-[35px] bg-[#fff] rounded-sm flex items-center justify-center cursor-pointer'
+                                      >
                                           {index + 1}
                                       </span>
                                   )

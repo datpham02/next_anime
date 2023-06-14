@@ -12,9 +12,11 @@ const VideoPlayer = dynamic(() => import('../components/VideoPlayer'), {
 const Watch = ({
     anime_info,
     currentEpisode,
+    episodeId,
 }: {
     anime_info: AnimeInfo
     currentEpisode: EpisodeSource
+    episodeId: string
 }) => {
     return (
         <>
@@ -29,7 +31,10 @@ const Watch = ({
                 </div>
                 <div className='w-full flex lg:flex-row flex-col lg:space-x-4 lg:space-y-0 space-y-4 bg-[#202125] px-[20px] pt-[50px] rounded-sm'>
                     <div className='h-full lg:w-[80%] w-full flex flex-col space-y-4'>
-                        <Comment />
+                        <Comment
+                            animeId={anime_info.id}
+                            episodeId={episodeId}
+                        />
                         <Recommend
                             data={anime_info?.recommendations}
                             props={{}}
@@ -49,9 +54,9 @@ export default Watch
 export const getServerSideProps = async (
     context: GetServerSidePropsContext,
 ) => {
-    const { id } = context.query
+    const { id, episode } = context.query
 
-    if (!id) {
+    if (!(id && episode)) {
         return { notFound: true }
     }
 
@@ -64,6 +69,7 @@ export const getServerSideProps = async (
         props: {
             anime_info,
             currentEpisode,
+            episodeId: episode,
         },
     }
 }

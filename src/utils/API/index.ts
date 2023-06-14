@@ -1,3 +1,4 @@
+import axios from 'axios'
 import baseAPI from './baseApi'
 
 export const getTredingAnime = async (page: number = 1, perPage: number) => {
@@ -85,4 +86,93 @@ export const getAnimeEpisodeStreamingLink = async (
     })
 
     return data
+}
+
+export const addWatchList = async (userId: string, animeId: string) => {
+    const { data } = await axios.post('/api/watch_list/add', {
+        userId,
+        animeId,
+    })
+
+    return data
+}
+
+export const removeWatchList = async (userId: string, animeId: string) => {
+    const { data } = await axios.post('/api/watch_list/remove', {
+        userId,
+        animeId,
+    })
+
+    return data
+}
+
+export const getAnimeWatchListStatus = async (
+    userId: string,
+    animeId: string,
+) => {
+    const { data } = await axios.post('/api/watch_list/user/anime/status', {
+        userId,
+        animeId,
+    })
+
+    return data
+}
+
+export const getUserWatchList = async (userId: string) => {
+    const { data } = await axios.post('/api/watch_list/user/get', {
+        userId,
+    })
+
+    return data
+}
+
+export const CreateComment = async (
+    content: string,
+    userId: string,
+    episodeId: string,
+    animeId: string,
+) => {
+    const { data } = await axios.post('/api/comment/create', {
+        content: content,
+        userId: userId,
+        episodeId: episodeId,
+        animeId: animeId,
+    })
+
+    return data
+}
+
+export const DeleteComment = async (id: string) => {
+    const { data } = await axios.post(`/api/comment/delete?id=${id}`)
+
+    return data
+}
+
+export const CreateReply = async (
+    content: string,
+    userId: string,
+    commentId: string,
+) => {
+    const { data } = await axios.post('/api/comment/create', {
+        content: content,
+        userId: userId,
+        commentId: commentId,
+    })
+
+    return data
+}
+
+export const DeleteReply = async (commentId: string, replyId: string) => {
+    const { data } = await axios.post(
+        `/api/comment/delete?commentId=${commentId}&replyId=${replyId}`,
+    )
+
+    return data
+}
+export const GetComments = async (animeId: string, episodeId: string) => {
+    const { data } = await axios.get(
+        `/api/comment/anime/get?animeId=${animeId}&episodeId=${episodeId}`,
+    )
+
+    return data.comment
 }
