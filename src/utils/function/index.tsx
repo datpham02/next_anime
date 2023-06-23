@@ -102,6 +102,7 @@ export const calculateTimeElapsed = (time: string) => {
     if (minute > 0) {
         return `${minute} minute ago`
     }
+
     return `${second} second ago`
 }
 

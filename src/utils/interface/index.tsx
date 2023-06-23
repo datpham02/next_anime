@@ -264,6 +264,7 @@ export interface Intro {
 }
 
 export interface Comment {
+    id: string
     user: User
     content: string
     disLike: any[]
@@ -285,4 +286,17 @@ export interface Reply {
     disLike: any[]
     like: any[]
     replyAt: string
+}
+
+export interface InputCommentProps {
+    episodeId: string
+    animeId: string
+}
+export interface InputReplyProps {
+    commentId: string
+    inputReplyShow: any
+}
+export interface ReplyItemProps {
+    reply: Reply
+    commentId: string
 }

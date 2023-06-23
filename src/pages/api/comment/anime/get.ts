@@ -13,6 +13,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                     episodeId: episodeId as string,
                 },
                 select: {
+                    id: true,
                     user: {
                         select: {
                             id: true,
@@ -36,7 +37,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                                 },
                             },
                             content: true,
-                            replytAt: true,
+                            replyAt: true,
                             disLike: true,
                             like: true,
                         },
@@ -46,14 +47,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
             if (comment) {
                 return res.status(201).json({
-                    comment: comment,
+                    comment: comment ?? [],
                     success: true,
-                    message: 'Get comments success !',
-                })
-            } else {
-                return res.status(204).json({
-                    message: 'Get comments failed !',
-                    success: false,
                 })
             }
         } catch (err) {

@@ -153,7 +153,7 @@ export const CreateReply = async (
     userId: string,
     commentId: string,
 ) => {
-    const { data } = await axios.post('/api/comment/create', {
+    const { data } = await axios.post('/api/reply/create', {
         content: content,
         userId: userId,
         commentId: commentId,
@@ -164,7 +164,7 @@ export const CreateReply = async (
 
 export const DeleteReply = async (commentId: string, replyId: string) => {
     const { data } = await axios.post(
-        `/api/comment/delete?commentId=${commentId}&replyId=${replyId}`,
+        `/api/reply/delete?commentId=${commentId}&replyId=${replyId}`,
     )
 
     return data
@@ -175,4 +175,36 @@ export const GetComments = async (animeId: string, episodeId: string) => {
     )
 
     return data.comment
+}
+
+export const LikeComment = async (commentId: string, userId: string) => {
+    const { data } = await axios.post('/api/comment/like', {
+        commentId: commentId,
+        userId: userId,
+    })
+    return data
+}
+
+export const DisLikeComment = async (commentId: string, userId: string) => {
+    const { data } = await axios.post('/api/comment/dislike', {
+        commentId: commentId,
+        userId: userId,
+    })
+    return data
+}
+
+export const LikeReply = async (commentId: string, userId: string) => {
+    const { data } = await axios.post('/api/reply/like', {
+        commentId: commentId,
+        userId: userId,
+    })
+    return data
+}
+
+export const DisLikeReply = async (commentId: string, userId: string) => {
+    const { data } = await axios.post('/api/reply/dislike', {
+        commentId: commentId,
+        userId: userId,
+    })
+    return data
 }

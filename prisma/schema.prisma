@@ -100,7 +100,7 @@ model Comment {
 model Reply {
   id        String    @id @default(cuid()) @map("_id")
   content   String
-  replytAt  DateTime  @default(now()) @db.Timestamp
+  replyAt   DateTime  @default(now()) @db.Timestamp
   comment   Comment?  @relation(fields: [commentId], references: [id])
   commentId String?
   user      User?     @relation(fields: [userId], references: [id])

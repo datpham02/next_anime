@@ -5,31 +5,29 @@ import prisma from '~/lib/prisma'
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method == 'POST') {
         try {
-            const { content, userId, commentId } = req.body
+            const { commentId, userId } = req.body
 
-            console.log(commentId, content, userId)
-            const reply = await prisma.comment.update({
+            const dislike = await prisma.comment.update({
                 where: {
-                    id: commentId as string,
+                    id: commentId,
                 },
                 data: {
-                    reply: {
+                    disLike: {
                         create: {
-                            content: content,
                             userId: userId,
                         },
                     },
                 },
             })
 
-            if (reply) {
+            if (dislike) {
                 return res.status(201).json({
-                    message: 'Reply success !',
+                    message: 'Dislike success !',
                     success: true,
                 })
             } else {
                 return res.status(204).json({
-                    message: 'Reply failed !',
+                    message: 'Dislike failed !',
                     success: false,
                 })
             }

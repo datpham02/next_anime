@@ -1,5 +1,10 @@
 import React from 'react'
-import { EpisodeComponent, Recommend, RelateAnime, Comment } from '~/components'
+import {
+    EpisodeComponent,
+    Recommend,
+    RelateAnime,
+    CommentComponent,
+} from '~/components'
 import dynamic from 'next/dynamic'
 import { GetServerSidePropsContext } from 'next/types'
 import { getAnimeEpisodeStreamingLink, getAnimeInfo } from '~/utils/API'
@@ -31,7 +36,7 @@ const Watch = ({
                 </div>
                 <div className='w-full flex lg:flex-row flex-col lg:space-x-4 lg:space-y-0 space-y-4 bg-[#202125] px-[20px] pt-[50px] rounded-sm'>
                     <div className='h-full lg:w-[80%] w-full flex flex-col space-y-4'>
-                        <Comment
+                        <CommentComponent
                             animeId={anime_info.id}
                             episodeId={episodeId}
                         />
