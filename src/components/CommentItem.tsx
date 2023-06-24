@@ -2,14 +2,22 @@ import React, { useRef, useState } from 'react'
 import { BiLike, BiDislike } from 'react-icons/bi'
 import { BsFillReplyFill } from 'react-icons/bs'
 import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io'
-import { calculateTimeElapsed } from '~/utils/function'
+import { calculateTimeElapsed, isLike } from '~/utils/function'
 import { Comment, Reply } from '~/utils/interface'
 import InputReply from './InputReply'
 import ReplyItem from './ReplyItem'
 import { useMutation } from '@tanstack/react-query'
-import { LikeComment } from '~/utils/API'
+import {
+    CancelLikeDisLikeComment,
+    DisLikeComment,
+    LikeComment,
+} from '~/utils/API'
+import toast from 'react-hot-toast'
+import { useSession } from 'next-auth/react'
+import { queryClient } from '~/pages/_app'
 
 const CommentItem = ({ commentData }: { commentData: Comment }) => {
+    const { data: sessionData } = useSession()
     const wrappedInputReplyRef = useRef<HTMLDivElement>(null)
     const wrappedReplyRef = useRef<HTMLDivElement>(null)
     const [replyShow, setReplyShow] = useState<Boolean>(false)
@@ -19,8 +27,60 @@ const CommentItem = ({ commentData }: { commentData: Comment }) => {
             const result = await LikeComment(data.commentId, data.userId)
             return result
         },
+        onError: () => {
+            toast.error('Something went wrong please f5 and try again')
+        },
+        onSuccess: () => {
+            queryClient.refetchQueries(['comment'])
+        },
     })
 
+    const { mutate: dislike } = useMutation({
+        mutationFn: async (data: { commentId: string; userId: string }) => {
+            const result = await DisLikeComment(data.commentId, data.userId)
+            return result
+        },
+        onError: () => {
+            toast.error('Something went wrong please f5 and try again')
+        },
+        onSuccess: () => {
+            queryClient.refetchQueries(['comment'])
+        },
+    })
+    const { mutate: cancel } = useMutation({
+        mutationFn: async (data: { commentId: string; userId: string }) => {
+            const result = await CancelLikeDisLikeComment(
+                data.commentId,
+                data.userId,
+            )
+            return result
+        },
+        onError: () => {
+            toast.error('Something went wrong please f5 and try again')
+        },
+        onSuccess: () => {
+            queryClient.refetchQueries(['comment'])
+        },
+    })
+
+    const handleLike = () => {
+        like({
+            commentId: commentData.id as string,
+            userId: sessionData?.user.id as string,
+        })
+    }
+    const handleDisLike = () => {
+        dislike({
+            commentId: commentData.id as string,
+            userId: sessionData?.user.id as string,
+        })
+    }
+    const handleCancel = () => {
+        cancel({
+            commentId: commentData.id as string,
+            userId: sessionData?.user.id as string,
+        })
+    }
     const handleReplyOnClick = () => {
         if (wrappedInputReplyRef && wrappedInputReplyRef.current) {
             wrappedInputReplyRef.current.classList.toggle('h-[0px]')
@@ -32,6 +92,7 @@ const CommentItem = ({ commentData }: { commentData: Comment }) => {
             wrappedReplyRef.current.classList.toggle('h-[0px]')
         }
     }
+
     return (
         <div className='w-full flex justify-start space-x-3'>
             <div className='flex justify-start'>
@@ -65,8 +126,56 @@ const CommentItem = ({ commentData }: { commentData: Comment }) => {
                                 Reply
                             </span>
                         </div>
-                        <BiLike className='cursor-pointer hover:text-[#2196F3]' />
-                        <BiDislike className='cursor-pointer hover:text-[#2196F3]' />
+                        <div className='flex space-x-2 items-center'>
+                            {isLike(
+                                sessionData?.user.id as string,
+                                commentData.like,
+                            ) ? (
+                                <BiLike
+                                    onClick={() => {
+                                        handleCancel()
+                                    }}
+                                    className='cursor-pointer text-[#2196F3]'
+                                />
+                            ) : (
+                                <BiLike
+                                    onClick={() => {
+                                        handleLike()
+                                    }}
+                                    className='cursor-pointer hover:text-[#2196F3]'
+                                />
+                            )}
+                            <span className='text-[#2196F3] text-[13px]'>
+                                {commentData.like.length > 0
+                                    ? commentData.like.length
+                                    : null}
+                            </span>
+                        </div>
+                        <div className='flex space-x-2 items-center'>
+                            {isLike(
+                                sessionData?.user.id as string,
+                                commentData.disLike,
+                            ) ? (
+                                <BiDislike
+                                    onClick={() => {
+                                        handleCancel()
+                                    }}
+                                    className='cursor-pointer text-[#2196F3]'
+                                />
+                            ) : (
+                                <BiDislike
+                                    onClick={() => {
+                                        handleDisLike()
+                                    }}
+                                    className='cursor-pointer hover:text-[#2196F3]'
+                                />
+                            )}
+                            <span className='text-[#2196F3] text-[13px]'>
+                                {commentData.disLike.length > 0
+                                    ? commentData.disLike.length
+                                    : null}
+                            </span>
+                        </div>
                     </div>
                     <div
                         ref={wrappedInputReplyRef}

@@ -4,9 +4,74 @@ import { BsFillReplyFill } from 'react-icons/bs'
 import { calculateTimeElapsed } from '~/utils/function'
 import { ReplyItemProps } from '~/utils/interface'
 import InputReply from './InputReply'
+import { CancelLikeDisLikeReply, DisLikeReply, LikeReply } from '~/utils/API'
+import { useMutation } from '@tanstack/react-query'
+import { useSession } from 'next-auth/react'
+import toast from 'react-hot-toast'
+import { queryClient } from '~/pages/_app'
 
 const ReplyItem = ({ reply, commentId }: ReplyItemProps) => {
+    const { data: sessionData } = useSession()
     const wrappedInputReplyRef = useRef<HTMLDivElement>(null)
+    const { mutate: like } = useMutation({
+        mutationFn: async (data: { replyId: string; userId: string }) => {
+            const result = await LikeReply(data.replyId, data.userId)
+            return result
+        },
+        onError: () => {
+            toast.error('Something went wrong please f5 and try again')
+        },
+        onSuccess: () => {
+            queryClient.refetchQueries(['comment'])
+        },
+    })
+
+    const { mutate: dislike } = useMutation({
+        mutationFn: async (data: { replyId: string; userId: string }) => {
+            const result = await DisLikeReply(data.replyId, data.userId)
+            return result
+        },
+        onError: () => {
+            toast.error('Something went wrong please f5 and try again')
+        },
+        onSuccess: () => {
+            queryClient.refetchQueries(['comment'])
+        },
+    })
+    const { mutate: cancel } = useMutation({
+        mutationFn: async (data: { replyId: string; userId: string }) => {
+            const result = await CancelLikeDisLikeReply(
+                data.replyId,
+                data.userId,
+            )
+            return result
+        },
+        onError: () => {
+            toast.error('Something went wrong please f5 and try again')
+        },
+        onSuccess: () => {
+            queryClient.refetchQueries(['comment'])
+        },
+    })
+
+    const handleLike = () => {
+        like({
+            replyId: commentId as string,
+            userId: sessionData?.user.id as string,
+        })
+    }
+    const handleDisLike = () => {
+        dislike({
+            replyId: commentId as string,
+            userId: sessionData?.user.id as string,
+        })
+    }
+    const handleCancel = () => {
+        cancel({
+            replyId: commentId as string,
+            userId: sessionData?.user.id as string,
+        })
+    }
     const handleReplyOnClick = () => {
         if (wrappedInputReplyRef && wrappedInputReplyRef.current) {
             wrappedInputReplyRef.current.classList.toggle('h-[0px]')

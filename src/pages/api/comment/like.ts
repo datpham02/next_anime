@@ -7,6 +7,48 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         try {
             const { commentId, userId } = req.body
 
+            const dislike = await prisma.comment.findUnique({
+                where: {
+                    id: commentId,
+                },
+                select: {
+                    disLike: {
+                        where: {
+                            userId: userId,
+                        },
+                    },
+                },
+            })
+            if (dislike?.disLike[0]) {
+                const like = await prisma.comment.update({
+                    where: {
+                        id: commentId,
+                    },
+                    data: {
+                        like: {
+                            create: {
+                                userId: userId,
+                            },
+                        },
+                        disLike: {
+                            delete: {
+                                id: dislike?.disLike[0].id,
+                            },
+                        },
+                    },
+                })
+                if (like) {
+                    return res.status(201).json({
+                        message: 'Like success !',
+                        success: true,
+                    })
+                } else {
+                    return res.status(204).json({
+                        message: 'Like failed !',
+                        success: false,
+                    })
+                }
+            }
             const like = await prisma.comment.update({
                 where: {
                     id: commentId,

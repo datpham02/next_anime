@@ -208,3 +208,27 @@ export const DisLikeReply = async (commentId: string, userId: string) => {
     })
     return data
 }
+
+export const CancelLikeDisLikeComment = async (
+    commentId: string,
+    userId: string,
+) => {
+    const { data } = await axios.post('/api/comment/cancel', {
+        commentId: commentId,
+        userId: userId,
+    })
+
+    return data
+}
+
+export const CancelLikeDisLikeReply = async (
+    commentId: string,
+    userId: string,
+) => {
+    const { data } = await axios.post('/api/reply/cancel', {
+        commentId: commentId,
+        userId: userId,
+    })
+
+    return data
+}

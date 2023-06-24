@@ -19,17 +19,25 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                     },
                 },
             })
-            if (like?.like[0]) {
-                const disLike = await prisma.comment.update({
+            const dislike = await prisma.comment.findUnique({
+                where: {
+                    id: commentId,
+                },
+                select: {
+                    disLike: {
+                        where: {
+                            userId: userId,
+                        },
+                    },
+                },
+            })
+
+            if (like) {
+                const cancel = await prisma.comment.update({
                     where: {
                         id: commentId,
                     },
                     data: {
-                        disLike: {
-                            create: {
-                                userId: userId,
-                            },
-                        },
                         like: {
                             delete: {
                                 id: like?.like[0].id,
@@ -37,41 +45,32 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                         },
                     },
                 })
-                if (disLike) {
-                    return res.status(201).json({
-                        message: 'DisLike success !',
+                if (cancel)
+                    return res.json({
+                        message: 'Cancel success !',
                         success: true,
                     })
-                } else {
-                    return res.status(204).json({
-                        message: 'DisLike failed !',
-                        success: false,
-                    })
-                }
+                return res.json({ message: 'Cancel failed !', success: false })
             }
-            const disLike = await prisma.comment.update({
-                where: {
-                    id: commentId,
-                },
-                data: {
-                    disLike: {
-                        create: {
-                            userId: userId,
+            if (dislike) {
+                const cancel = await prisma.comment.update({
+                    where: {
+                        id: commentId,
+                    },
+                    data: {
+                        disLike: {
+                            delete: {
+                                id: dislike?.disLike[0].id,
+                            },
                         },
                     },
-                },
-            })
-
-            if (disLike) {
-                return res.status(201).json({
-                    message: 'DisLike success !',
-                    success: true,
                 })
-            } else {
-                return res.status(204).json({
-                    message: 'DisLike failed !',
-                    success: false,
-                })
+                if (cancel)
+                    return res.json({
+                        message: 'Cancel success !',
+                        success: true,
+                    })
+                return res.json({ message: 'Cancel failed !', success: false })
             }
         } catch (err) {
             return res.status(500).json('Server not found!')

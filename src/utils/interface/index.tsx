@@ -300,3 +300,15 @@ export interface ReplyItemProps {
     reply: Reply
     commentId: string
 }
+
+export interface Like {
+    id: string
+    commentId: string
+    userId: string
+}
+
+export interface DisLike {
+    id: string
+    commentId: string
+    userId: string
+}

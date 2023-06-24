@@ -1,3 +1,5 @@
+import { Like } from '../interface'
+
 export const convertMonthNumberToMonthString = (monthNumber: number) => {
     const months = [
         'Jan',
@@ -119,4 +121,10 @@ export const formatTime = (time: {
     let month = time.month > 9 ? time.month : `0${time.month}`
     let year = time.year > 9 ? time.year : `0${time.year}`
     return `${hour} : ${minute} - ${day}/${month}/${year}`
+}
+
+export const isLike = (userId: string, likeData: Like[]) => {
+    if (likeData.find((like) => like.userId === userId)) {
+        return true
+    } else return false
 }
