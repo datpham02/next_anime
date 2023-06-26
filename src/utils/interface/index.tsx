@@ -312,3 +312,17 @@ export interface DisLike {
     commentId: string
     userId: string
 }
+export interface LikeComponentProps {
+    isLike: Boolean
+
+    handleLike: any
+    handleCancel: any
+    count: number
+}
+export interface DisLikeComponentProps {
+    isDisLike: Boolean
+
+    handleDisLike: any
+    handleCancel: any
+    count: number
+}

@@ -1,7 +1,7 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { BiLike, BiDislike } from 'react-icons/bi'
 import { BsFillReplyFill } from 'react-icons/bs'
-import { calculateTimeElapsed } from '~/utils/function'
+import { calculateTimeElapsed, isDisLike, isLike } from '~/utils/function'
 import { ReplyItemProps } from '~/utils/interface'
 import InputReply from './InputReply'
 import { CancelLikeDisLikeReply, DisLikeReply, LikeReply } from '~/utils/API'
@@ -9,10 +9,43 @@ import { useMutation } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import toast from 'react-hot-toast'
 import { queryClient } from '~/pages/_app'
+import DisLikeComponent from './DisLikeComponent'
+import LikeComponent from './LikeComponent'
 
 const ReplyItem = ({ reply, commentId }: ReplyItemProps) => {
     const { data: sessionData } = useSession()
     const wrappedInputReplyRef = useRef<HTMLDivElement>(null)
+    const [isLikeState, setIsLikeState] = useState<{
+        state: Boolean
+        count: number
+    }>({ state: false, count: 0 })
+    const [isDisLikeState, setIsDisLikeState] = useState<{
+        state: Boolean
+        count: number
+    }>({ state: false, count: 0 })
+
+    useEffect(() => {
+        if (reply.like.length > 0) {
+            if (isLike(sessionData?.user.id as string, reply.like)) {
+                setIsLikeState({
+                    ...isLikeState,
+                    state: true,
+                    count: reply.like.length,
+                })
+            }
+        }
+    }, [reply])
+    useEffect(() => {
+        if (reply.disLike.length > 0) {
+            if (isDisLike(sessionData?.user.id as string, reply.disLike)) {
+                setIsDisLikeState({
+                    ...isDisLikeState,
+                    state: true,
+                    count: reply.disLike.length,
+                })
+            }
+        }
+    }, [reply])
     const { mutate: like } = useMutation({
         mutationFn: async (data: { replyId: string; userId: string }) => {
             const result = await LikeReply(data.replyId, data.userId)
@@ -21,7 +54,7 @@ const ReplyItem = ({ reply, commentId }: ReplyItemProps) => {
         onError: () => {
             toast.error('Something went wrong please f5 and try again')
         },
-        onSuccess: () => {
+        onSettled: () => {
             queryClient.refetchQueries(['comment'])
         },
     })
@@ -34,7 +67,7 @@ const ReplyItem = ({ reply, commentId }: ReplyItemProps) => {
         onError: () => {
             toast.error('Something went wrong please f5 and try again')
         },
-        onSuccess: () => {
+        onSettled: () => {
             queryClient.refetchQueries(['comment'])
         },
     })
@@ -49,24 +82,71 @@ const ReplyItem = ({ reply, commentId }: ReplyItemProps) => {
         onError: () => {
             toast.error('Something went wrong please f5 and try again')
         },
-        onSuccess: () => {
+        onSettled: () => {
             queryClient.refetchQueries(['comment'])
         },
     })
-
     const handleLike = () => {
+        setIsLikeState({
+            ...isLikeState,
+            state: true,
+            count: isLikeState.count + 1,
+        })
+        setIsDisLikeState({
+            ...isDisLikeState,
+            state: false,
+            count:
+                isDisLikeState.count > 0
+                    ? isDisLikeState.count - 1
+                    : isDisLikeState.count,
+        })
         like({
             replyId: commentId as string,
             userId: sessionData?.user.id as string,
         })
     }
     const handleDisLike = () => {
+        setIsDisLikeState({
+            ...isDisLikeState,
+            state: true,
+            count: isDisLikeState.count + 1,
+        })
+        setIsLikeState({
+            ...isLikeState,
+            state: false,
+            count:
+                isLikeState.count > 0
+                    ? isLikeState.count - 1
+                    : isLikeState.count,
+        })
         dislike({
             replyId: commentId as string,
             userId: sessionData?.user.id as string,
         })
     }
-    const handleCancel = () => {
+    const handleCancelLike = () => {
+        setIsLikeState({
+            ...isLikeState,
+            state: false,
+            count:
+                isLikeState.count > 0
+                    ? isLikeState.count - 1
+                    : isLikeState.count,
+        })
+        cancel({
+            replyId: commentId as string,
+            userId: sessionData?.user.id as string,
+        })
+    }
+    const handleCancelDisLike = () => {
+        setIsDisLikeState({
+            ...isDisLikeState,
+            state: false,
+            count:
+                isDisLikeState.count > 0
+                    ? isDisLikeState.count - 1
+                    : isDisLikeState.count,
+        })
         cancel({
             replyId: commentId as string,
             userId: sessionData?.user.id as string,
@@ -114,8 +194,18 @@ const ReplyItem = ({ reply, commentId }: ReplyItemProps) => {
                             Reply
                         </span>
                     </div>
-                    <BiLike className='cursor-pointer hover:text-[#2196F3]' />
-                    <BiDislike className='cursor-pointer hover:text-[#2196F3]' />
+                    <LikeComponent
+                        isLike={isLikeState.state}
+                        handleLike={handleLike}
+                        handleCancel={handleCancelLike}
+                        count={isLikeState.count}
+                    />
+                    <DisLikeComponent
+                        isDisLike={isDisLikeState.state}
+                        handleDisLike={handleDisLike}
+                        handleCancel={handleCancelDisLike}
+                        count={isDisLikeState.count}
+                    />
                 </div>
                 <div
                     ref={wrappedInputReplyRef}

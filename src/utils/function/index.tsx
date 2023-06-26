@@ -1,4 +1,4 @@
-import { Like } from '../interface'
+import { DisLike, Like } from '../interface'
 
 export const convertMonthNumberToMonthString = (monthNumber: number) => {
     const months = [
@@ -125,6 +125,12 @@ export const formatTime = (time: {
 
 export const isLike = (userId: string, likeData: Like[]) => {
     if (likeData.find((like) => like.userId === userId)) {
+        return true
+    } else return false
+}
+
+export const isDisLike = (userId: string, disLikeData: DisLike[]) => {
+    if (disLikeData.find((dislike) => dislike.userId === userId)) {
         return true
     } else return false
 }

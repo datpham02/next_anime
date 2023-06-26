@@ -1,8 +1,7 @@
-import React, { useRef, useState } from 'react'
-import { BiLike, BiDislike } from 'react-icons/bi'
+import React, { useEffect, useRef, useState } from 'react'
 import { BsFillReplyFill } from 'react-icons/bs'
 import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io'
-import { calculateTimeElapsed, isLike } from '~/utils/function'
+import { calculateTimeElapsed, isDisLike, isLike } from '~/utils/function'
 import { Comment, Reply } from '~/utils/interface'
 import InputReply from './InputReply'
 import ReplyItem from './ReplyItem'
@@ -15,13 +14,47 @@ import {
 import toast from 'react-hot-toast'
 import { useSession } from 'next-auth/react'
 import { queryClient } from '~/pages/_app'
+import LikeComponent from './LikeComponent'
+import DisLikeComponent from './DisLikeComponent'
 
 const CommentItem = ({ commentData }: { commentData: Comment }) => {
     const { data: sessionData } = useSession()
     const wrappedInputReplyRef = useRef<HTMLDivElement>(null)
     const wrappedReplyRef = useRef<HTMLDivElement>(null)
     const [replyShow, setReplyShow] = useState<Boolean>(false)
+    const [isLikeState, setIsLikeState] = useState<{
+        state: Boolean
+        count: number
+    }>({ state: false, count: 0 })
+    const [isDisLikeState, setIsDisLikeState] = useState<{
+        state: Boolean
+        count: number
+    }>({ state: false, count: 0 })
 
+    useEffect(() => {
+        if (commentData.like.length > 0) {
+            if (isLike(sessionData?.user.id as string, commentData.like)) {
+                setIsLikeState({
+                    ...isLikeState,
+                    state: true,
+                    count: commentData.like.length,
+                })
+            }
+        }
+    }, [commentData])
+    useEffect(() => {
+        if (commentData.disLike.length > 0) {
+            if (
+                isDisLike(sessionData?.user.id as string, commentData.disLike)
+            ) {
+                setIsDisLikeState({
+                    ...isDisLikeState,
+                    state: true,
+                    count: commentData.disLike.length,
+                })
+            }
+        }
+    }, [commentData])
     const { mutate: like } = useMutation({
         mutationFn: async (data: { commentId: string; userId: string }) => {
             const result = await LikeComment(data.commentId, data.userId)
@@ -30,7 +63,7 @@ const CommentItem = ({ commentData }: { commentData: Comment }) => {
         onError: () => {
             toast.error('Something went wrong please f5 and try again')
         },
-        onSuccess: () => {
+        onSettled: () => {
             queryClient.refetchQueries(['comment'])
         },
     })
@@ -43,7 +76,8 @@ const CommentItem = ({ commentData }: { commentData: Comment }) => {
         onError: () => {
             toast.error('Something went wrong please f5 and try again')
         },
-        onSuccess: () => {
+
+        onSettled: () => {
             queryClient.refetchQueries(['comment'])
         },
     })
@@ -64,18 +98,66 @@ const CommentItem = ({ commentData }: { commentData: Comment }) => {
     })
 
     const handleLike = () => {
+        setIsLikeState({
+            ...isLikeState,
+            state: true,
+            count: isLikeState.count + 1,
+        })
+        setIsDisLikeState({
+            ...isDisLikeState,
+            state: false,
+            count:
+                isDisLikeState.count > 0
+                    ? isDisLikeState.count - 1
+                    : isDisLikeState.count,
+        })
         like({
             commentId: commentData.id as string,
             userId: sessionData?.user.id as string,
         })
     }
     const handleDisLike = () => {
+        setIsDisLikeState({
+            ...isDisLikeState,
+            state: true,
+            count: isDisLikeState.count + 1,
+        })
+        setIsLikeState({
+            ...isLikeState,
+            state: false,
+            count:
+                isLikeState.count > 0
+                    ? isLikeState.count - 1
+                    : isLikeState.count,
+        })
         dislike({
             commentId: commentData.id as string,
             userId: sessionData?.user.id as string,
         })
     }
-    const handleCancel = () => {
+    const handleCancelLike = () => {
+        setIsLikeState({
+            ...isLikeState,
+            state: false,
+            count:
+                isLikeState.count > 0
+                    ? isLikeState.count - 1
+                    : isLikeState.count,
+        })
+        cancel({
+            commentId: commentData.id as string,
+            userId: sessionData?.user.id as string,
+        })
+    }
+    const handleCancelDisLike = () => {
+        setIsDisLikeState({
+            ...isDisLikeState,
+            state: false,
+            count:
+                isDisLikeState.count > 0
+                    ? isDisLikeState.count - 1
+                    : isDisLikeState.count,
+        })
         cancel({
             commentId: commentData.id as string,
             userId: sessionData?.user.id as string,
@@ -126,56 +208,19 @@ const CommentItem = ({ commentData }: { commentData: Comment }) => {
                                 Reply
                             </span>
                         </div>
-                        <div className='flex space-x-2 items-center'>
-                            {isLike(
-                                sessionData?.user.id as string,
-                                commentData.like,
-                            ) ? (
-                                <BiLike
-                                    onClick={() => {
-                                        handleCancel()
-                                    }}
-                                    className='cursor-pointer text-[#2196F3]'
-                                />
-                            ) : (
-                                <BiLike
-                                    onClick={() => {
-                                        handleLike()
-                                    }}
-                                    className='cursor-pointer hover:text-[#2196F3]'
-                                />
-                            )}
-                            <span className='text-[#2196F3] text-[13px]'>
-                                {commentData.like.length > 0
-                                    ? commentData.like.length
-                                    : null}
-                            </span>
-                        </div>
-                        <div className='flex space-x-2 items-center'>
-                            {isLike(
-                                sessionData?.user.id as string,
-                                commentData.disLike,
-                            ) ? (
-                                <BiDislike
-                                    onClick={() => {
-                                        handleCancel()
-                                    }}
-                                    className='cursor-pointer text-[#2196F3]'
-                                />
-                            ) : (
-                                <BiDislike
-                                    onClick={() => {
-                                        handleDisLike()
-                                    }}
-                                    className='cursor-pointer hover:text-[#2196F3]'
-                                />
-                            )}
-                            <span className='text-[#2196F3] text-[13px]'>
-                                {commentData.disLike.length > 0
-                                    ? commentData.disLike.length
-                                    : null}
-                            </span>
-                        </div>
+
+                        <LikeComponent
+                            isLike={isLikeState.state}
+                            handleLike={handleLike}
+                            handleCancel={handleCancelLike}
+                            count={isLikeState.count}
+                        />
+                        <DisLikeComponent
+                            isDisLike={isDisLikeState.state}
+                            handleDisLike={handleDisLike}
+                            handleCancel={handleCancelDisLike}
+                            count={isDisLikeState.count}
+                        />
                     </div>
                     <div
                         ref={wrappedInputReplyRef}

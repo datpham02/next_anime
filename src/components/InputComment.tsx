@@ -28,9 +28,11 @@ const InputComment = ({ episodeId, animeId }: InputCommentProps) => {
         onError: () => {
             toast.error('Something went wrong please f5 and try again')
         },
+        onSettled: () => {
+            queryClient.refetchQueries(['comment'])
+        },
         onSuccess: () => {
             setComment('')
-            queryClient.refetchQueries(['comment'])
         },
     })
 
