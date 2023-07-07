@@ -5,7 +5,7 @@ import prisma from '~/lib/prisma'
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method == 'POST') {
         try {
-            const { userId, animeId } = req.body
+            const { userId, animeId, name, image } = req.body
             const check = await prisma.watchList.findFirst({
                 where: {
                     animeId: animeId,
@@ -26,6 +26,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                     watchList: {
                         create: {
                             animeId,
+                            name,
+                            image,
                         },
                     },
                 },

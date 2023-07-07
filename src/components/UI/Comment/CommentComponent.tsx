@@ -1,12 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
-import React, { memo } from 'react'
+import React, { memo, useEffect } from 'react'
 import { FaSort } from 'react-icons/fa'
 import { IoChatboxOutline } from 'react-icons/io5'
 import { GetComments } from '~/utils/API'
 import { Comment, CommentProps } from '~/utils/interface'
-import CommentItem from './CommentItem'
 import InputComment from './InputComment'
+import CommentBase from './CommentBase'
+import { formatCommentData, mergeData } from '~/utils/function'
 
 const CommentComponent = ({ animeId, episodeId }: CommentProps) => {
     const { data: sessionData } = useSession()
@@ -60,11 +61,14 @@ const CommentComponent = ({ animeId, episodeId }: CommentProps) => {
 
                 <div className='flex flex-col space-y-4'>
                     {data &&
-                        data.map((comment: Comment) => {
+                        formatCommentData(data).map((comment: Comment) => {
                             return (
-                                <CommentItem
+                                <CommentBase
                                     key={comment.content + comment.commentAt}
                                     commentData={comment}
+                                    animeId={animeId}
+                                    episodeId={episodeId}
+                                    Data={data}
                                 />
                             )
                         })}

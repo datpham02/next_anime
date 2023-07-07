@@ -1,4 +1,4 @@
-import { DisLike, Like } from '../interface'
+import { Comment, DisLike, Like, Reply, User } from '../interface'
 
 export const convertMonthNumberToMonthString = (monthNumber: number) => {
     const months = [
@@ -133,4 +133,76 @@ export const isDisLike = (userId: string, disLikeData: DisLike[]) => {
     if (disLikeData.find((dislike) => dislike.userId === userId)) {
         return true
     } else return false
+}
+
+export const formatCommentData = (commentData: Comment[]) => {
+    return commentData.filter((comment: Comment) => {
+        return comment.parentCommentId == null
+    })
+}
+export const getCommentReply = (id: String, commentData: Comment[]) => {
+    return commentData.filter((comment) => comment.id == id)[0]
+}
+
+export const mergeData = (replyArr: Reply[], commentData: Comment[]) => {
+    const result: Reply[] = []
+
+    function merge(element: Reply) {
+        result.push(element)
+
+        if (
+            getCommentReply(element.id, commentData)?.replies &&
+            getCommentReply(element.id, commentData)?.replies.length > 0
+        ) {
+            for (const reply of getCommentReply(element.id, commentData)
+                .replies) {
+                if (
+                    getCommentReply(reply.id, commentData)?.replies &&
+                    getCommentReply(reply.id, commentData)?.replies.length > 0
+                ) {
+                    merge(reply)
+                } else {
+                    result.push(reply)
+                }
+            }
+        }
+    }
+
+    // Bắt đầu từ mảng data ban đầu
+    for (let i = 0; i < replyArr.length; i++) {
+        merge(replyArr[i])
+    }
+
+    return result
+}
+
+export const quickSortByDateTime = (arr: Reply[]): Reply[] => {
+    if (arr.length <= 1) return arr
+
+    const pivotIndex = Math.floor(arr.length / 2)
+    const pivot = arr[pivotIndex]
+    const left = []
+    const right = []
+
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] < pivot) {
+            left.push(arr[i])
+        } else {
+            right.push(arr[i])
+        }
+    }
+
+    return [...quickSortByDateTime(left), pivot, ...quickSortByDateTime(right)]
+}
+export const contentCommentFormat = (
+    parentCommentUser: User,
+    comment: Comment,
+) => {
+    if (parentCommentUser.id == comment.userId) {
+        return comment.content
+    } else
+        return `<span style="color :#2196F3 ">@${parentCommentUser.name}</span> ${comment.content}`
+}
+export const convertQueryArrayParams = (queries: string[]) => {
+    return `[${queries?.map((item) => `"${item}"`) || []}]`
 }

@@ -1,3 +1,5 @@
+import { CSSProperties, MouseEventHandler } from 'react'
+
 export interface Children {
     children: React.ReactNode
 }
@@ -265,14 +267,22 @@ export interface Intro {
 
 export interface Comment {
     id: string
-    user: User
+    episodeId: string
+    animeId: string
     content: string
-    disLike: any[]
-    like: any[]
     commentAt: string
-    reply: Reply[]
+    userId: string
+    parentCommentId: string
+    parentComment: ParentComment
+    user: User
+    disLike: DisLike[]
+    like: Like[]
+    replies: Reply[]
 }
 
+export interface ParentComment {
+    user: User
+}
 export interface User {
     id: string
     email: string
@@ -281,11 +291,16 @@ export interface User {
 }
 
 export interface Reply {
-    user: User
+    id: string
+    episodeId: string
+    animeId: string
     content: string
+    commentAt: string
+    userId: string
+    parentCommentId: string
+    user: User
     disLike: any[]
     like: any[]
-    replyAt: string
 }
 
 export interface InputCommentProps {
@@ -293,12 +308,10 @@ export interface InputCommentProps {
     animeId: string
 }
 export interface InputReplyProps {
-    commentId: string
-    inputReplyShow: any
-}
-export interface ReplyItemProps {
-    reply: Reply
-    commentId: string
+    userId: string
+    animeId: string
+    episodeId: string
+    parentCommentId: string
 }
 
 export interface Like {
@@ -325,4 +338,16 @@ export interface DisLikeComponentProps {
     handleDisLike: any
     handleCancel: any
     count: number
+}
+export interface ArrowProps {
+    className?: string
+    style?: CSSProperties
+    onClick?: MouseEventHandler
+}
+export interface WatchList {
+    id: string
+    animeId: string
+    name: string
+    image: string
+    userId: string
 }

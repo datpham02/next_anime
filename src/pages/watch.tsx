@@ -4,7 +4,7 @@ import {
     Recommend,
     RelateAnime,
     CommentComponent,
-} from '~/components'
+} from '~/components/UI'
 import dynamic from 'next/dynamic'
 import { GetServerSidePropsContext } from 'next/types'
 import { getAnimeEpisodeStreamingLink, getAnimeInfo } from '~/utils/API'
@@ -31,7 +31,7 @@ const Watch = ({
                         <EpisodeComponent data={anime_info.episodes} />
                     </div>
                     <div className='w-full lg:w-[75%] aspect-video'>
-                        <VideoPlayer src={currentEpisode.sources[0].url} />
+                        {/* <VideoPlayer src={currentEpisode.sources[0].url} /> */}
                     </div>
                 </div>
                 <div className='w-full flex lg:flex-row flex-col lg:space-x-4 lg:space-y-0 space-y-4 bg-[#202125] px-[20px] pt-[50px] rounded-sm'>
@@ -67,13 +67,13 @@ export const getServerSideProps = async (
 
     const anime_info: AnimeInfo = await getAnimeInfo(id as string, 'zoro')
 
-    const currentEpisode: EpisodeSource = await getAnimeEpisodeStreamingLink(
-        anime_info.episodes[0].id,
-    )
+    // const currentEpisode: EpisodeSource = await getAnimeEpisodeStreamingLink(
+    //     anime_info.episodes[0].id,
+    // )
     return {
         props: {
             anime_info,
-            currentEpisode,
+            currentEpisode: '',
             episodeId: episode,
         },
     }

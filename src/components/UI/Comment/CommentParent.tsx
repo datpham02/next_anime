@@ -1,10 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { BsFillReplyFill } from 'react-icons/bs'
-import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io'
-import { calculateTimeElapsed, isDisLike, isLike } from '~/utils/function'
+import {
+    calculateTimeElapsed,
+    contentCommentFormat,
+    getCommentReply,
+    isDisLike,
+    isLike,
+    mergeData,
+} from '~/utils/function'
 import { Comment, Reply } from '~/utils/interface'
-import InputReply from './InputReply'
-import ReplyItem from './ReplyItem'
 import { useMutation } from '@tanstack/react-query'
 import {
     CancelLikeDisLikeComment,
@@ -16,11 +20,25 @@ import { useSession } from 'next-auth/react'
 import { queryClient } from '~/pages/_app'
 import LikeComponent from './LikeComponent'
 import DisLikeComponent from './DisLikeComponent'
+import { IoMdArrowDropup, IoMdArrowDropdown } from 'react-icons/io'
+import InputReply from './InputReply'
+import CommentChild from './CommentChild'
 
-const CommentItem = ({ commentData }: { commentData: Comment }) => {
+const CommentParent = ({
+    animeId,
+    episodeId,
+    commentData,
+    Data,
+}: {
+    commentData: Comment
+    animeId: string
+    episodeId: string
+    Data: Comment[]
+}) => {
     const { data: sessionData } = useSession()
     const wrappedInputReplyRef = useRef<HTMLDivElement>(null)
     const wrappedReplyRef = useRef<HTMLDivElement>(null)
+    const [reply, setReply] = useState<Reply[]>([])
     const [replyShow, setReplyShow] = useState<Boolean>(false)
     const [isLikeState, setIsLikeState] = useState<{
         state: Boolean
@@ -55,6 +73,7 @@ const CommentItem = ({ commentData }: { commentData: Comment }) => {
             }
         }
     }, [commentData])
+
     const { mutate: like } = useMutation({
         mutationFn: async (data: { commentId: string; userId: string }) => {
             const result = await LikeComment(data.commentId, data.userId)
@@ -189,12 +208,18 @@ const CommentItem = ({ commentData }: { commentData: Comment }) => {
                         {commentData?.user?.name}
                     </span>
                     <span className='text-[#515356] text-[12px]'>
-                        {calculateTimeElapsed(commentData.commentAt)}
+                        {calculateTimeElapsed(commentData?.commentAt)}
                     </span>
                 </div>
-                <p className='text-[14px] text-[#7E888B]'>
-                    {commentData?.content}
-                </p>
+                <p
+                    className='text-[14px] text-[#7E888B]'
+                    dangerouslySetInnerHTML={{
+                        __html: contentCommentFormat(
+                            commentData.parentComment.user,
+                            commentData,
+                        ),
+                    }}
+                />
                 <div className='flex flex-col space-y-3'>
                     <div className='flex items-center text-[#fff] space-x-4 text-[15px]'>
                         <div className='flex items-center space-x-1 cursor-pointer hover:text-[#2196F3]'>
@@ -227,40 +252,61 @@ const CommentItem = ({ commentData }: { commentData: Comment }) => {
                         className='overflow-hidden transition-all duration-150 ease-linear h-[0px]'
                     >
                         <InputReply
-                            commentId={commentData.id}
-                            inputReplyShow={handleReplyOnClick}
+                            userId={sessionData?.user?.id as string}
+                            animeId={animeId}
+                            episodeId={episodeId}
+                            parentCommentId={commentData?.id}
                         />
                     </div>
-                    {commentData.reply.length > 0 ? (
+                    {commentData.replies.length > 0 ? (
                         <div className='flex flex-col space-y-2'>
                             <div className='text-[#2196F3] text-[14px] flex items-center space-x-1 cursor-pointer'>
                                 {replyShow ? (
-                                    <IoMdArrowDropup className='w-[18px] h-[18px]' />
+                                    <>
+                                        <IoMdArrowDropup className='w-[18px] h-[18px]' />
+                                        <span
+                                            onClick={() => {
+                                                handleViewReplyOnClick()
+                                            }}
+                                        >
+                                            Hide {commentData.replies.length}{' '}
+                                            replies
+                                        </span>
+                                    </>
                                 ) : (
-                                    <IoMdArrowDropdown className='w-[18px] h-[18px]' />
+                                    <>
+                                        <IoMdArrowDropdown className='w-[18px] h-[18px]' />
+                                        <span
+                                            onClick={() => {
+                                                handleViewReplyOnClick()
+                                            }}
+                                        >
+                                            View {commentData.replies.length}{' '}
+                                            replies
+                                        </span>
+                                    </>
                                 )}
-
-                                <span
-                                    onClick={() => {
-                                        handleViewReplyOnClick()
-                                    }}
-                                >
-                                    View {commentData.reply.length} replies
-                                </span>
                             </div>
 
                             <div
                                 ref={wrappedReplyRef}
                                 className='flex flex-col space-y-4 h-[0px] overflow-hidden transition-all duration-200 ease-linear'
                             >
-                                {commentData.reply.map((reply: Reply) => {
-                                    return (
-                                        <ReplyItem
-                                            commentId={commentData.id}
-                                            reply={reply}
-                                        />
-                                    )
-                                })}
+                                {mergeData(commentData.replies, Data).map(
+                                    (reply: Reply) => {
+                                        return (
+                                            <CommentChild
+                                                key={reply.id}
+                                                animeId={animeId}
+                                                episodeId={episodeId}
+                                                commentData={getCommentReply(
+                                                    reply.id,
+                                                    Data,
+                                                )}
+                                            />
+                                        )
+                                    },
+                                )}
                             </div>
                         </div>
                     ) : null}
@@ -270,4 +316,4 @@ const CommentItem = ({ commentData }: { commentData: Comment }) => {
     )
 }
 
-export default CommentItem
+export default CommentParent

@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import React, { useEffect } from 'react'
 import { BsFillPlayFill } from 'react-icons/bs'
 import { getPopularAnime } from '~/utils/API'
-import Loading from './Loading'
+import Loading from '../Loading'
 import { PopularAnime } from '~/utils/interface'
 import Link from 'next/link'
 

@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react'
-import { Episode } from '../utils/interface'
+import { Episode } from '../../utils/interface'
 import { BsFillPlayFill } from 'react-icons/bs'
 import { useRouter } from 'next/router'
 import { AiOutlineSearch } from 'react-icons/ai'

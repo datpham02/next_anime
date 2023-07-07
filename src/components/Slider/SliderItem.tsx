@@ -7,7 +7,7 @@ import { MdOutlineAccessTime } from 'react-icons/md'
 import { getAnimeInfo } from '~/utils/API'
 import { convertMonthNumberToMonthString } from '~/utils/function'
 import { AnimeInfo, TrendingAnime } from '~/utils/interface'
-import Loading from './Loading'
+import Loading from '../Loading'
 import Link from 'next/link'
 
 const SliderItem = ({

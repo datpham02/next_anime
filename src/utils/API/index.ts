@@ -1,5 +1,6 @@
 import axios from 'axios'
 import baseAPI from './baseApi'
+import { convertQueryArrayParams } from '../function'
 
 export const getTredingAnime = async (page: number = 1, perPage: number) => {
     const { data } = await baseAPI.get('/meta/anilist/trending', {
@@ -74,6 +75,22 @@ export const searchAnime = async (
     })
     return data
 }
+export const getAnimeByGenres = async (
+    genres: string[],
+    page: number = 1,
+    perPage: number = 20,
+    provider: string,
+) => {
+    const { data } = await baseAPI.get('/meta/anilist/advanced-search', {
+        params: {
+            genres: convertQueryArrayParams(genres),
+            page: page,
+            perPage: perPage,
+            provider: provider,
+        },
+    })
+    return data
+}
 
 export const getAnimeEpisodeStreamingLink = async (
     episodeId: string,
@@ -88,10 +105,17 @@ export const getAnimeEpisodeStreamingLink = async (
     return data
 }
 
-export const addWatchList = async (userId: string, animeId: string) => {
+export const addWatchList = async (
+    userId: string,
+    animeId: string,
+    name: string,
+    image: string,
+) => {
     const { data } = await axios.post('/api/watch_list/add', {
         userId,
         animeId,
+        name,
+        image
     })
 
     return data
@@ -142,33 +166,30 @@ export const CreateComment = async (
     return data
 }
 
+export const CreateReply = async (
+    userId: string,
+    content: string,
+    animeId: string,
+    episodeId: string,
+    parentCommentId: string,
+) => {
+    const { data } = await axios.post('/api/comment/reply', {
+        userId: userId,
+        content: content,
+        animeId: animeId,
+        episodeId: episodeId,
+        parentCommentId: parentCommentId,
+    })
+
+    return data
+}
+
 export const DeleteComment = async (id: string) => {
     const { data } = await axios.post(`/api/comment/delete?id=${id}`)
 
     return data
 }
 
-export const CreateReply = async (
-    content: string,
-    userId: string,
-    commentId: string,
-) => {
-    const { data } = await axios.post('/api/reply/create', {
-        content: content,
-        userId: userId,
-        commentId: commentId,
-    })
-
-    return data
-}
-
-export const DeleteReply = async (commentId: string, replyId: string) => {
-    const { data } = await axios.post(
-        `/api/reply/delete?commentId=${commentId}&replyId=${replyId}`,
-    )
-
-    return data
-}
 export const GetComments = async (animeId: string, episodeId: string) => {
     const { data } = await axios.get(
         `/api/comment/anime/get?animeId=${animeId}&episodeId=${episodeId}`,
@@ -193,39 +214,11 @@ export const DisLikeComment = async (commentId: string, userId: string) => {
     return data
 }
 
-export const LikeReply = async (commentId: string, userId: string) => {
-    const { data } = await axios.post('/api/reply/like', {
-        commentId: commentId,
-        userId: userId,
-    })
-    return data
-}
-
-export const DisLikeReply = async (commentId: string, userId: string) => {
-    const { data } = await axios.post('/api/reply/dislike', {
-        commentId: commentId,
-        userId: userId,
-    })
-    return data
-}
-
 export const CancelLikeDisLikeComment = async (
     commentId: string,
     userId: string,
 ) => {
     const { data } = await axios.post('/api/comment/cancel', {
-        commentId: commentId,
-        userId: userId,
-    })
-
-    return data
-}
-
-export const CancelLikeDisLikeReply = async (
-    commentId: string,
-    userId: string,
-) => {
-    const { data } = await axios.post('/api/reply/cancel', {
         commentId: commentId,
         userId: userId,
     })

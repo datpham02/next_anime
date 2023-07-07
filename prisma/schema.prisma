@@ -47,7 +47,6 @@ model User {
   sessions         Session[]
   continueWatching ContniueWatching?
   comment          Comment[]
-  reply            Reply[]
   like             Like[]
   disLike          DisLike[]
 }
@@ -64,6 +63,8 @@ model VerificationToken {
 model WatchList {
   id      String  @id @default(cuid()) @map("_id")
   animeId String
+  name    String
+  image   String
   user    User?   @relation(fields: [userId], references: [id])
   userId  String?
 }
@@ -85,28 +86,18 @@ model AnimeWatched {
 }
 
 model Comment {
-  id        String    @id @default(cuid()) @map("_id")
-  episodeId String
-  animeId   String
-  content   String
-  commentAt DateTime  @default(now()) @db.Timestamp
-  user      User?     @relation(fields: [userId], references: [id])
-  userId    String?
-  reply     Reply[]
-  like      Like[]
-  disLike   DisLike[]
-}
-
-model Reply {
-  id        String    @id @default(cuid()) @map("_id")
-  content   String
-  replyAt   DateTime  @default(now()) @db.Timestamp
-  comment   Comment?  @relation(fields: [commentId], references: [id])
-  commentId String?
-  user      User?     @relation(fields: [userId], references: [id])
-  userId    String?
-  like      Like[]
-  disLike   DisLike[]
+  id              String    @id @default(cuid()) @map("_id")
+  episodeId       String
+  animeId         String
+  content         String
+  commentAt       DateTime  @default(now()) @db.Timestamp
+  user            User?     @relation(fields: [userId], references: [id])
+  userId          String?
+  like            Like[]
+  disLike         DisLike[]
+  parentComment   Comment?  @relation("Reply", fields: [parentCommentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  parentCommentId String?
+  replies         Comment[] @relation("Reply")
 }
 
 model Like {
@@ -115,8 +106,8 @@ model Like {
   commentId String?
   user      User?    @relation(fields: [userId], references: [id])
   userId    String?
-  reply     Reply?   @relation(fields: [replyId], references: [id])
-  replyId   String?
+
+  replyId String?
 }
 
 model DisLike {
@@ -125,6 +116,5 @@ model DisLike {
   commentId String?
   user      User?    @relation(fields: [userId], references: [id])
   userId    String?
-  reply     Reply?   @relation(fields: [replyId], references: [id])
   replyId   String?
 }

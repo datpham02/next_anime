@@ -1,8 +1,8 @@
 import Link from 'next/link'
-import Login from './Login'
-import Loading from './Loading'
-import UseDebounce from './UseDebounce'
-import UseBreakPoint from './UseBreakPoint'
+import Login from '../Login'
+import Loading from '../Loading'
+import UseDebounce from '../hook/UseDebounce'
+import UseBreakPoint from '../hook/UseBreakPoint'
 import Tippy from '@tippyjs/react/headless'
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { BiMenu } from 'react-icons/bi'
@@ -134,7 +134,7 @@ const Header = () => {
                                 {search && data ? (
                                     isSuccess ? (
                                         <div className='absolute w-full top-[50px] bg-[#414248]'>
-                                            {data.results.lenght > 0 ? (
+                                            {data.results.length > 0 ? (
                                                 <>
                                                     {data.results.map(
                                                         (
@@ -257,10 +257,12 @@ const Header = () => {
                                                         Continue Watching
                                                     </span>
                                                 </div>
-                                                <div className='flex items-center space-x-2 cursor-pointer text-[#fff] hover:text-[#2196f3] text-[14px] bg-[#4F515B] rounded-full px-[12px] py-[10px]'>
-                                                    <AiTwotoneHeart />
-                                                    <span>Watch List</span>
-                                                </div>
+                                                <Link href={'/watch_list'}>
+                                                    <div className='flex items-center space-x-2 cursor-pointer text-[#fff] hover:text-[#2196f3] text-[14px] bg-[#4F515B] rounded-full px-[12px] py-[10px]'>
+                                                        <AiTwotoneHeart />
+                                                        <span>Watch List</span>
+                                                    </div>
+                                                </Link>
                                                 <div className='flex items-center space-x-2 cursor-pointer text-[#fff] hover:text-[#2196f3] text-[14px] bg-[#4F515B] rounded-full px-[12px] py-[10px]'>
                                                     <BsFillBellFill />
                                                     <span>Notification</span>

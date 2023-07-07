@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { BsFillPlayFill } from 'react-icons/bs'
 import { getRecentAnime } from '~/utils/API'
 import { RecentAnime } from '~/utils/interface'
-import Loading from './Loading'
+import Loading from '../Loading'
 import Link from 'next/link'
 
 const RecentAnime = () => {

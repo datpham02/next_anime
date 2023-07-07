@@ -8,9 +8,9 @@ import {
     RecentAnime,
     SliderItem,
     Trending,
-} from '~/components'
+} from '~/components/UI'
 import { TrendingAnime } from '~/utils/interface'
-import AiringAnime from '~/components/AiringAnime'
+import AiringAnime from '~/components/UI/AiringAnime'
 const Home = () => {
     const { data, isSuccess } = useQuery({
         queryKey: ['trending_anime'],

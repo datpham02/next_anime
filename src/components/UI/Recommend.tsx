@@ -1,6 +1,6 @@
 import React from 'react'
 import { BsFillPlayFill } from 'react-icons/bs'
-import { RecommendProps, Recommendation } from '../utils/interface'
+import { RecommendProps, Recommendation } from '../../utils/interface'
 import Link from 'next/link'
 
 const Recommend = ({ data, props }: RecommendProps) => {

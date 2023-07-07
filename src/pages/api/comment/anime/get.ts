@@ -6,38 +6,28 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method == 'GET') {
         try {
             const { animeId, episodeId } = req.query
-
+            if (!(animeId && episodeId))
+                return res.json({
+                    messsage: 'Invalied request !',
+                    success: false,
+                })
             const comment = await prisma.comment.findMany({
                 where: {
                     animeId: animeId as string,
                     episodeId: episodeId as string,
                 },
-                select: {
-                    id: true,
-                    user: {
-                        select: {
-                            id: true,
-                            email: true,
-                            name: true,
-                            image: true,
-                        },
-                    },
-                    content: true,
+                include: {
+                    user: true,
                     disLike: true,
                     like: true,
-                    commentAt: true,
-                    reply: {
+                    parentComment: {
                         select: {
-                            user: {
-                                select: {
-                                    id: true,
-                                    email: true,
-                                    name: true,
-                                    image: true,
-                                },
-                            },
-                            content: true,
-                            replyAt: true,
+                            user: true,
+                        },
+                    },
+                    replies: {
+                        include: {
+                            user: true,
                             disLike: true,
                             like: true,
                         },

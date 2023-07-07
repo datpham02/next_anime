@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import React, { useEffect } from 'react'
 import { BsFillPlayFill } from 'react-icons/bs'
 import { getAiringAnime } from '~/utils/API'
-import Loading from './Loading'
+import Loading from '../Loading'
 import { AiringAnime } from '~/utils/interface'
 import { convertTimeStamp, formatTime } from '~/utils/function'
 import Link from 'next/link'
@@ -125,10 +125,12 @@ const AiringAnime = () => {
                                                 {data.anime.map(
                                                     (
                                                         airing_anime: AiringAnime,
+                                                        index: number,
                                                     ) => (
                                                         <Link
                                                             key={
-                                                                airing_anime.id
+                                                                airing_anime.id +
+                                                                index
                                                             }
                                                             href={`/detail?id=${airing_anime.id}`}
                                                         >

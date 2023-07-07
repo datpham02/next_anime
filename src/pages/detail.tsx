@@ -4,7 +4,7 @@ import { FaCalendar, FaPlayCircle } from 'react-icons/fa'
 import { MdOutlineAccessTime } from 'react-icons/md'
 import { convertMonthNumberToMonthString } from '../utils/function'
 import { AiOutlineLoading3Quarters, AiOutlinePlus } from 'react-icons/ai'
-import { Characters, Recommend, RelateAnime } from '~/components'
+import { Characters, Recommend, RelateAnime } from '~/components/UI'
 import {
     addWatchList,
     getAnimeInfo,
@@ -26,8 +26,18 @@ const Detail = ({ anime_info }: { anime_info: AnimeInfo }) => {
 
     const { mutateAsync: AddWatchList, isLoading: addWatchListLoading } =
         useMutation({
-            mutationFn: async (data: { userId: string; animeId: string }) => {
-                const result = await addWatchList(data.userId, data.animeId)
+            mutationFn: async (data: {
+                userId: string
+                animeId: string
+                name: string
+                image: string
+            }) => {
+                const result = await addWatchList(
+                    data.userId,
+                    data.animeId,
+                    data.name,
+                    data.image,
+                )
                 return result
             },
             onSuccess: (response) => {
@@ -77,9 +87,12 @@ const Detail = ({ anime_info }: { anime_info: AnimeInfo }) => {
             })
         } else {
             setLoading(true)
+
             AddWatchList({
                 userId: sessionData?.user?.id as string,
                 animeId: anime_info.id,
+                name: anime_info.title.romaji,
+                image: anime_info.image,
             })
         }
     }
