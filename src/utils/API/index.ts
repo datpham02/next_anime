@@ -50,11 +50,12 @@ export const getAiringAnime = async (page: number = 1, perPage: number) => {
     return data
 }
 
-export const getPopularAnime = async (page: number = 1, perPage: number) => {
+export const getPopularAnime = async (page: number = 1, perPage: number,provider : string) => {
     const { data } = await baseAPI.get('/meta/anilist/popular', {
         params: {
             page: page,
             perPage: perPage,
+            provider : provider
         },
     })
 
@@ -115,7 +116,7 @@ export const addWatchList = async (
         userId,
         animeId,
         name,
-        image
+        image,
     })
 
     return data

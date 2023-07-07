@@ -20,7 +20,10 @@ const SliderItem = ({
     const { data, isSuccess, isLoading } = useQuery({
         queryKey: ['anime_info'],
         queryFn: async () => {
-            const data: AnimeInfo = await getAnimeInfo(TrendingAnime.id, 'zoro')
+            const data: AnimeInfo = await getAnimeInfo(
+                TrendingAnime.id,
+                'gogoanime',
+            )
             return data
         },
     })
@@ -32,9 +35,7 @@ const SliderItem = ({
                 className='relative flex items-center justify-center outline-none 2xl:h-[650px]  xl:h-[550px] lg:h-[500px] md:h-[450px] h-[400px] w-full overflow-hidden  '
             >
                 {isLoading ? (
-                    <div className='w-full h-full flex items-center justify-center'>
-                        <Loading />
-                    </div>
+                    <div className='w-full h-full skeleton'></div>
                 ) : (
                     <>
                         <div className='relative flex items-center w-full h-full text-[#fff] '>

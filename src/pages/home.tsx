@@ -43,13 +43,13 @@ const Home = () => {
                     })}
                 </Slider>
                 <Trending />
-                <div className='flex'>
-                    <div className='w-[75%] h-full flex flex-col space-y-3'>
+                <div className='flex lg:flex-row flex-col-reverse'>
+                    <div className='lg:w-[75%] w-full h-full flex flex-col space-y-3'>
                         <AiringAnime />
                         <RecentAnime />
                         <Popular />
                     </div>
-                    <div className='w-[25%] h-full flex flex-col'>
+                    <div className='lg:w-[25%] lg:mb-0 mb-[30px] w-full h-full flex flex-col'>
                         <Genres />
                     </div>
                 </div>
